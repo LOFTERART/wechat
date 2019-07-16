@@ -8,12 +8,6 @@ import (
 // 测试付款码支付
 func TestMicropay(t *testing.T) {
 	fmt.Println("----------付款码支付----------")
-	client := NewClient(false, ServiceType, ApiKey, Config{
-		AppId:    AppID,
-		SubAppId: SubAppID,
-		MchId:    MchID,
-		SubMchId: SubMchID,
-	})
 	outTradeNo := GetRandomString(32)
 	// 初始化参数
 	body := MicropayBody{}
@@ -27,9 +21,10 @@ func TestMicropay(t *testing.T) {
 		Name: "测试门店",
 	})
 	// 请求支付
-	wxRsp, err := client.Micropay(body)
+	wxRsp, err := testClient.Micropay(body)
 	if err != nil {
 		t.Error(err)
 	}
 	fmt.Printf("Response: %+v\n", wxRsp)
+	testOutOrderNos = append(testOutOrderNos, outTradeNo)
 }

@@ -10,7 +10,7 @@ type Client struct {
 // 是否是服务商模式
 func (c *Client) isFacilitator() bool {
 	switch c.serviceType {
-	case ServiceTypeFacilitator:
+	case ServiceTypeFacilitatorDomestic, ServiceTypeFacilitatorAbroad, ServiceTypeBankServiceProvidor:
 		return true
 	default:
 		return false
@@ -36,26 +36,6 @@ func NewClient(isProd bool, serviceType int, apiKey string, config Config) (clie
 	return client
 }
 
-// // 查询订单
-// // 境内普通商户：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_2
-// // 境内的服务商：https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_2
-// func (c *WeChatClient) QueryOrder(body BodyMap) (wxRsp WeChatQueryOrderResponse, err error) {
-// 	var bytes []byte
-// 	if c.isProd {
-// 		tlsConfig := new(tls.Config)
-// 		tlsConfig.InsecureSkipVerify = true
-// 		if bytes, err = c.doWeChat(body, wxUrlOrderQuery, tlsConfig); err != nil {
-// 			return
-// 		}
-// 	} else {
-// 		if bytes, err = c.doWeChat(body, wxUrlOrderQuerySandBox); err != nil {
-// 			return
-// 		}
-// 	}
-// 	err = xml.Unmarshal(bytes, &wxRsp)
-// 	return
-// }
-//
 // // 关闭订单
 // // 文档地址：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_3
 // func (c *WeChatClient) CloseOrder(body BodyMap) (wxRsp *WeChatCloseOrderResponse, err error) {

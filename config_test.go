@@ -2,11 +2,11 @@ package wechat
 
 import "os"
 
-var (
-	AppID       = os.Getenv("AppID")
-	SubAppID    = os.Getenv("SubAppID")
-	MchID       = os.Getenv("MchID")
-	SubMchID    = os.Getenv("SubMchID")
-	ApiKey      = os.Getenv("ApiKey")
-	ServiceType = ServiceTypeNormal
-)
+var testClient = NewClient(false, ServiceTypeNormalDomestic, os.Getenv("ApiKey"), Config{
+	AppId:    os.Getenv("AppID"),
+	SubAppId: os.Getenv("SubAppID"),
+	MchId:    os.Getenv("MchID"),
+	SubMchId: os.Getenv("SubMchID"),
+})
+
+var testOutOrderNos = make([]string, 0)

@@ -6,9 +6,6 @@ const (
 	baseUrl        = "https://api.mch.weixin.qq.com/"            // (生产环境) 微信支付的基地址
 	baseUrlSandbox = "https://api.mch.weixin.qq.com/sandboxnew/" // (沙盒环境) 微信支付的基地址
 
-	// wxUrlOrderQuery          = wxBaseUrl + "pay/orderquery"          // 查询订单
-	// wxUrlOrderQuerySandBox   = wxBaseUrlSandbox + "pay/orderquery"   // 查询订单(沙盒)
-	//
 	// wxURL_CloseOrder        = wxBaseUrl + "pay/closeorder"                  // 关闭订单
 	// wxURL_Refund            = wxBaseUrl + "secapi/pay/refund"               // 申请退款
 	// wxURL_Reverse           = wxBaseUrl + "secapi/pay/reverse"              // 撤销订单
@@ -16,7 +13,6 @@ const (
 	// wxURL_DownloadBill      = wxBaseUrl + "pay/downloadbill"                // 下载对账单
 	// wxURL_DownloadFundFlow  = wxBaseUrl + "pay/downloadfundflow"            // 下载资金账单
 	// wxURL_BatchQueryComment = wxBaseUrl + "billcommentsp/batchquerycomment" // 拉取订单评价数据
-	//
 	wxURL_SanBox_GetSignKey = baseUrlSandbox + "pay/getsignkey"
 	// wxURL_SanBox_CloseOrder        = wxBaseUrlSandbox + "pay/closeorder"
 	// wxURL_SanBox_Refund            = wxBaseUrlSandbox + "pay/refund"
@@ -27,8 +23,11 @@ const (
 	// wxURL_SanBox_BatchQueryComment = wxBaseUrlSandbox + "billcommentsp/batchquerycomment"
 
 	// 服务模式
-	ServiceTypeNormal      = 1 // 普通商户
-	ServiceTypeFacilitator = 2 // 境内服务商
+	ServiceTypeNormalDomestic      = 1 // 境内普通商户
+	ServiceTypeNormalAbroad        = 2 // 境外普通商户
+	ServiceTypeFacilitatorDomestic = 3 // 境内服务商
+	ServiceTypeFacilitatorAbroad   = 4 // 境外服务商
+	ServiceTypeBankServiceProvidor = 5 // 银行服务商
 
 	// 支付类型
 	TradeTypeApplet   = "JSAPI"    // 小程序支付
@@ -37,6 +36,15 @@ const (
 	TradeTypeH5       = "MWEB"     // H5支付
 	TradeTypeNative   = "NATIVE"   // Native支付
 	TradeTypeMicropay = "MICROPAY" // 付款码支付
+
+	// 交易状态
+	TradeStateSuccess    = "SUCCESS"    // 支付成功
+	TradeStateRefund     = "REFUND"     // 转入退款
+	TradeStateNotPay     = "NOTPAY"     // 未支付
+	TradeStateClosed     = "CLOSED"     // 已关闭
+	TradeStateRevoked    = "REVOKED"    // 已撤销(刷卡支付)
+	TradeStateUserPaying = "USERPAYING" // 用户支付中
+	TradeStatePayError   = "PAYERROR"   // 支付失败(其他原因，如银行返回失败)
 
 	// 签名方式
 	SignTypeMD5        = "MD5" // 默认

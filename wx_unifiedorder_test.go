@@ -2,6 +2,7 @@ package wechat
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 	"testing"
 	"time"
@@ -10,12 +11,6 @@ import (
 // 测试统一下单
 func TestUnifiedOrder(t *testing.T) {
 	fmt.Println("----------统一下单----------")
-	client := NewClient(false, ServiceType, ApiKey, Config{
-		AppId:    AppID,
-		SubAppId: SubAppID,
-		MchId:    MchID,
-		SubMchId: SubMchID,
-	})
 	outTradeNo := GetRandomString(32)
 	// 初始化参数
 	body := UnifiedOrderBody{}
@@ -27,14 +22,15 @@ func TestUnifiedOrder(t *testing.T) {
 	body.TradeType = TradeTypeJsApi
 	body.DeviceInfo = "WEB"
 	// 请求支付
-	wxRsp, err := client.UnifiedOrder(body)
+	wxRsp, err := testClient.UnifiedOrder(body)
 	if err != nil {
 		t.Error(err)
 	}
 	fmt.Printf("Response: %+v\n", wxRsp)
+	testOutOrderNos = append(testOutOrderNos, outTradeNo)
 	// 获取小程序需要的支付签名
 	timeStamp := strconv.FormatInt(time.Now().Unix(), 10)
 	pac := "prepay_id=" + wxRsp.PrepayId
-	paySign := GetMiniPaySign("wxbf1c916561ebb420", wxRsp.NonceStr, pac, SignTypeMD5, timeStamp, ApiKey)
+	paySign := GetMiniPaySign("wxbf1c916561ebb420", wxRsp.NonceStr, pac, SignTypeMD5, timeStamp, os.Getenv("ApiKey"))
 	fmt.Printf("paySign: %s\n", paySign)
 }

@@ -13,9 +13,9 @@ go get -u github.com/cuckoopark/wechat
 
 ```go
 const (
-    isProd      = true                     // 生产环境或沙盒环境
-    serviceType = wechat.ServiceTypeNormal // 或其他枚举值
-    apiKey      = "xxxxxxxx"               // 微信支付上设置的API Key
+    isProd      = true                             // 生产环境或沙盒环境
+    serviceType = wechat.ServiceTypeNormalDomestic // 普通商户或服务商等类型
+    apiKey      = "xxxxxxxx"                       // 微信支付上设置的API Key
 )
 config := wechat.Config{
     AppId: AppID,
@@ -30,13 +30,15 @@ client := wechat.NewClient(isProd, serviceType, apiKey, config)
 
 下面是通用的接口，其中`client`是上面初始化时生成的实例：
 
-* 提交付款码支付：`rsp, err := client.Micropay(body)`
+* 提交付款码支付：`client.Micropay`
     * `body`参数：`wechat.MicropayBody`
     * `rsp`返回值：`wechat.MicropayResponse`
-* 统一下单：`rsp, err := client.UnifiedOrder(body)`
+* 统一下单：`client.UnifiedOrder`
     * `body`参数：`wechat.UnifiedOrderBody`
     * `rsp`返回值：`wechat.UnifiedOrderResponse`
-* 查询订单：client.QueryOrder()
+* 查询订单：`client.QueryOrder`
+    * `body`参数：`wechat.QueryOrderBody`
+    * `rsp`返回值：`wechat.QueryOrderResponse`
 * 关闭订单：client.CloseOrder()
 * 撤销订单：client.Reverse()
 * 申请退款：client.Refund()
@@ -47,7 +49,9 @@ client := wechat.NewClient(isProd, serviceType, apiKey, config)
 
 参数或返回值中的常量，请参照[constant.go](constant.go)文件。
 
-一些参数或返回值的模型类型，请查看接口对应的`wx_xxxxxx.go`文件。
+参数或返回值的模型类型，请查看接口对应的`wx_xxxxxx.go`文件。
+
+具体使用方法，请参照接口对应的`wx_xxxxxx_test.go`测试文件。
 
 ### 文档
 
