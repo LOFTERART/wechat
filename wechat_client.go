@@ -1,25 +1,36 @@
 package wechat
 
 type Client struct {
-	AppId  string
-	MchId  string
-	apiKey string
-	isProd bool
+	config      Config // 配置信息
+	serviceType int    // 服务模式
+	apiKey      string // API Key
+	isProd      bool   // 是否是生产环境
 }
 
+// 是否是服务商模式
+func (c *Client) isFacilitator() bool {
+	switch c.serviceType {
+	case ServiceTypeFacilitator:
+		return true
+	default:
+		return false
+	}
+}
+
+// 拼接完整的URL
 func (c *Client) url(relativePath string) string {
-	if IsProd() {
+	if c.isProd {
 		return baseUrl + relativePath
 	} else {
 		return baseUrlSandbox + relativePath
 	}
 }
 
-// 初始化微信客户端，包括应用ID、商户ID、API秘钥值、是否是正式环境
-func NewWeChatClient(appId, mchId, apiKey string, isProd bool) (client *Client) {
+// 初始化微信客户端
+func NewClient(isProd bool, serviceType int, apiKey string, config Config) (client *Client) {
 	client = new(Client)
-	client.AppId = appId
-	client.MchId = mchId
+	client.config = config
+	client.serviceType = serviceType
 	client.apiKey = apiKey
 	client.isProd = isProd
 	return client

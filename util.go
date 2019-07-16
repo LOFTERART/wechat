@@ -48,18 +48,6 @@ func ParseDateTime(timeStr string) (datetime time.Time) {
 	return
 }
 
-// 格式化Datetime
-func FormatDateTime(timeStr string) (formatTime string) {
-	// 2019-01-04T15:40:00Z
-	// 2019-01-18 20:51:30+08:00
-	if timeStr == null {
-		return null
-	}
-	replace := strings.Replace(timeStr, "T", " ", 1)
-	formatTime = replace[:19]
-	return
-}
-
 // 格式化
 func FormatDate(dateStr string) (formatDate string) {
 	// 2020-12-30T00:00:00+08:00
@@ -68,12 +56,6 @@ func FormatDate(dateStr string) (formatDate string) {
 	}
 	split := strings.Split(dateStr, "T")
 	formatDate = split[0]
-	return
-}
-
-// 字符串转Float
-func String2Float(floatStr string) (floatNum float64) {
-	floatNum, _ = strconv.ParseFloat(floatStr, 64)
 	return
 }
 

@@ -9,16 +9,35 @@
 go get -u github.com/cuckoopark/wechat
 ```
 
+### 初始化
+
+```go
+const (
+	isProd      = true                     // 生产环境或沙盒环境
+    serviceType = wechat.ServiceTypeNormal // 或其他枚举值
+    apiKey      = "xxxxxxxx"               // 微信支付上设置的API Key
+)
+config := wechat.Config{
+	AppId: AppID,
+	SubAppId: SubAppId, // 仅服务商模式有效
+    MchId: MchID,
+    SubMchId: SubMchID, // 仅服务商模式有效
+}
+client := wechat.NewClient(isProd, serviceType, apiKey, config)
+```
+
 ### 使用
 
-微信支付：
+下面是通用的接口，其中`client`是上面初始化时生成的实例：
 
 * 统一下单：client.UnifiedOrder()
     * JSAPI - JSAPI支付（或小程序支付）
     * NATIVE - Native支付
     * APP - app支付
     * MWEB - H5支付
-* 提交付款码支付：client.Micropay()
+* 提交付款码支付：`rsp, err := client.Micropay(body)`
+    * `body`参数：`wechat.MicropayBody`
+    * `rsp`返回值：`wechat.MicropayResponse`
 * 查询订单：client.QueryOrder()
 * 关闭订单：client.CloseOrder()
 * 撤销订单：client.Reverse()
@@ -27,6 +46,27 @@ go get -u github.com/cuckoopark/wechat
 * 下载对账单：client.DownloadBill()
 * 下载资金账单：client.DownloadFundFlow()
 * 拉取订单评价数据：client.BatchQueryComment()
+
+参数或返回值中的常量，请参照[constant.go](constant.go)文件。
+
+一些参数或返回值的模型类型，请查看接口对应的`wx_xxxxxx.go`文件。
+
+### 文档
+
+* 微信支付文档：[https://pay.weixin.qq.com/wiki/doc/api/index.html](https://pay.weixin.qq.com/wiki/doc/api/index.html)
+* 随机数生成算法：[https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=4_3](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=4_3)
+* 签名生成算法：[https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=4_3](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=4_3)
+* 交易金额：[https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=4_2](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=4_2)
+* 交易类型：[https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=4_2](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=4_2)
+* 货币类型：[https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=4_2](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=4_2)
+* 时间规则：[https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=4_2](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=4_2)
+* 时间戳：[https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=4_2](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=4_2)
+* 商户订单号：[https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=4_2](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=4_2)
+* 银行类型：[https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=4_2](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=4_2)
+* 单品优惠功能字段：[https://pay.weixin.qq.com/wiki/doc/api/danpin.php?chapter=9_101&index=1](https://pay.weixin.qq.com/wiki/doc/api/danpin.php?chapter=9_101&index=1)
+* 代金券或立减优惠：[https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=12_1](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=12_1)
+* 最新县及县以上行政区划代码：[https://pay.weixin.qq.com/wiki/doc/api/download/store_adress.csv](https://pay.weixin.qq.com/wiki/doc/api/download/store_adress.csv)
+
 
 ## 微信公共API
 
@@ -38,12 +78,6 @@ go get -u github.com/cuckoopark/wechat
 * gopay.GetWeChatUserInfo() => 微信公众号：获取用户基本信息(UnionID机制)
 * gopay.DecryptOpenDataToStruct() => 加密数据，解密到指定结构体
 * gopay.GetOpenIdByAuthCode() => 授权码查询openid
-
-# 微信支付
-
-<font color='#0088ff'>注意：具体参数根据请求的不同而不同，请参考微信官方文档的参数说明！</font>
-
-参考文档：[微信支付文档](https://pay.weixin.qq.com/wiki/doc/api/index.html)
 
 ### 获取微信用户OpenId、UnionId、SessionKey
 
@@ -232,36 +266,6 @@ fmt.Println("PrepayId：", wxRsp.PrepayId)
 fmt.Println("TradeType：", wxRsp.TradeType)
 fmt.Println("CodeUrl:", wxRsp.CodeUrl)
 fmt.Println("MwebUrl:", wxRsp.MwebUrl)
-```
-
-### 提交付款码支付
-```go
-//初始化微信客户端
-//    appId：应用ID
-//    mchID：商户ID
-//    apiKey：API秘钥值
-//    isProd：是否是正式环境
-client := gopay.NewWeChatClient("wxd678efh567hg6787", "1230000109", "192006250b4c09247ec02edce69f6a2d", false)
-
-//初始化参数Map
-body := make(gopay.BodyMap)
-body.Set("nonce_str", gopay.GetRandomString(32))
-body.Set("body", "扫用户付款码支付")
-number := gopay.GetRandomString(32)
-log.Println("Number:", number)
-body.Set("out_trade_no", number)
-body.Set("total_fee", 1)
-body.Set("spbill_create_ip", "127.0.0.1")
-body.Set("notify_url", "http://www.gopay.ink")
-body.Set("auth_code", "120061098828009406")
-body.Set("sign_type", gopay.SignTypeMD5)
-
-//请求支付，成功后得到结果
-wxRsp, err := client.Micropay(body)
-if err != nil {
-	fmt.Println("Error:", err)
-}
-fmt.Println("Response:", wxRsp)
 ```
 
 ### 申请退款

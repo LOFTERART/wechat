@@ -14,13 +14,17 @@ func (c *Client) doWeChat(bodyObj interface{}, url string, tlsConfig ...*tls.Con
 	_ = json.Unmarshal(bodyJson, &body)
 	fmt.Printf("%+v \n", body)
 	var sign string
-	body["appid"] = c.AppId
-	body["mch_id"] = c.MchId
+	body["appid"] = c.config.AppId
+	body["mch_id"] = c.config.MchId
+	if c.isFacilitator() {
+		body["sub_appid"] = c.config.SubAppId
+		body["sub_mch_id"] = c.config.SubMchId
+	}
 	// 生成参数
 	if !c.isProd {
 		body["sign_type"] = SignTypeMD5
 		// 从微信接口获取SandBoxSignKey
-		key, iErr := getSandBoxSign(c.MchId, body["nonce_str"].(string), c.apiKey, body["sign_type"].(string))
+		key, iErr := getSandBoxSign(c.config.MchId, body["nonce_str"].(string), c.apiKey, body["sign_type"].(string))
 		if err = iErr; iErr != nil {
 			return
 		}
