@@ -36,28 +36,6 @@ func NewClient(isProd bool, serviceType int, apiKey string, config Config) (clie
 	return client
 }
 
-//
-//
-// // 统一下单
-// // 境内普通商户：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1
-// // 境内的服务商：https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_1
-// func (c *WeChatClient) UnifiedOrder(body BodyMap) (wxRsp WeChatUnifiedOrderResponse, err error) {
-// 	var bytes []byte
-// 	if c.isProd {
-// 		tlsConfig := new(tls.Config)
-// 		tlsConfig.InsecureSkipVerify = true
-// 		if bytes, err = c.doWeChat(body, wxUrlUnifiedOrder, tlsConfig); err != nil {
-// 			return
-// 		}
-// 	} else {
-// 		if bytes, err = c.doWeChat(body, wxUrlUnifiedOrderSandBox); err != nil {
-// 			return
-// 		}
-// 	}
-// 	err = xml.Unmarshal(bytes, &wxRsp)
-// 	return
-// }
-//
 // // 查询订单
 // // 境内普通商户：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_2
 // // 境内的服务商：https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_2

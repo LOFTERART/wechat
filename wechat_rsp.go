@@ -1,22 +1,5 @@
 package wechat
 
-type WeChatUnifiedOrderResponse struct {
-	ReturnCode string `xml:"return_code"`
-	ReturnMsg  string `xml:"return_msg"`
-	Appid      string `xml:"appid"`
-	MchId      string `xml:"mch_id"`
-	DeviceInfo string `xml:"device_info"`
-	NonceStr   string `xml:"nonce_str"`
-	Sign       string `xml:"sign"`
-	ResultCode string `xml:"result_code"`
-	ErrCode    string `xml:"err_code"`
-	ErrCodeDes string `xml:"err_code_des"`
-	TradeType  string `xml:"trade_type"`
-	PrepayId   string `xml:"prepay_id"`
-	CodeUrl    string `xml:"code_url"`
-	MwebUrl    string `xml:"mweb_url"`
-}
-
 type WeChatQueryOrderResponse struct {
 	ReturnCode         string `xml:"return_code"`
 	ReturnMsg          string `xml:"return_msg"`

@@ -13,13 +13,13 @@ go get -u github.com/cuckoopark/wechat
 
 ```go
 const (
-	isProd      = true                     // 生产环境或沙盒环境
+    isProd      = true                     // 生产环境或沙盒环境
     serviceType = wechat.ServiceTypeNormal // 或其他枚举值
     apiKey      = "xxxxxxxx"               // 微信支付上设置的API Key
 )
 config := wechat.Config{
-	AppId: AppID,
-	SubAppId: SubAppId, // 仅服务商模式有效
+    AppId: AppID,
+    SubAppId: SubAppId, // 仅服务商模式有效
     MchId: MchID,
     SubMchId: SubMchID, // 仅服务商模式有效
 }
@@ -30,14 +30,12 @@ client := wechat.NewClient(isProd, serviceType, apiKey, config)
 
 下面是通用的接口，其中`client`是上面初始化时生成的实例：
 
-* 统一下单：client.UnifiedOrder()
-    * JSAPI - JSAPI支付（或小程序支付）
-    * NATIVE - Native支付
-    * APP - app支付
-    * MWEB - H5支付
 * 提交付款码支付：`rsp, err := client.Micropay(body)`
     * `body`参数：`wechat.MicropayBody`
     * `rsp`返回值：`wechat.MicropayResponse`
+* 统一下单：`rsp, err := client.UnifiedOrder(body)`
+    * `body`参数：`wechat.UnifiedOrderBody`
+    * `rsp`返回值：`wechat.UnifiedOrderResponse`
 * 查询订单：client.QueryOrder()
 * 关闭订单：client.CloseOrder()
 * 撤销订单：client.Reverse()
@@ -219,53 +217,6 @@ rsp.ReturnCode = "SUCCESS"
 rsp.ReturnMsg = "OK"
 
 return c.String(http.StatusOK, rsp.ToXmlString())
-```
-
-### 统一下单
-```go
-//初始化微信客户端
-//    appId：应用ID
-//    mchID：商户ID
-//    apiKey：API秘钥值
-//    isProd：是否是正式环境
-client := gopay.NewWeChatClient("wxd678efh567hg6787", "1230000109", "192006250b4c09247ec02edce69f6a2d", false)
-
-//初始化参数Map
-body := make(gopay.BodyMap)
-body.Set("nonce_str", gopay.GetRandomString(32))
-body.Set("body", "测试支付")
-number := gopay.GetRandomString(32)
-log.Println("Number:", number)
-body.Set("out_trade_no", number)
-body.Set("total_fee", 1)
-body.Set("spbill_create_ip", "127.0.0.1")   //终端IP
-body.Set("notify_url", "http://www.gopay.ink")
-body.Set("trade_type", gopay.TradeTypeJsApi)
-body.Set("device_info", "WEB")
-body.Set("sign_type", gopay.SignTypeMD5)
-//body.Set("scene_info", `{"h5_info": {"type":"Wap","wap_url": "http://www.gopay.ink","wap_name": "测试支付"}}`)
-body.Set("openid", "o0Df70H2Q0fY8JXh1aFPIRyOBgu6")
-
-//发起下单请求
-wxRsp, err := client.UnifiedOrder(body)
-if err != nil {
-	fmt.Println("Error:", err)
-	return
-}
-fmt.Println("ReturnCode：", wxRsp.ReturnCode)
-fmt.Println("ReturnMsg：", wxRsp.ReturnMsg)
-fmt.Println("Appid：", wxRsp.Appid)
-fmt.Println("MchId：", wxRsp.MchId)
-fmt.Println("DeviceInfo：", wxRsp.DeviceInfo)
-fmt.Println("NonceStr：", wxRsp.NonceStr)
-fmt.Println("Sign：", wxRsp.Sign)
-fmt.Println("ResultCode：", wxRsp.ResultCode)
-fmt.Println("ErrCode：", wxRsp.ErrCode)
-fmt.Println("ErrCodeDes：", wxRsp.ErrCodeDes)
-fmt.Println("PrepayId：", wxRsp.PrepayId)
-fmt.Println("TradeType：", wxRsp.TradeType)
-fmt.Println("CodeUrl:", wxRsp.CodeUrl)
-fmt.Println("MwebUrl:", wxRsp.MwebUrl)
 ```
 
 ### 申请退款

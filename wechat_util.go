@@ -20,6 +20,7 @@ func (c *Client) doWeChat(bodyObj interface{}, url string, tlsConfig ...*tls.Con
 		body["sub_appid"] = c.config.SubAppId
 		body["sub_mch_id"] = c.config.SubMchId
 	}
+	body["nonce_str"] = GetRandomString(32)
 	// 生成参数
 	if !c.isProd {
 		body["sign_type"] = SignTypeMD5

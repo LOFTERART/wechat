@@ -32,27 +32,16 @@ func convert2String(value interface{}) (valueStr string) {
 	case string:
 		valueStr = v
 	default:
-		valueStr = null
+		valueStr = ""
 	}
-	return
-}
-
-const (
-	null       string = ""
-	TimeLayout string = "2006-01-02 15:04:05"
-)
-
-// 解析时间
-func ParseDateTime(timeStr string) (datetime time.Time) {
-	datetime, _ = time.ParseInLocation(TimeLayout, timeStr, time.Local)
 	return
 }
 
 // 格式化
 func FormatDate(dateStr string) (formatDate string) {
 	// 2020-12-30T00:00:00+08:00
-	if dateStr == null {
-		return null
+	if dateStr == "" {
+		return ""
 	}
 	split := strings.Split(dateStr, "T")
 	formatDate = split[0]

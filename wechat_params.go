@@ -1,7 +1,6 @@
 package wechat
 
 import (
-	"bytes"
 	"encoding/xml"
 	"errors"
 	"github.com/parnurzeal/gorequest"
@@ -43,24 +42,5 @@ func getSandBoxSignKey(mchId, nonceStr, sign string) (key string, err error) {
 		return
 	}
 	key = keyResponse.SandboxSignkey
-	return
-}
-
-// 生成请求XML的Body体
-func generateXml(bm BodyMap) (reqXml string) {
-	buffer := new(bytes.Buffer)
-	buffer.WriteString("<xml>")
-	for k, v := range bm {
-		buffer.WriteString("<")
-		buffer.WriteString(k)
-		buffer.WriteString("><![CDATA[")
-		valueStr := convert2String(v)
-		buffer.WriteString(valueStr)
-		buffer.WriteString("]]></")
-		buffer.WriteString(k)
-		buffer.WriteString(">")
-	}
-	buffer.WriteString("</xml>")
-	reqXml = buffer.String()
 	return
 }

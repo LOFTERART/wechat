@@ -3,36 +3,6 @@
 */
 package wechat
 
-// // 测试统一下单
-// func TestWeChatClientUnifiedOrder(t *testing.T) {
-// 	client := NewWeChatClient(AppID, MchID, ApiKey, IsProd())
-// 	// 初始化参数
-// 	body := make(BodyMap)
-// 	if IsFacilitator() {
-// 		body.Set("sub_mch_id", SubMchID)
-// 	}
-// 	body.Set("nonce_str", GetRandomString(32))
-// 	body.Set("body", "统一下单支付")
-// 	body.Set("out_trade_no", GetRandomString(32))
-// 	body.Set("total_fee", 101)
-// 	body.Set("spbill_create_ip", "124.77.173.62")
-// 	body.Set("notify_url", "http://www.gopay.ink")
-// 	body.Set("trade_type", TradeTypeJsApi)
-// 	body.Set("device_info", "WEB")
-// 	body.Set("sign_type", SignTypeMD5)
-// 	// 请求支付
-// 	wxRsp, err := client.UnifiedOrder(body)
-// 	if err != nil {
-// 		fmt.Printf("%s\n", err)
-// 	}
-// 	fmt.Printf("Response: %+v\n", wxRsp)
-// 	// 获取小程序需要的支付签名
-// 	timeStamp := strconv.FormatInt(time.Now().Unix(), 10)
-// 	pac := "prepay_id=" + wxRsp.PrepayId
-// 	paySign := GetMiniPaySign("wxbf1c916561ebb420", wxRsp.NonceStr, pac, SignTypeMD5, timeStamp, ApiKey)
-// 	fmt.Printf("paySign: %s\n", paySign)
-// }
-//
 // // 测试查询订单
 // func TestWeChatClientQueryOrder(t *testing.T) {
 // 	client := NewWeChatClient(AppID, MchID, ApiKey, IsProd())

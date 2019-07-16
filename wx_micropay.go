@@ -18,7 +18,6 @@ func (c *Client) Micropay(body MicropayBody) (wxRsp MicropayResponse, err error)
 
 // 提交付款码支付的参数
 type MicropayBody struct {
-	BodyModel
 	DeviceInfo     string `json:"device_info,omitempty"` // (非必填) 终端设备号(商户自定义，如门店编号)
 	Body           string `json:"body"`                  // 商品或支付单简要描述，格式要求：门店品牌名-城市分店名-实际商品名称
 	Detail         string `json:"detail,omitempty"`      // (非必填) TODO 单品优惠功能字段，需要接入请见详细说明
@@ -36,7 +35,7 @@ type MicropayBody struct {
 	SceneInfo      string `json:"scene_info,omitempty"`  // (非必填) 该字段用于上报场景信息，目前支持上报实际门店信息。该字段为JSON对象数据，对象格式为{"store_info":{"id": "门店ID","name": "名称","area_code": "编码","address": "地址" }} ，字段详细说明请点击行前的+展开
 }
 
-// 提交付款码支付的结果
+// 提交付款码支付的返回值
 type MicropayResponse struct {
 	ResponseModel
 	// 当return_code为SUCCESS时
@@ -68,12 +67,4 @@ type MicropayResponse struct {
 	Attach             string `xml:"attach"`               // 商家数据包，原样返回
 	TimeEnd            string `xml:"time_end"`             // 订单生成时间，格式为yyyyMMddHHmmss，如2009年12月25日9点10分10秒表示为20091225091010。详见时间规则
 	PromotionDetail    string `xml:"promotion_detail"`     // TODO 单品优惠详情
-}
-
-// 场景信息模型
-type SceneInfoModel struct {
-	ID       string `json:"id"`        // 门店唯一标识
-	Name     string `json:"name"`      // 门店名称
-	AreaCode string `json:"area_code"` // 门店所在地行政区划码，详细见《最新县及县以上行政区划代码》
-	Address  string `json:"address"`   // 门店详细地址
 }
