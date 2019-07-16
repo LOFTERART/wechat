@@ -36,25 +36,6 @@ func NewClient(isProd bool, serviceType int, apiKey string, config Config) (clie
 	return client
 }
 
-// // 关闭订单
-// // 文档地址：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_3
-// func (c *WeChatClient) CloseOrder(body BodyMap) (wxRsp *WeChatCloseOrderResponse, err error) {
-// 	var bytes []byte
-// 	if c.isProd {
-// 		tlsConfig := new(tls.Config)
-// 		tlsConfig.InsecureSkipVerify = true
-// 		if bytes, err = c.doWeChat(body, wxURL_CloseOrder, tlsConfig); err != nil {
-// 			return
-// 		}
-// 	} else {
-// 		if bytes, err = c.doWeChat(body, wxURL_SanBox_CloseOrder); err != nil {
-// 			return
-// 		}
-// 	}
-// 	err = xml.Unmarshal(bytes, &wxRsp)
-// 	return
-// }
-//
 // // 撤销订单
 // // 文档地址：https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_11&index=3
 // func (c *WeChatClient) Reverse(body BodyMap, certFilePath, keyFilePath, pkcs12FilePath string) (wxRsp *WeChatReverseResponse, err error) {

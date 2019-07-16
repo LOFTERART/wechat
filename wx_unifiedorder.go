@@ -37,13 +37,7 @@ type UnifiedOrderResponse struct {
 	ResponseModel
 	// 当return_code为SUCCESS时
 	ServiceResponseModel
-	AppId      string `xml:"appid"`       // 调用接口提交的公众账号ID
-	MchId      string `xml:"mch_id"`      // 调用接口提交的商户号
-	SubAppId   string `xml:"sub_appid"`   // (服务商模式) 微信分配的子商户公众账号ID
-	SubMchId   string `xml:"sub_mch_id"`  // (服务商模式) 微信支付分配的子商户号
 	DeviceInfo string `xml:"device_info"` // 调用接口提交的终端设备号
-	NonceStr   string `xml:"nonce_str"`   // 微信返回的随机字符串
-	Sign       string `xml:"sign"`        // 微信返回的签名，详见签名算法
 	// 当return_code 和result_code都为SUCCESS时
 	TradeType string `xml:"trade_type"` // JSAPI-公众号支付 NATIVE-Native支付 APP-APP支付 说明详见参数规定
 	PrepayId  string `xml:"prepay_id"`  // 微信生成的预支付回话标识，用于后续接口调用中使用，该值有效期为2小时

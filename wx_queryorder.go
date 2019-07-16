@@ -20,12 +20,6 @@ type QueryOrderResponse struct {
 	ResponseModel
 	// 当return_code为SUCCESS时
 	ServiceResponseModel
-	Appid    string `xml:"appid"`      // 微信分配的公众账号ID
-	MchId    string `xml:"mch_id"`     // 微信支付分配的商户号
-	SubAppId string `xml:"sub_appid"`  // (服务商模式) 微信分配的子商户公众账号ID
-	SubMchId string `xml:"sub_mch_id"` // (服务商模式) 微信支付分配的子商户号
-	NonceStr string `xml:"nonce_str"`  // 随机字符串，不长于32位。推荐随机数生成算法
-	Sign     string `xml:"sign"`       // 签名，详见签名生成算法
 	// 当return_code、result_code、trade_state都为SUCCESS时有返回，如trade_state不为SUCCESS，则只返回out_trade_no(必传)和attach(选传)。
 	DeviceInfo         string `xml:"device_info"`          // 微信支付分配的终端设备号
 	Openid             string `xml:"openid"`               // 用户在商户appid下的唯一标识

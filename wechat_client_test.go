@@ -3,28 +3,6 @@
 */
 package wechat
 
-// func TestWeChatClient_CloseOrder(t *testing.T) {
-// 	//初始化微信客户端
-// 	//    appId：应用ID
-// 	//    MchID：商户ID
-// 	//    ApiKey：Key值
-// 	//    isProd：是否是正式环境
-// 	client := NewWeChatClient(AppID, MchID, ApiKey, false)
-//
-// 	//初始化参数结构体
-// 	body := make(BodyMap)
-// 	body.Set("out_trade_no", "MfZC2segKxh0bnJSELbvKNeH3d9oWvvQ")
-// 	body.Set("nonce_str", GetRandomString(32))
-// 	body.Set("sign_type", SignTypeMD5)
-//
-// 	//请求订单查询，成功后得到结果
-// 	wxRsp, err := client.CloseOrder(body)
-// 	if err != nil {
-// 		fmt.Println("Error:", err)
-// 	}
-// 	fmt.Println("Response：", wxRsp)
-// }
-//
 // func TestWeChatClient_Refund(t *testing.T) {
 // 	//初始化微信客户端
 // 	//    appId：应用ID

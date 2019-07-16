@@ -17,6 +17,12 @@ type ResponseModel struct {
 
 // 业务返回结果的错误信息
 type ServiceResponseModel struct {
+	AppId      string `xml:"appid"`        // 微信分配的公众账号ID
+	MchId      string `xml:"mch_id"`       // 微信支付分配的商户号
+	SubAppId   string `xml:"sub_appid"`    // (服务商模式) 微信分配的子商户公众账号ID
+	SubMchId   string `xml:"sub_mch_id"`   // (服务商模式) 微信支付分配的子商户号
+	NonceStr   string `xml:"nonce_str"`    // 随机字符串，不长于32位
+	Sign       string `xml:"sign"`         // 签名，详见签名生成算法
 	ResultCode string `xml:"result_code"`  // SUCCESS/FAIL
 	ErrCode    string `xml:"err_code"`     // 详细参见第6节错误列表
 	ErrCodeDes string `xml:"err_code_des"` // 错误返回的信息描述
