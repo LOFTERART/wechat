@@ -13,69 +13,6 @@ type WeChatReverseResponse struct {
 	Recall     string `xml:"recall"`
 }
 
-type WeChatRefundResponse struct {
-	ReturnCode          string `xml:"return_code"`
-	ReturnMsg           string `xml:"return_msg"`
-	ResultCode          string `xml:"result_code"`
-	ErrCode             string `xml:"err_code"`
-	ErrCodeDes          string `xml:"err_code_des"`
-	Appid               string `xml:"appid"`
-	MchId               string `xml:"mch_id"`
-	NonceStr            string `xml:"nonce_str"`
-	Sign                string `xml:"sign"`
-	TransactionId       string `xml:"transaction_id"`
-	OutTradeNo          string `xml:"out_trade_no"`
-	OutRefundNo         string `xml:"out_refund_no"`
-	RefundId            string `xml:"refund_id"`
-	RefundFee           int    `xml:"refund_fee"`
-	SettlementRefundFee int    `xml:"settlement_refund_fee"`
-	TotalFee            int    `xml:"total_fee"`
-	SettlementTotalFee  int    `xml:"settlement_total_fee"`
-	FeeType             string `xml:"fee_type"`
-	CashFee             int    `xml:"cash_fee"`
-	CashFeeType         string `xml:"cash_fee_type"`
-	CashRefundFee       int    `xml:"cash_refund_fee"`
-	CouponType0         string `xml:"coupon_type_0"`
-	CouponRefundFee     int    `xml:"coupon_refund_fee"`
-	CouponRefundFee0    int    `xml:"coupon_refund_fee_0"`
-	CouponRefundCount   int    `xml:"coupon_refund_count"`
-	CouponRefundId0     string `xml:"coupon_refund_id_0"`
-}
-
-type WeChatQueryRefundResponse struct {
-	ReturnCode           string `xml:"return_code"`
-	ReturnMsg            string `xml:"return_msg"`
-	ResultCode           string `xml:"result_code"`
-	ErrCode              string `xml:"err_code"`
-	ErrCodeDes           string `xml:"err_code_des"`
-	Appid                string `xml:"appid"`
-	MchId                string `xml:"mch_id"`
-	NonceStr             string `xml:"nonce_str"`
-	Sign                 string `xml:"sign"`
-	TotalRefundCount     int    `xml:"total_refund_count"`
-	TransactionId        string `xml:"transaction_id"`
-	OutTradeNo           string `xml:"out_trade_no"`
-	TotalFee             int    `xml:"total_fee"`
-	SettlementTotalFee   int    `xml:"settlement_total_fee"`
-	FeeType              string `xml:"fee_type"`
-	CashFee              int    `xml:"cash_fee"`
-	RefundCount          int    `xml:"refund_count"`
-	OutRefundNo0         string `xml:"out_refund_no_0"`
-	RefundId0            string `xml:"refund_id_0"`
-	RefundChannel0       string `xml:"refund_channel_0"`
-	RefundFee0           int    `xml:"refund_fee_0"`
-	SettlementRefundFee0 int    `xml:"settlement_refund_fee_0"`
-	CouponType00         string `xml:"coupon_type_0_0"`
-	CouponRefundFee0     int    `xml:"coupon_refund_fee_0"`
-	CouponRefundCount0   int    `xml:"coupon_refund_count_0"`
-	CouponRefundId00     string `xml:"coupon_refund_id_0_0"`
-	CouponRefundFee00    int    `xml:"coupon_refund_fee_0_0"`
-	RefundStatus0        string `xml:"refund_status_0"`
-	RefundAccount0       string `xml:"refund_account_0"`
-	RefundRecvAccout0    string `xml:"refund_recv_accout_0"`
-	RefundSuccessTime0   string `xml:"refund_success_time_0"`
-}
-
 type WeChatNotifyRequest struct {
 	ReturnCode         string `xml:"return_code"`
 	ReturnMsg          string `xml:"return_msg"`

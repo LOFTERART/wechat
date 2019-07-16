@@ -1,10 +1,16 @@
 package wechat
 
+import "encoding/xml"
+
 // 查询订单
 // 境内普通商户：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_2
 // 境内的服务商：https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_2
 func (c *Client) QueryOrder(body QueryOrderBody) (wxRsp QueryOrderResponse, err error) {
-	err = c.doWeChat("pay/orderquery", body, &wxRsp)
+	bytes, err := c.doWeChat("pay/orderquery", body)
+	if err != nil {
+		return
+	}
+	err = xml.Unmarshal(bytes, &wxRsp)
 	return
 }
 

@@ -1,10 +1,16 @@
 package wechat
 
+import "encoding/xml"
+
 // 统一下单
 // 境内普通商户：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1
 // 境内的服务商：https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_1
 func (c *Client) UnifiedOrder(body UnifiedOrderBody) (wxRsp UnifiedOrderResponse, err error) {
-	err = c.doWeChat("pay/unifiedorder", body, &wxRsp)
+	bytes, err := c.doWeChat("pay/unifiedorder", body)
+	if err != nil {
+		return
+	}
+	err = xml.Unmarshal(bytes, &wxRsp)
 	return
 }
 

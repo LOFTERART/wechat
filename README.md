@@ -31,15 +31,9 @@ client := wechat.NewClient(isProd, serviceType, apiKey, config)
 下面是通用的接口，其中`client`是上面初始化时生成的实例：
 
 * 提交付款码支付：`client.Micropay`
-    * `body`参数：`wechat.MicropayBody`
-    * `rsp`返回值：`wechat.MicropayResponse`
 * 统一下单：`client.UnifiedOrder`
-    * `body`参数：`wechat.UnifiedOrderBody`
-    * `rsp`返回值：`wechat.UnifiedOrderResponse`
 * 查询订单：`client.QueryOrder`
-    * `body`参数：`wechat.QueryOrderBody`
-    * `rsp`返回值：`wechat.QueryOrderResponse`
-* 关闭订单：client.CloseOrder()
+* 关闭订单：`client.CloseOrder`
 * 撤销订单：client.Reverse()
 * 申请退款：client.Refund()
 * 查询退款：client.QueryRefund()
@@ -47,11 +41,12 @@ client := wechat.NewClient(isProd, serviceType, apiKey, config)
 * 下载资金账单：client.DownloadFundFlow()
 * 拉取订单评价数据：client.BatchQueryComment()
 
-参数或返回值中的常量，请参照[constant.go](constant.go)文件。
+注意事项：
 
-参数或返回值的模型类型，请查看接口对应的`wx_xxxxxx.go`文件。
-
-具体使用方法，请参照接口对应的`wx_xxxxxx_test.go`测试文件。
+* 接口调用格式为`rsp, err := client.XXX(body)`。
+* 参数或返回值的类型，请查看接口对应的`wx_xxxxxx.go`文件，里面有`XXXBody`和`XXXResponse`与之对应。* 
+* 参数或返回值中的常量，请参照[constant.go](constant.go)文件。
+* 具体使用方法，请参照接口对应的`wx_xxxxxx_test.go`测试文件。
 
 ### 文档
 
