@@ -2,16 +2,15 @@ package wechat
 
 import (
 	"encoding/json"
-	"fmt"
+	"encoding/xml"
 )
 
 // 向微信发送请求
-func (c *Client) doWeChat(bodyObj interface{}, url string) (bytes []byte, err error) {
+func (c *Client) doWeChat(relativeUrl string, bodyObj interface{}, rsp interface{}) (err error) {
+	url := c.url(relativeUrl)
 	bodyJson, _ := json.Marshal(bodyObj)
-	var body map[string]interface{}
+	body := make(map[string]interface{})
 	_ = json.Unmarshal(bodyJson, &body)
-	fmt.Printf("%+v \n", body)
-	var sign string
 	body["appid"] = c.config.AppId
 	body["mch_id"] = c.config.MchId
 	if c.isFacilitator() {
@@ -20,21 +19,29 @@ func (c *Client) doWeChat(bodyObj interface{}, url string) (bytes []byte, err er
 	}
 	body["nonce_str"] = GetRandomString(32)
 	// 生成参数
-	if !c.isProd {
+	signType, _ := body["sign_type"].(string)
+	var sign string
+	if c.isProd {
+		sign = localSign(body, signType, c.apiKey)
+	} else {
 		body["sign_type"] = SignTypeMD5
-		// 从微信接口获取SandBoxSignKey
-		key, iErr := sandboxSign(c.config.MchId, body["nonce_str"].(string), c.apiKey, body["sign_type"].(string))
+		key, iErr := sandboxSign(c.config.MchId, body["nonce_str"].(string), c.apiKey, SignTypeMD5)
 		if err = iErr; iErr != nil {
 			return
 		}
-		sign = localSign(body, body["sign_type"].(string), key)
-	} else {
-		// 本地计算Sign
-		sign = localSign(body, body["sign_type"].(string), c.apiKey)
+		sign = localSign(body, SignTypeMD5, key)
 	}
 	body["sign"] = sign
 	reqXML := generateXml(body)
 	// 发起请求
-	bytes, err = HttpPost(url, reqXML)
+	bytes, err := httpPost(url, reqXML)
+	if err != nil {
+		return
+	}
+	// 解析参数
+	err = xml.Unmarshal(bytes, rsp)
+	if err != nil {
+		return
+	}
 	return
 }

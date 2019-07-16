@@ -1,23 +1,16 @@
 package wechat
 
-import (
-	"encoding/xml"
-)
-
 // 提交付款码支付
 // 境内普通商户：https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_10&index=1
 // 境内的服务商：https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=9_10&index=1
 func (c *Client) Micropay(body MicropayBody) (wxRsp MicropayResponse, err error) {
-	var bytes []byte
-	if bytes, err = c.doWeChat(body, c.url("pay/micropay")); err != nil {
-		return
-	}
-	err = xml.Unmarshal(bytes, &wxRsp)
+	err = c.doWeChat("pay/micropay", body, &wxRsp)
 	return
 }
 
 // 提交付款码支付的参数
 type MicropayBody struct {
+	SignType       string `json:"sign_type,omitempty"`   // 签名类型，目前支持HMAC-SHA256和MD5，默认为MD5
 	DeviceInfo     string `json:"device_info,omitempty"` // (非必填) 终端设备号(商户自定义，如门店编号)
 	Body           string `json:"body"`                  // 商品或支付单简要描述，格式要求：门店品牌名-城市分店名-实际商品名称
 	Detail         string `json:"detail,omitempty"`      // (非必填) TODO 单品优惠功能字段，需要接入请见详细说明
@@ -39,16 +32,14 @@ type MicropayBody struct {
 type MicropayResponse struct {
 	ResponseModel
 	// 当return_code为SUCCESS时
-	AppId      string `xml:"appid"`        // 调用接口提交的公众账号ID
-	SubAppId   string `xml:"sub_appid"`    // (服务商模式) 调用接口提交的子商户公众账号ID
-	MchId      string `xml:"mch_id"`       // 调用接口提交的商户号
-	SubMchId   string `xml:"sub_mch_id"`   // (服务商模式) 调用接口提交的子商户号
-	DeviceInfo string `xml:"device_info"`  // 调用接口提交的终端设备号
-	NonceStr   string `xml:"nonce_str"`    // 微信返回的随机字符串
-	Sign       string `xml:"sign"`         // 微信返回的签名
-	ResultCode string `xml:"result_code"`  // SUCCESS/FAIL
-	ErrCode    string `xml:"err_code"`     // 详细参见错误列表
-	ErrCodeDes string `xml:"err_code_des"` // 错误返回的信息描述
+	ServiceResponseModel
+	AppId      string `xml:"appid"`       // 调用接口提交的公众账号ID
+	SubAppId   string `xml:"sub_appid"`   // (服务商模式) 调用接口提交的子商户公众账号ID
+	MchId      string `xml:"mch_id"`      // 调用接口提交的商户号
+	SubMchId   string `xml:"sub_mch_id"`  // (服务商模式) 调用接口提交的子商户号
+	DeviceInfo string `xml:"device_info"` // 调用接口提交的终端设备号
+	NonceStr   string `xml:"nonce_str"`   // 微信返回的随机字符串
+	Sign       string `xml:"sign"`        // 微信返回的签名
 	// 当return_code和result_code都为SUCCESS时
 	OpenId             string `xml:"openid"`               // 用户在商户appid下的唯一标识
 	IsSubscribe        string `xml:"is_subscribe"`         // 用户是否关注公众账号，仅在公众账号类型支付有效，取值范围：Y或N;Y-关注;N-未关注

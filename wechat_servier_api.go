@@ -7,23 +7,15 @@ import (
 	"crypto/hmac"
 	"crypto/md5"
 	"crypto/sha256"
-	"crypto/tls"
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
 	"encoding/xml"
 	"errors"
-	"github.com/parnurzeal/gorequest"
 	"net/http"
 	"reflect"
 	"strings"
 )
-
-func HttpAgent() (agent *gorequest.SuperAgent) {
-	agent = gorequest.New()
-	agent.TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
-	return
-}
 
 // 解析支付完成后的Notify信息
 func ParseNotifyResult(req *http.Request) (notifyRsp *WeChatNotifyRequest, err error) {
@@ -235,11 +227,7 @@ func DecryptOpenDataToStruct(encryptedData, iv, sessionKey string, beanPtr inter
 func Code2Session(appId, appSecret, wxCode string) (sessionRsp *Code2SessionRsp, err error) {
 	sessionRsp = new(Code2SessionRsp)
 	url := "https://api.weixin.qq.com/sns/jscode2session?appid=" + appId + "&secret=" + appSecret + "&js_code=" + wxCode + "&grant_type=authorization_code"
-	agent := HttpAgent()
-	_, _, errs := agent.Get(url).EndStruct(sessionRsp)
-	if len(errs) > 0 {
-		err = errs[0]
-	}
+	_, err = httpGet(url)
 	return
 }
 
@@ -249,11 +237,7 @@ func Code2Session(appId, appSecret, wxCode string) (sessionRsp *Code2SessionRsp,
 func GetAccessToken(appId, appSecret string) (accessToken *AccessToken, err error) {
 	accessToken = new(AccessToken)
 	url := "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appId + "&secret=" + appSecret
-	agent := HttpAgent()
-	_, _, errs := agent.Get(url).EndStruct(accessToken)
-	if len(errs) > 0 {
-		err = errs[0]
-	}
+	_, err = httpGet(url)
 	return
 }
 
@@ -273,13 +257,8 @@ func GetOpenIdByAuthCode(appId, mchId, authCode, apiKey, nonceStr string) (openI
 	body["sign"] = sign
 	reqXML := generateXml(body)
 	// 发起请求
-	agent := gorequest.New()
-	agent.Post(url)
-	agent.Type("xml")
-	agent.SendString(reqXML)
-	_, bs, errs := agent.EndBytes()
-	if len(errs) > 0 {
-		err = errs[0]
+	bs, err := httpPost(url, reqXML)
+	if err != nil {
 		return
 	}
 	err = xml.Unmarshal(bs, &openIdRsp)
@@ -293,11 +272,7 @@ func GetOpenIdByAuthCode(appId, mchId, authCode, apiKey, nonceStr string) (openI
 func GetPaidUnionId(accessToken, openId, transactionId string) (unionId *PaidUnionId, err error) {
 	unionId = new(PaidUnionId)
 	url := "https://api.weixin.qq.com/wxa/getpaidunionid?access_token=" + accessToken + "&openid=" + openId + "&transaction_id=" + transactionId
-	agent := HttpAgent()
-	_, _, errs := agent.Get(url).EndStruct(unionId)
-	if len(errs) > 0 {
-		err = errs[0]
-	}
+	_, err = httpGet(url)
 	return
 }
 
@@ -313,10 +288,6 @@ func GetWeChatUserInfo(accessToken, openId string, lang ...string) (userInfo *We
 	} else {
 		url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=" + accessToken + "&openid=" + openId + "&lang=zh_CN"
 	}
-	agent := HttpAgent()
-	_, _, errs := agent.Get(url).EndStruct(userInfo)
-	if len(errs) > 0 {
-		err = errs[0]
-	}
+	_, err = httpGet(url)
 	return
 }

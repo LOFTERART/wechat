@@ -32,7 +32,7 @@ func getSandBoxSignKey(mchId, nonceStr, sign string) (key string, err error) {
 	params["nonce_str"] = nonceStr
 	params["sign"] = sign
 	paramXml := generateXml(params)
-	bytes, err := HttpPost(baseUrlSandbox+"pay/getsignkey", paramXml)
+	bytes, err := httpPost(baseUrlSandbox+"pay/getsignkey", paramXml)
 	if err != nil {
 		return
 	}

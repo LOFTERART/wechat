@@ -1,23 +1,16 @@
 package wechat
 
-import (
-	"encoding/xml"
-)
-
 // 统一下单
 // 境内普通商户：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1
 // 境内的服务商：https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_1
 func (c *Client) UnifiedOrder(body UnifiedOrderBody) (wxRsp UnifiedOrderResponse, err error) {
-	var bytes []byte
-	if bytes, err = c.doWeChat(body, c.url("pay/unifiedorder")); err != nil {
-		return
-	}
-	err = xml.Unmarshal(bytes, &wxRsp)
+	err = c.doWeChat("pay/unifiedorder", body, &wxRsp)
 	return
 }
 
 // 统一下单的参数
 type UnifiedOrderBody struct {
+	SignType       string `json:"sign_type,omitempty"`   // 签名类型，目前支持HMAC-SHA256和MD5，默认为MD5
 	DeviceInfo     string `json:"device_info,omitempty"` // (非必填) 终端设备号(门店号或收银设备ID)，注意：PC网页或JSAPI支付请传"WEB"
 	Body           string `json:"body"`                  // 商品描述交易字段格式根据不同的应用场景建议按照以下格式上传： （1）PC网站——传入浏览器打开的网站主页title名-实际商品名称，例如：腾讯充值中心-QQ会员充值；（2） 公众号——传入公众号名称-实际商品名称，例如：腾讯形象店- image-QQ公仔；（3） H5——应用在浏览器网页上的场景，传入浏览器打开的移动网页的主页title名-实际商品名称，例如：腾讯充值中心-QQ会员充值；（4） 线下门店——门店品牌名-城市分店名-实际商品名称，例如： image形象店-深圳腾大- QQ公仔）（5） APP——需传入应用市场上的APP名字-实际商品名称，天天爱消除-游戏充值。
 	Detail         string `json:"detail,omitempty"`      // (非必填) TODO 商品详细描述，对于使用单品优惠的商户，该字段必须按照规范上传，详见"单品优惠参数说明"
@@ -43,16 +36,14 @@ type UnifiedOrderBody struct {
 type UnifiedOrderResponse struct {
 	ResponseModel
 	// 当return_code为SUCCESS时
-	AppId      string `xml:"appid"`        // 调用接口提交的公众账号ID
-	MchId      string `xml:"mch_id"`       // 调用接口提交的商户号
-	SubAppId   string `xml:"sub_appid"`    // (服务商模式) 微信分配的子商户公众账号ID
-	SubMchId   string `xml:"sub_mch_id"`   // (服务商模式) 微信支付分配的子商户号
-	DeviceInfo string `xml:"device_info"`  // 调用接口提交的终端设备号
-	NonceStr   string `xml:"nonce_str"`    // 微信返回的随机字符串
-	Sign       string `xml:"sign"`         // 微信返回的签名，详见签名算法
-	ResultCode string `xml:"result_code"`  // SUCCESS/FAIL
-	ErrCode    string `xml:"err_code"`     // 详细参见第6节错误列表
-	ErrCodeDes string `xml:"err_code_des"` // 错误返回的信息描述
+	ServiceResponseModel
+	AppId      string `xml:"appid"`       // 调用接口提交的公众账号ID
+	MchId      string `xml:"mch_id"`      // 调用接口提交的商户号
+	SubAppId   string `xml:"sub_appid"`   // (服务商模式) 微信分配的子商户公众账号ID
+	SubMchId   string `xml:"sub_mch_id"`  // (服务商模式) 微信支付分配的子商户号
+	DeviceInfo string `xml:"device_info"` // 调用接口提交的终端设备号
+	NonceStr   string `xml:"nonce_str"`   // 微信返回的随机字符串
+	Sign       string `xml:"sign"`        // 微信返回的签名，详见签名算法
 	// 当return_code 和result_code都为SUCCESS时
 	TradeType string `xml:"trade_type"` // JSAPI-公众号支付 NATIVE-Native支付 APP-APP支付 说明详见参数规定
 	PrepayId  string `xml:"prepay_id"`  // 微信生成的预支付回话标识，用于后续接口调用中使用，该值有效期为2小时
