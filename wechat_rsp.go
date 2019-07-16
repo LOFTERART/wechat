@@ -89,15 +89,6 @@ type WeChatQueryRefundResponse struct {
 	RefundSuccessTime0   string `xml:"refund_success_time_0"`
 }
 
-type getSignKeyResponse struct {
-	ReturnCode     string `xml:"return_code"`
-	ReturnMsg      string `xml:"return_msg"`
-	Retmsg         string `xml:"retmsg"`
-	Retcode        string `xml:"retcode"`
-	MchId          string `xml:"mch_id"`
-	SandboxSignkey string `xml:"sandbox_signkey"`
-}
-
 type WeChatNotifyRequest struct {
 	ReturnCode         string `xml:"return_code"`
 	ReturnMsg          string `xml:"return_msg"`

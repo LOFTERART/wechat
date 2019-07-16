@@ -13,7 +13,6 @@ const (
 	// wxURL_DownloadBill      = wxBaseUrl + "pay/downloadbill"                // 下载对账单
 	// wxURL_DownloadFundFlow  = wxBaseUrl + "pay/downloadfundflow"            // 下载资金账单
 	// wxURL_BatchQueryComment = wxBaseUrl + "billcommentsp/batchquerycomment" // 拉取订单评价数据
-	wxURL_SanBox_GetSignKey = baseUrlSandbox + "pay/getsignkey"
 	// wxURL_SanBox_CloseOrder        = wxBaseUrlSandbox + "pay/closeorder"
 	// wxURL_SanBox_Refund            = wxBaseUrlSandbox + "pay/refund"
 	// wxURL_SanBox_Reverse           = wxBaseUrlSandbox + "pay/reverse"

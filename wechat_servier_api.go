@@ -93,7 +93,7 @@ func VerifyPayResultSign(apiKey string, signType string, notifyRsp *WeChatNotify
 			newBody[k] = v
 		}
 	}
-	sign = getLocalSign(newBody, signType, apiKey)
+	sign = localSign(newBody, signType, apiKey)
 	ok = sign == notifyRsp.Sign
 	return
 }
@@ -269,7 +269,7 @@ func GetOpenIdByAuthCode(appId, mchId, authCode, apiKey, nonceStr string) (openI
 	body["mch_id"] = mchId
 	body["auth_code"] = authCode
 	body["nonce_str"] = nonceStr
-	sign := getLocalSign(body, SignTypeMD5, apiKey)
+	sign := localSign(body, SignTypeMD5, apiKey)
 	body["sign"] = sign
 	reqXML := generateXml(body)
 	// 发起请求
