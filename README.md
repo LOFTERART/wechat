@@ -36,8 +36,8 @@ client := wechat.NewClient(isProd, serviceType, apiKey, config)
 * 关闭订单：`client.CloseOrder`
 * 撤销订单：client.Reverse()
 * 申请退款：client.Refund()
-* 查询退款：client.QueryRefund()
-* 下载对账单：client.DownloadBill()
+* 查询退款：`client.QueryRefund`
+* 下载对账单：`client.DownloadBill`
 * 下载资金账单：client.DownloadFundFlow()
 * 拉取订单评价数据：client.BatchQueryComment()
 

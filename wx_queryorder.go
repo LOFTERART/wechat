@@ -1,6 +1,11 @@
 package wechat
 
-import "encoding/xml"
+import (
+	"encoding/xml"
+	"fmt"
+	"github.com/beevik/etree"
+	"strconv"
+)
 
 // 查询订单
 // 境内普通商户：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_2
@@ -10,7 +15,23 @@ func (c *Client) QueryOrder(body QueryOrderBody) (wxRsp QueryOrderResponse, err 
 	if err != nil {
 		return
 	}
-	err = xml.Unmarshal(bytes, &wxRsp)
+	// 常规解析
+	if err = xml.Unmarshal(bytes, &wxRsp); err != nil {
+		return
+	}
+	// 解析CouponCount的对应项
+	if wxRsp.CouponCount > 0 {
+		doc := etree.NewDocument()
+		if err = doc.ReadFromBytes(bytes); err != nil {
+			return
+		}
+		wxRsp.Coupons = make([]QueryOrderResponseCoupon, wxRsp.CouponCount)
+		for i := 0; i < wxRsp.CouponCount; i++ {
+			wxRsp.Coupons[i].CouponId = doc.SelectElement(fmt.Sprintf("coupon_id_%d", i)).Text()
+			wxRsp.Coupons[i].CouponType = doc.SelectElement(fmt.Sprintf("coupon_type_%d", i)).Text()
+			wxRsp.Coupons[i].CouponFee, _ = strconv.ParseInt(doc.SelectElement(fmt.Sprintf("coupon_fee_%d", i)).Text(), 10, 64)
+		}
+	}
 	return
 }
 
@@ -43,12 +64,17 @@ type QueryOrderResponse struct {
 	CashFeeType        string `xml:"cash_fee_type"`        // 货币类型，符合ISO 4217标准的三位字母代码，默认人民币：CNY，其他值列表详见货币类型
 	CouponFee          int    `xml:"coupon_fee"`           // "代金券或立减优惠"金额<=订单总金额，订单总金额-"代金券或立减优惠"金额=现金支付金额，详见支付金额
 	CouponCount        int    `xml:"coupon_count"`         // 代金券或立减优惠使用数量
-	CouponType0        string `xml:"coupon_type_0"`        // TODO
-	CouponId0          string `xml:"coupon_id_0"`          // TODO
-	CouponFee0         int    `xml:"coupon_fee_0"`         // TODO
 	TransactionId      string `xml:"transaction_id"`       // 微信支付订单号
 	OutTradeNo         string `xml:"out_trade_no"`         // 商户系统内部订单号，要求32个字符内，只能是数字、大小写字母_-|*@ ，且在同一个商户号下唯一。
 	Attach             string `xml:"attach"`               // 商家数据包，原样返回
 	TimeEnd            string `xml:"time_end"`             // 订单支付时间，格式为yyyyMMddHHmmss，如2009年12月25日9点10分10秒表示为20091225091010。其他详见时间规则
 	TradeStateDesc     string `xml:"trade_state_desc"`     // 对当前查询订单状态的描述和下一步操作的指引
+	// 使用coupon_count的序号生成的优惠券项
+	Coupons []QueryOrderResponseCoupon `xml:"-"`
+}
+
+type QueryOrderResponseCoupon struct {
+	CouponId   string // 代金券或立减优惠ID, $n为下标，从0开始编号
+	CouponType string // CASH--充值代金券 NO_CASH---非充值优惠券 开通免充值券功能，并且订单使用了优惠券后有返回（取值：CASH、NO_CASH）。$n为下标,从0开始编号，举例：coupon_type_$0
+	CouponFee  int64  // 单个代金券或立减优惠支付金额, $n为下标，从0开始编号
 }

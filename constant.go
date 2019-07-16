@@ -55,11 +55,31 @@ const (
 	// 电子发票
 	ReceiptEnable = "Y" // 支付成功消息和支付详情页将出现开票入口
 
+	// 代金券类型
+	CouponTypeCash   = "CASH"    // 充值代金券
+	CouponTypeNoCash = "NO_CASH" // 非充值优惠券
+
 	// 账单类型
 	BillTypeAll            = "ALL"             // 返回当日所有订单信息，默认值
 	BillTypeSuccess        = "SUCCESS"         // 返回当日成功支付的订单
 	BillTypeRefund         = "REFUND"          // 返回当日退款订单
 	BillTypeRechargeRefund = "RECHARGE_REFUND" // 返回当日充值退款订单
+
+	// 退款渠道
+	RefundChannelOriginal      = "ORIGINAL"       // 原路退款
+	RefundChannelBalance       = "BALANCE"        // 退回到余额
+	RefundChannelOtherBalance  = "OTHER_BALANCE"  // 原账户异常退到其他余额账户
+	RefundChannelOtherBankCard = "OTHER_BANKCARD" // 原银行卡异常退到其他银行卡
+
+	// 退款状态
+	RefundStatusSuccess    = "SUCCESS"     // 退款成功
+	RefundStatusClose      = "REFUNDCLOSE" // 退款关闭
+	RefundStatusProcessing = "PROCESSING"  // 退款处理中
+	RefundStatusChange     = "CHANGE"      // 退款异常，退款到银行发现用户的卡作废或者冻结了，导致原路退款银行卡失败，可前往商户平台(pay.weixin.qq.com)-交易中心，手动处理此笔退款
+
+	// 退款资金来源
+	RefundAccountRechargeFunds  = "REFUND_SOURCE_RECHARGE_FUNDS"  // 可用余额退款/基本账户
+	RefundAccountUnsettledFunds = "REFUND_SOURCE_UNSETTLED_FUNDS" // 未结算资金退款
 
 	// 返回结果
 	ResponseSuccess = "SUCCESS" // 成功，通信标识或业务结果
