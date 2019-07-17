@@ -3,8 +3,6 @@ package wechat
 import "encoding/xml"
 
 // 关闭订单
-// 境内普通商户：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_3
-// 境内的服务商：https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_3
 func (c *Client) CloseOrder(body CloseOrderBody) (wxRsp CloseOrderResponse, err error) {
 	bytes, err := c.doWeChat("pay/closeorder", body)
 	if err != nil {

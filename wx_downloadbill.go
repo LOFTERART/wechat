@@ -6,8 +6,6 @@ import (
 )
 
 // 下载对账单
-// 境内普通商户：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_6
-// 境内的服务商：https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_6
 func (c *Client) DownloadBill(body DownloadBillBody) (wxRsp string, failRsp *DownloadBillResponse, err error) {
 	bytes, err := c.doWeChat("pay/downloadbill", body)
 	if err != nil {

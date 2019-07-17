@@ -8,8 +8,6 @@ import (
 )
 
 // 查询退款
-// 境内普通商户：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_5
-// 境内的服务商：https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_5
 func (c *Client) QueryRefund(body QueryRefundBody) (wxRsp QueryRefundResponse, err error) {
 	bytes, err := c.doWeChat("pay/refundquery", body)
 	if err != nil {
@@ -47,11 +45,9 @@ func (c *Client) QueryRefund(body QueryRefundBody) (wxRsp QueryRefundResponse, e
 				wxRsp.TotalRefunds[i].RefundRecvAccout = doc.SelectElement(fmt.Sprintf("refund_recv_accout_%d", i)).Text()
 				wxRsp.TotalRefunds[i].RefundSuccessTime = doc.SelectElement(fmt.Sprintf("refund_success_time_%d", i)).Text()
 				if wxRsp.TotalRefunds[i].CouponRefundCount > 0 {
-					wxRsp.TotalRefunds[i].Coupons = make([]QueryRefundResponseTotalRefundCoupon, wxRsp.TotalRefunds[i].CouponRefundCount)
 					for j := int64(0); j < wxRsp.TotalRefunds[i].CouponRefundCount; j++ {
-						wxRsp.TotalRefunds[i].Coupons[j].CouponRefundId = doc.SelectElement(fmt.Sprintf("coupon_refund_id_%d_%d", i, j)).Text()
-						wxRsp.TotalRefunds[i].Coupons[j].CouponType = doc.SelectElement(fmt.Sprintf("coupon_type_%d_%d", i, j)).Text()
-						wxRsp.TotalRefunds[i].Coupons[j].CouponRefundFee, _ = strconv.ParseInt(doc.SelectElement(fmt.Sprintf("coupon_refund_fee_%d_%d", i, j)).Text(), 10, 64)
+						m := NewCouponResponseModel(doc, "coupon_refund_id_%d_%d", "coupon_type_%d_%d", "coupon_refund_fee_%d_%d", i, j)
+						wxRsp.TotalRefunds[i].Coupons = append(wxRsp.TotalRefunds[i].Coupons, m)
 					}
 				}
 			}
@@ -105,11 +101,5 @@ type QueryRefundResponseTotalRefund struct {
 	RefundRecvAccout    string // 取当前退款单的退款入账方 1）退回银行卡：{银行名称}{卡类型}{卡尾号} 2）退回支付用户零钱: 支付用户零钱 3）退还商户: 商户基本账户 商户结算银行账户 4）退回支付用户零钱通: 支付用户零钱通
 	RefundSuccessTime   string // 退款成功时间，当退款状态为退款成功时有返回。$n为下标，从0开始编号。
 	// 使用coupon_refund_count的序号生成的代金券项
-	Coupons []QueryRefundResponseTotalRefundCoupon
-}
-
-type QueryRefundResponseTotalRefundCoupon struct {
-	CouponType      string // CASH--充值代金券 NO_CASH---非充值代金券 订单使用代金券时有返回（取值：CASH、NO_CASH）。$n为下标,$m为下标,从0开始编号，举例：coupon_type_$0_$1
-	CouponRefundId  string // 退款代金券ID, $n为下标，$m为下标，从0开始编号
-	CouponRefundFee int64  // 单个退款代金券支付金额, $n为下标，$m为下标，从0开始编号
+	Coupons []CouponResponseModel
 }

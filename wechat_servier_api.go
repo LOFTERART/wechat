@@ -12,35 +12,9 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"errors"
-	"net/http"
 	"reflect"
 	"strings"
 )
-
-// 解析支付完成后的Notify信息
-func ParseNotifyResult(req *http.Request) (notifyRsp *WeChatNotifyRequest, err error) {
-	defer req.Body.Close()
-	err = xml.NewDecoder(req.Body).Decode(notifyRsp)
-	return
-}
-
-type WeChatNotifyResponse struct {
-	ReturnCode string `xml:"return_code"`
-	ReturnMsg  string `xml:"return_msg"`
-}
-
-// 返回数据给微信
-func (c *WeChatNotifyResponse) ToXmlString() (xmlStr string) {
-	buffer := new(bytes.Buffer)
-	buffer.WriteString("<xml><return_code><![CDATA[")
-	buffer.WriteString(c.ReturnCode)
-	buffer.WriteString("]]></return_code>")
-	buffer.WriteString("<return_msg><![CDATA[")
-	buffer.WriteString(c.ReturnMsg)
-	buffer.WriteString("]]></return_msg></xml>")
-	xmlStr = buffer.String()
-	return
-}
 
 // 支付通知的签名验证和参数签名后的Sign
 //    apiKey：API秘钥值

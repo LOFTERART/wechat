@@ -1,8 +1,6 @@
 package wechat
 
 // 申请退款 TODO
-// 境内普通商户：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_4
-// 境内的服务商：https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_4
 func (c *Client) Refund(body RefundBody, certFilePath, keyFilePath, pkcs12FilePath string) (wxRsp RefundResponse, err error) {
 	// var bytes []byte
 	// if c.isProd {

@@ -3,8 +3,6 @@ package wechat
 import "encoding/xml"
 
 // 交易保障(MICROPAY)
-// 境内普通商户：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_8
-// 境内的服务商：https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_8
 func (c *Client) ReportMicropay(body ReportMicropayBody) (wxRsp ReportMicropayResponse, err error) {
 	body.InterfaceUrl = "https://api.mch.weixin.qq.com/pay/batchreport/micropay/total"
 	bytes, err := c.doWeChat("payitil/report", body)

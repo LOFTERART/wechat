@@ -2,14 +2,10 @@ package wechat
 
 import (
 	"encoding/xml"
-	"fmt"
 	"github.com/beevik/etree"
-	"strconv"
 )
 
 // 查询订单
-// 境内普通商户：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_2
-// 境内的服务商：https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_2
 func (c *Client) QueryOrder(body QueryOrderBody) (wxRsp QueryOrderResponse, err error) {
 	bytes, err := c.doWeChat("pay/orderquery", body)
 	if err != nil {
@@ -25,11 +21,9 @@ func (c *Client) QueryOrder(body QueryOrderBody) (wxRsp QueryOrderResponse, err 
 		if err = doc.ReadFromBytes(bytes); err != nil {
 			return
 		}
-		wxRsp.Coupons = make([]QueryOrderResponseCoupon, wxRsp.CouponCount)
 		for i := 0; i < wxRsp.CouponCount; i++ {
-			wxRsp.Coupons[i].CouponId = doc.SelectElement(fmt.Sprintf("coupon_id_%d", i)).Text()
-			wxRsp.Coupons[i].CouponType = doc.SelectElement(fmt.Sprintf("coupon_type_%d", i)).Text()
-			wxRsp.Coupons[i].CouponFee, _ = strconv.ParseInt(doc.SelectElement(fmt.Sprintf("coupon_fee_%d", i)).Text(), 10, 64)
+			m := NewCouponResponseModel(doc, "coupon_id_%d", "coupon_type_%d", "coupon_fee_%d", i)
+			wxRsp.Coupons = append(wxRsp.Coupons, m)
 		}
 	}
 	return
@@ -70,11 +64,5 @@ type QueryOrderResponse struct {
 	TimeEnd            string `xml:"time_end"`             // 订单支付时间，格式为yyyyMMddHHmmss，如2009年12月25日9点10分10秒表示为20091225091010。其他详见时间规则
 	TradeStateDesc     string `xml:"trade_state_desc"`     // 对当前查询订单状态的描述和下一步操作的指引
 	// 使用coupon_count的序号生成的优惠券项
-	Coupons []QueryOrderResponseCoupon `xml:"-"`
-}
-
-type QueryOrderResponseCoupon struct {
-	CouponId   string // 代金券或立减优惠ID, $n为下标，从0开始编号
-	CouponType string // CASH--充值代金券 NO_CASH---非充值优惠券 开通免充值券功能，并且订单使用了优惠券后有返回（取值：CASH、NO_CASH）。$n为下标,从0开始编号，举例：coupon_type_$0
-	CouponFee  int64  // 单个代金券或立减优惠支付金额, $n为下标，从0开始编号
+	Coupons []CouponResponseModel `xml:"-"`
 }

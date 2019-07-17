@@ -3,8 +3,6 @@ package wechat
 import "encoding/xml"
 
 // 提交付款码支付
-// 境内普通商户：https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_10&index=1
-// 境内的服务商：https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=9_10&index=1
 func (c *Client) Micropay(body MicropayBody) (wxRsp MicropayResponse, err error) {
 	bytes, err := c.doWeChat("pay/micropay", body)
 	if err != nil {

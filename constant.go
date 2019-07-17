@@ -86,9 +86,16 @@ const (
 	RefundAccountRechargeFunds  = "REFUND_SOURCE_RECHARGE_FUNDS"  // 可用余额退款/基本账户
 	RefundAccountUnsettledFunds = "REFUND_SOURCE_UNSETTLED_FUNDS" // 未结算资金退款
 
+	// 退款发起来源
+	RefundRequestSourceApi            = "API"             // API接口
+	RefundRequestSourceVendorPlatform = "VENDOR_PLATFORM" // 商户平台
+
 	// 返回结果
 	ResponseSuccess = "SUCCESS" // 成功，通信标识或业务结果
 	ResponseFail    = "FAIL"    // 失败，通信标识或业务结果
+
+	// 返回消息
+	ResponseMessageOk = "OK" // 返回成功信息
 
 	// 错误代码，包括描述、支付状态、原因、解决方案
 	ErrCodeAppIdMchIdNotMatch   = "APPID_MCHID_NOT_MATCH" // appid和mch_id不匹配 支付确认失败 appid和mch_id不匹配 请确认appid和mch_id是否匹配
