@@ -7,13 +7,14 @@ import (
 
 // 下载对账单
 func (c *Client) DownloadBill(body DownloadBillBody) (wxRsp string, failRsp *DownloadBillResponse, err error) {
+	// 业务逻辑
 	bytes, err := c.doWeChat("pay/downloadbill", body)
 	if err != nil {
 		return
 	}
+	// 解析返回值
 	failRsp = new(DownloadBillResponse)
 	err = xml.Unmarshal(bytes, failRsp)
-	// TODO 结果校验
 	if err != nil {
 		return string(bytes), nil, nil
 	} else {

@@ -13,7 +13,7 @@ func (c *Client) QueryOrder(body QueryOrderBody) (wxRsp QueryOrderResponse, err 
 		return
 	}
 	// 结果校验
-	if err = c.doVerifySign(bytes); err != nil {
+	if err = c.doVerifySign(bytes, true); err != nil {
 		return
 	}
 	// 解析返回值
@@ -73,8 +73,9 @@ func (c *Client) queryOrderParseResponse(xmlStr []byte, rsp *QueryOrderResponse)
 		if err = doc.ReadFromBytes(xmlStr); err != nil {
 			return
 		}
+		root := doc.SelectElement("xml")
 		for i := 0; i < rsp.CouponCount; i++ {
-			m := NewCouponResponseModel(doc, "coupon_id_%d", "coupon_type_%d", "coupon_fee_%d", i)
+			m := NewCouponResponseModel(root, "coupon_id_%d", "coupon_type_%d", "coupon_fee_%d", i)
 			rsp.Coupons = append(rsp.Coupons, m)
 		}
 	}

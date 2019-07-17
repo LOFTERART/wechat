@@ -4,12 +4,17 @@ import "encoding/xml"
 
 // 统一下单
 func (c *Client) UnifiedOrder(body UnifiedOrderBody) (wxRsp UnifiedOrderResponse, err error) {
+	// 业务逻辑
 	bytes, err := c.doWeChat("pay/unifiedorder", body)
 	if err != nil {
 		return
 	}
+	// 结果校验
+	if err = c.doVerifySign(bytes, true); err != nil {
+		return
+	}
+	// 解析返回值
 	err = xml.Unmarshal(bytes, &wxRsp)
-	// TODO 结果校验
 	return
 }
 

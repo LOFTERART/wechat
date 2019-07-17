@@ -10,7 +10,7 @@ type PayNotifyHandler func(PayNotifyBody) error
 // 支付结果通知
 func (c *Client) OnPayNotify(handler PayNotifyHandler, requestBody []byte) (rspBody string, err error) {
 	// 验证Sign
-	if err = c.doVerifySign(requestBody); err != nil {
+	if err = c.doVerifySign(requestBody, false); err != nil {
 		return
 	}
 	// 解析参数
@@ -69,8 +69,9 @@ func (c *Client) payNotifyParseParams(xmlStr []byte, body *PayNotifyBody) (err e
 		if err = doc.ReadFromBytes(xmlStr); err != nil {
 			return
 		}
+		root := doc.SelectElement("xml")
 		for i := 0; i < body.CouponCount; i++ {
-			m := NewCouponResponseModel(doc, "coupon_id_%d", "coupon_type_%d", "coupon_fee_%d", i)
+			m := NewCouponResponseModel(root, "coupon_id_%d", "coupon_type_%d", "coupon_fee_%d", i)
 			body.Coupons = append(body.Coupons, m)
 		}
 	}

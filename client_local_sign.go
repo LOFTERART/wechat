@@ -13,8 +13,8 @@ import (
 
 // 本地通过支付参数计算签名值
 // 生成算法：https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=4_3
-func localSign(body map[string]interface{}, signType string, apiKey string) string {
-	signStr := sortSignParams(body, apiKey)
+func (c *Client) localSign(body map[string]interface{}, signType string, apiKey string) string {
+	signStr := c.sortSignParams(body, apiKey)
 	var hashSign []byte
 	if signType == SignTypeHmacSHA256 {
 		hash := hmac.New(sha256.New, []byte(apiKey))
@@ -29,7 +29,7 @@ func localSign(body map[string]interface{}, signType string, apiKey string) stri
 }
 
 // 获取根据Key排序后的请求参数字符串
-func sortSignParams(body map[string]interface{}, apiKey string) string {
+func (c *Client) sortSignParams(body map[string]interface{}, apiKey string) string {
 	keyList := make([]string, 0)
 	for k := range body {
 		keyList = append(keyList, k)

@@ -16,10 +16,10 @@ func TestMicropay(t *testing.T) {
 	body.TotalFee = 1
 	body.SpbillCreateIP = "124.77.173.62"
 	body.AuthCode = "123456789012345678"
-	body.SceneInfo = JsonString(SceneInfoModel{
+	body.SceneInfo = &SceneInfoModel{
 		ID:   "1",
 		Name: "测试门店",
-	})
+	}
 	// 请求支付
 	wxRsp, err := testClient.Micropay(body)
 	if err != nil {
@@ -27,5 +27,4 @@ func TestMicropay(t *testing.T) {
 		return
 	}
 	fmt.Printf("返回值: %+v\n", wxRsp)
-	testOutOrderNos = append(testOutOrderNos, outTradeNo)
 }

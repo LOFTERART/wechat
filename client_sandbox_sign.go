@@ -14,24 +14,24 @@ type getSignKeyResponse struct {
 }
 
 // 获取沙盒的签名
-func sandboxSign(mchId, nonceStr, apiKey, signType string) (key string, err error) {
+func (c *Client) sandboxSign(nonceStr string, signType string) (key string, err error) {
 	body := make(BodyMap)
-	body["mch_id"] = mchId
+	body["mch_id"] = c.config.MchId
 	body["nonce_str"] = nonceStr
 	// 计算沙箱参数Sign
-	sanboxSign := localSign(body, signType, apiKey)
+	sanboxSign := c.localSign(body, signType, c.apiKey)
 	// 沙箱环境：获取key后，重新计算Sign
-	key, err = getSandBoxSignKey(mchId, nonceStr, sanboxSign)
+	key, err = c.getSandBoxSignKey(nonceStr, sanboxSign)
 	return
 }
 
 // 调用微信提供的接口获取SandboxSignkey
-func getSandBoxSignKey(mchId, nonceStr, sign string) (key string, err error) {
+func (c *Client) getSandBoxSignKey(nonceStr string, sign string) (key string, err error) {
 	params := make(map[string]interface{})
-	params["mch_id"] = mchId
+	params["mch_id"] = c.config.MchId
 	params["nonce_str"] = nonceStr
 	params["sign"] = sign
-	paramXml := generateXml(params)
+	paramXml := GenerateXml(params)
 	bytes, err := httpPost(baseUrlSandbox+"pay/getsignkey", paramXml)
 	if err != nil {
 		return

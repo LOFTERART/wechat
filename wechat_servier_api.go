@@ -10,7 +10,6 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
-	"encoding/xml"
 	"errors"
 	"reflect"
 	"strings"
@@ -164,30 +163,6 @@ func GetAccessToken(appId, appSecret string) (accessToken *AccessToken, err erro
 	accessToken = new(AccessToken)
 	url := "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appId + "&secret=" + appSecret
 	_, err = httpGet(url)
-	return
-}
-
-// 授权码查询openid(AccessToken:157字符)
-//    appId:APPID
-//    mchId:商户号
-//    authCode:用户授权码
-//    nonceStr:随即字符串
-func GetOpenIdByAuthCode(appId, mchId, authCode, apiKey, nonceStr string) (openIdRsp OpenIdByAuthCodeRsp, err error) {
-	url := "https://api.mch.weixin.qq.com/tools/authcodetoopenid"
-	body := make(BodyMap)
-	body["appid"] = appId
-	body["mch_id"] = mchId
-	body["auth_code"] = authCode
-	body["nonce_str"] = nonceStr
-	sign := localSign(body, SignTypeMD5, apiKey)
-	body["sign"] = sign
-	reqXML := generateXml(body)
-	// 发起请求
-	bs, err := httpPost(url, reqXML)
-	if err != nil {
-		return
-	}
-	err = xml.Unmarshal(bs, &openIdRsp)
 	return
 }
 

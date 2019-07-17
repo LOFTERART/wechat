@@ -4,13 +4,17 @@ import "encoding/xml"
 
 // 提交付款码支付
 func (c *Client) Micropay(body MicropayBody) (wxRsp MicropayResponse, err error) {
+	// 处理参数
+	if body.SceneInfo != nil {
+		body.SceneInfoStr = JsonString(*body.SceneInfo)
+	}
 	// 业务逻辑
 	bytes, err := c.doWeChat("pay/micropay", body)
 	if err != nil {
 		return
 	}
 	// 结果校验
-	if err = c.doVerifySign(bytes); err != nil {
+	if err = c.doVerifySign(bytes, true); err != nil {
 		return
 	}
 	// 解析返回值
@@ -35,7 +39,9 @@ type MicropayBody struct {
 	TimeExpire     string `json:"time_expire,omitempty"` // (非必填) 订单失效时间，格式为yyyyMMddHHmmss，如2009年12月27日9点10分10秒表示为20091227091010。注意：最短失效时间间隔需大于1分钟
 	AuthCode       string `json:"auth_code"`             // 扫码支付授权码，设备读取用户微信中的条码或者二维码信息 （注：用户付款码条形码规则：18位纯数字，以10、11、12、13、14、15开头）
 	Receipt        string `json:"receipt,omitempty"`     // (非必填) Y，传入Y时，支付成功消息和支付详情页将出现开票入口。需要在微信支付商户平台或微信公众平台开通电子发票功能，传此字段才可生效
-	SceneInfo      string `json:"scene_info,omitempty"`  // (非必填) 该字段用于上报场景信息，目前支持上报实际门店信息。该字段为JSON对象数据，对象格式为{"store_info":{"id": "门店ID","name": "名称","area_code": "编码","address": "地址" }} ，字段详细说明请点击行前的+展开
+	SceneInfoStr   string `json:"scene_info,omitempty"`  // (非必填) 该字段用于上报场景信息，目前支持上报实际门店信息。该字段为JSON对象数据，对象格式为{"store_info":{"id": "门店ID","name": "名称","area_code": "编码","address": "地址" }} ，字段详细说明请点击行前的+展开
+	// 用于生成SceneInfoStr
+	SceneInfo *SceneInfoModel `json:"-"`
 }
 
 // 提交付款码支付的返回值

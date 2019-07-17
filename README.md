@@ -25,8 +25,8 @@ const (
 )
 config := wechat.Config{
     AppId: AppID,
-    SubAppId: SubAppId, // 仅服务商模式有效
     MchId: MchID,
+    SubAppId: SubAppId, // 仅服务商模式有效
     SubMchId: SubMchID, // 仅服务商模式有效
 }
 client := wechat.NewClient(isProd, serviceType, apiKey, config)
@@ -34,24 +34,24 @@ client := wechat.NewClient(isProd, serviceType, apiKey, config)
 
 ### 使用
 
-下面是通用的接口，其中`client`是上面初始化时生成的实例：
+下面是通用的接口，使用上面初始化时生成的实例`client`进行相应函数的调用：
 
-* 提交付款码支付：`client.Micropay`
-* 统一下单：`client.UnifiedOrder`
-* 查询订单：`client.QueryOrder`
-* 关闭订单：`client.CloseOrder`
+* 提交付款码支付：`func (*Client) Micropay(MicropayBody) (MicropayResponse, error)`
+* 统一下单：`func (*Client) UnifiedOrder(UnifiedOrderBody) (UnifiedOrderResponse, error)`
+* 查询订单：`func (*Client) QueryOrder(QueryOrderBody) (QueryOrderResponse, error)`
+* 关闭订单：`func (*Client) CloseOrder(CloseOrderBody) (CloseOrderResponse, error)`
 * 撤销订单：client.Reverse()
 * 申请退款：client.Refund()
-* 查询退款：`client.QueryRefund`
-* 下载对账单：`client.DownloadBill`
-* 交易保障(JSAPI)：`client.ReportJsApi`
-* 交易保障(MICROPAY)：`client.ReportMicropay`
+* 查询退款：`func (*Client) QueryRefund(QueryRefundBody) (QueryRefundResponse, error)`
+* 下载对账单：`func (*Client) DownloadBill(DownloadBillBody) (string, *DownloadBillResponse, error)`
+* 交易保障(JSAPI)：`func (*Client) ReportJsApi(ReportJsApiBody) (ReportJsApiResponse, error)`
+* 交易保障(MICROPAY)：`func (*Client) ReportMicropay(ReportMicropayBody) (ReportMicropayResponse, error)`
 * 下载资金账单：client.DownloadFundFlow()
 * 拉取订单评价数据：client.BatchQueryComment()
+* 授权码查询openid：`func (*Client) OpenIdByAuthCode(OpenIdByAuthCodeBody) (OpenIdByAuthCodeResponse, error)`
 
 注意事项：
 
-* 接口调用格式为`rsp, err := client.XXX(body)`。
 * 参数或返回值的类型，请查看接口对应的`wx_xxxxxx.go`文件，里面有`XXXBody`和`XXXResponse`与之对应。* 
 * 参数或返回值中的常量，请参照[constant.go](constant.go)文件。
 * 具体使用方法，请参照接口对应的`wx_xxxxxx_test.go`测试文件。
@@ -75,81 +75,33 @@ client := wechat.NewClient(isProd, serviceType, apiKey, config)
 ### 开发进度
 
 * 境内普通商户
+  * (TODO) [付款码支付](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=5_1)
+  * (TODO) [JSAPI支付](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_1)
+  * (TODO) [Native支付](https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_1)
+  * (TODO) [APP支付](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=8_1)
+  * (TODO) [H5支付](https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=15_1)
+  * (TODO) [小程序支付](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_3&index=1)
+  * (TODO) [人脸支付](https://pay.weixin.qq.com/wiki/doc/wxfacepay/)
+  * (TODO) [代金券或立减优惠](https://pay.weixin.qq.com/wiki/doc/api/tools/sp_coupon.php?chapter=12_1)
+  * (TODO) [现金红包](https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_1)
+  * (TODO) [企业付款](https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_1)
 * 境内服务商
-  * (PROCESSING) [付款码支付](https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=5_1)
-    * 提交付款码支付
-    * 查询订单
-    * 撤销订单
-    * 申请退款
-    * 查询退款
-    * 下载对账单
-    * 交易保障
-    * 授权码查询openid
-    * 退款结果通知
-  * (PROCESSING) [JSAPI支付](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=7_1)
-    * (PROCESSING) [统一下单](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_1)
-    * (PROCESSING) [查询订单](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_2)
-    * (PROCESSING) [关闭订单](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_3)
-    * (PROCESSING) [申请退款](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_4)
-    * (PROCESSING) [查询退款](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_5)
-    * (PROCESSING) [下载对账单](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_6)
-    * (PROCESSING) [支付结果通知](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_7)
-    * (PROCESSING) [交易保障](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_8)
-    * (PROCESSING) [退款结果通知](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_16)
-  * (PROCESSING) [Native支付](https://pay.weixin.qq.com/wiki/doc/api/native_sl.php?chapter=6_1)
-    * 统一下单
-    * 查询订单
-    * 关闭订单
-    * 申请退款
-    * 查询退款
-    * 下载对账单
-    * 支付结果通知
-    * 交易保障
-    * 转换短链接
-    * 退款结果通知
-  * (PROCESSING) [APP支付](https://pay.weixin.qq.com/wiki/doc/api/app/app_sl.php?chapter=8_1)
-    * 统一下单
-    * 调起支付接口
-    * 支付结果通知
-    * 查询订单
-    * 关闭订单
-    * 申请退款
-    * 查询退款
-    * 下载对账单
-    * 交易保障
-    * 退款结果通知
-  * (PROCESSING) [H5支付](https://pay.weixin.qq.com/wiki/doc/api/H5_sl.php?chapter=15_1)
-    * 统一下单
-    * 查询订单
-    * 关闭订单
-    * 申请退款
-    * 查询退款
-    * 下载对账单
-    * 支付结果通知
-    * 交易保障
-  * (PROCESSING) [小程序支付](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_sl_api.php?chapter=7_3&index=1)
-    * 统一下单
-    * 查询订单
-    * 关闭订单
-    * 申请退款
-    * 查询退款
-    * 下载对账单
-    * 支付结果通知
-    * 交易保障
-    * 退款结果通知
-  * (PROCESSING) [人脸支付](https://pay.weixin.qq.com/wiki/doc/wxfacepay/)
-  * (PROCESSING) [现金红包](https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon_sl.php?chapter=13_1)
+  * (TODO) [付款码支付](https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=5_1)
+  * (TODO) [JSAPI支付](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=7_1)
+  * (TODO) [Native支付](https://pay.weixin.qq.com/wiki/doc/api/native_sl.php?chapter=6_1)
+  * (TODO) [APP支付](https://pay.weixin.qq.com/wiki/doc/api/app/app_sl.php?chapter=8_1)
+  * (TODO) [H5支付](https://pay.weixin.qq.com/wiki/doc/api/H5_sl.php?chapter=15_1)
+  * (TODO) [小程序支付](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_sl_api.php?chapter=7_3&index=1)
+  * (TODO) [人脸支付](https://pay.weixin.qq.com/wiki/doc/wxfacepay/)
+  * (TODO) [现金红包](https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon_sl.php?chapter=13_1)
 
 ## 微信公共API
 
-* gopay.ParseNotifyResult() => 解析并返回微信支付异步通知的参数
-* gopay.VerifyPayResultSign() => 微信支付异步通知的签名验证和返回参数验签后的Sign
 * gopay.Code2Session() => 登录凭证校验：获取微信用户OpenId、UnionId、SessionKey
 * gopay.GetAccessToken() => 获取小程序全局唯一后台接口调用凭据
 * gopay.GetPaidUnionId() => 用户支付完成后，获取该用户的 UnionId，无需用户授权
 * gopay.GetWeChatUserInfo() => 微信公众号：获取用户基本信息(UnionID机制)
 * gopay.DecryptOpenDataToStruct() => 加密数据，解密到指定结构体
-* gopay.GetOpenIdByAuthCode() => 授权码查询openid
 
 ### 获取微信用户OpenId、UnionId、SessionKey
 
@@ -230,30 +182,6 @@ sign := gopay.GetH5PaySign(appid, partnerid, wxRsp.NonceStr, prepayid, gopay.Sig
 
 //APP支付需要的参数信息
 fmt.Println("sign：", sign)
-```
-
-### 1、支付结果异步通知参数解析；2、参数解析和Sign值的验证
-
-> 微信支付后的异步通知文档[支付结果通知](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_7&index=8)
-
-```go
-//解析支付完成后的异步通知参数信息
-//此处 c.Request() 为 *http.Request
-notifyRsp, err := gopay.ParseNotifyResult(c.Request())
-if err != nil {
-    fmt.Println("err:", err)
-}
-fmt.Println("notifyRsp:", notifyRsp)
-
-//支付通知的签名验证和参数签名后的Sign
-//    apiKey：API秘钥值
-//    signType：签名类型 MD5 或 HMAC-SHA256（默认请填写 MD5）
-//    notifyRsp：利用 gopay.ParseNotifyResult() 得到的结构体
-//    返回参数ok：是否验证通过
-//    返回参数sign：根据参数计算的sign值，非微信返回参数中的Sign
-ok, sign := gopay.VerifyPayResultSign("192006250b4c09247ec02edce69f6a2d", "MD5", notifyRsp)
-log.Println("ok:", ok)
-log.Println("sign:", sign)
 ```
 
 ### 加密数据，解密到指定结构体

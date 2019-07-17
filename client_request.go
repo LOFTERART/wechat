@@ -23,17 +23,17 @@ func (c *Client) doWeChat(relativeUrl string, bodyObj interface{}) (bytes []byte
 	signType, _ := body["sign_type"].(string)
 	var sign string
 	if c.isProd {
-		sign = localSign(body, signType, c.apiKey)
+		sign = c.localSign(body, signType, c.apiKey)
 	} else {
 		body["sign_type"] = SignTypeMD5
-		key, iErr := sandboxSign(c.config.MchId, nonceStr, c.apiKey, SignTypeMD5)
+		key, iErr := c.sandboxSign(nonceStr, SignTypeMD5)
 		if err = iErr; iErr != nil {
 			return
 		}
-		sign = localSign(body, SignTypeMD5, key)
+		sign = c.localSign(body, SignTypeMD5, key)
 	}
 	body["sign"] = sign
 	// 发起请求
-	bytes, err = httpPost(c.url(relativeUrl), generateXml(body))
+	bytes, err = httpPost(c.url(relativeUrl), GenerateXml(body))
 	return
 }

@@ -8,5 +8,3 @@ var testClient = NewClient(false, ServiceTypeNormalDomestic, os.Getenv("ApiKey")
 	MchId:    os.Getenv("MchID"),
 	SubMchId: os.Getenv("SubMchID"),
 })
-
-var testOutOrderNos = make([]string, 0)

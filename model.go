@@ -59,7 +59,7 @@ type CouponResponseModel struct {
 
 // 在XML节点树中，查找labels对应的
 func NewCouponResponseModel(
-	doc *etree.Document,
+	doc *etree.Element,
 	idFormat string,
 	typeFormat string,
 	feeFormat string,

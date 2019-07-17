@@ -1,16 +1,29 @@
 package wechat
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"math/rand"
 	"net/url"
 	"time"
 )
 
+// 生成请求XML的Body体
+func GenerateXml(data map[string]interface{}) string {
+	buffer := new(bytes.Buffer)
+	buffer.WriteString("<xml>")
+	for k, v := range data {
+		buffer.WriteString(fmt.Sprintf("<%s><![CDATA[%v]]></%s>", k, v, k))
+	}
+	buffer.WriteString("</xml>")
+	return buffer.String()
+}
+
 // 生成模型字符串
 func JsonString(m interface{}) string {
-	bytes, _ := json.Marshal(m)
-	return string(bytes)
+	bs, _ := json.Marshal(m)
+	return string(bs)
 }
 
 // 格式化时间，按照yyyyMMddHHmmss格式

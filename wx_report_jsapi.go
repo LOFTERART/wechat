@@ -15,8 +15,8 @@ func (c *Client) ReportJsApi(body ReportJsApiBody) (wxRsp ReportJsApiResponse, e
 	if err != nil {
 		return
 	}
+	// 解析返回值
 	err = xml.Unmarshal(bytes, &wxRsp)
-	// TODO 结果校验
 	return
 }
 

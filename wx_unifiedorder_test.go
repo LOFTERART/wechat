@@ -28,7 +28,6 @@ func TestUnifiedOrder(t *testing.T) {
 		return
 	}
 	fmt.Printf("返回值: %+v\n", wxRsp)
-	testOutOrderNos = append(testOutOrderNos, outTradeNo)
 	// 获取小程序需要的支付签名
 	timeStamp := strconv.FormatInt(time.Now().Unix(), 10)
 	pac := "prepay_id=" + wxRsp.PrepayId
