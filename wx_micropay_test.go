@@ -24,6 +24,7 @@ func TestMicropay(t *testing.T) {
 	wxRsp, err := testClient.Micropay(body)
 	if err != nil {
 		t.Error(err)
+		return
 	}
 	fmt.Printf("返回值: %+v\n", wxRsp)
 	testOutOrderNos = append(testOutOrderNos, outTradeNo)

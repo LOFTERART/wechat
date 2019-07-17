@@ -1,11 +1,32 @@
 package wechat
 
 import (
+	"encoding/json"
 	"math/rand"
-	"strconv"
-	"strings"
+	"net/url"
 	"time"
 )
+
+// 生成模型字符串
+func JsonString(m interface{}) string {
+	bytes, _ := json.Marshal(m)
+	return string(bytes)
+}
+
+// 格式化时间，按照yyyyMMddHHmmss格式
+func FormatDateTime(t time.Time) string {
+	return t.Format("20060102150405")
+}
+
+// 对URL进行Encode编码
+func EscapedPath(u string) (path string, err error) {
+	uriObj, err := url.Parse(u)
+	if err != nil {
+		return
+	}
+	path = uriObj.EscapedPath()
+	return
+}
 
 // 获取随机字符串
 func GetRandomString(length int) string {
@@ -17,72 +38,6 @@ func GetRandomString(length int) string {
 		result = append(result, b[r.Intn(len(b))])
 	}
 	return string(result)
-}
-
-func convert2String(value interface{}) (valueStr string) {
-	switch v := value.(type) {
-	case int:
-		valueStr = Int2String(v)
-	case int64:
-		valueStr = Int642String(v)
-	case float64:
-		valueStr = Float64ToString(v)
-	case float32:
-		valueStr = Float32ToString(v)
-	case string:
-		valueStr = v
-	default:
-		valueStr = ""
-	}
-	return
-}
-
-// 格式化
-func FormatDate(dateStr string) (formatDate string) {
-	// 2020-12-30T00:00:00+08:00
-	if dateStr == "" {
-		return ""
-	}
-	split := strings.Split(dateStr, "T")
-	formatDate = split[0]
-	return
-}
-
-// Float64转字符串
-//    floatNum：float64数字
-//    prec：精度位数（不传则默认float数字精度）
-func Float64ToString(floatNum float64, prec ...int) (floatStr string) {
-	if len(prec) > 0 {
-		floatStr = strconv.FormatFloat(floatNum, 'f', prec[0], 64)
-		return
-	}
-	floatStr = strconv.FormatFloat(floatNum, 'f', -1, 64)
-	return
-}
-
-// Float32转字符串
-//    floatNum：float32数字
-//    prec：精度位数（不传则默认float数字精度）
-func Float32ToString(floatNum float32, prec ...int) (floatStr string) {
-	if len(prec) > 0 {
-		floatStr = strconv.FormatFloat(float64(floatNum), 'f', prec[0], 32)
-		return
-	}
-	floatStr = strconv.FormatFloat(float64(floatNum), 'f', -1, 32)
-	return
-}
-
-// Int转字符串
-func Int2String(intNum int) (intStr string) {
-	intStr = strconv.Itoa(intNum)
-	return
-}
-
-// Int64转字符串
-func Int642String(intNum int64) (int64Str string) {
-	// 10, 代表10进制
-	int64Str = strconv.FormatInt(intNum, 10)
-	return
 }
 
 // 解密填充模式（去除补全码） PKCS7UnPadding

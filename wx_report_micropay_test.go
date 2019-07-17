@@ -24,6 +24,7 @@ func TestReportMicropay(t *testing.T) {
 	wxRsp, err := testClient.ReportMicropay(body)
 	if err != nil {
 		t.Error(err)
+		return
 	}
 	fmt.Printf("返回值: %+v\n", wxRsp)
 }

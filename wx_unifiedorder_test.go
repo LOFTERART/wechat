@@ -25,6 +25,7 @@ func TestUnifiedOrder(t *testing.T) {
 	wxRsp, err := testClient.UnifiedOrder(body)
 	if err != nil {
 		t.Error(err)
+		return
 	}
 	fmt.Printf("返回值: %+v\n", wxRsp)
 	testOutOrderNos = append(testOutOrderNos, outTradeNo)

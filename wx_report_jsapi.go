@@ -1,14 +1,22 @@
 package wechat
 
-import "encoding/xml"
+import (
+	"encoding/xml"
+)
 
 // 交易保障(JSAPI)
 func (c *Client) ReportJsApi(body ReportJsApiBody) (wxRsp ReportJsApiResponse, err error) {
+	// 处理参数
+	if body.InterfaceUrl, err = EscapedPath(body.InterfaceUrl); err != nil {
+		return
+	}
+	// 业务逻辑
 	bytes, err := c.doWeChat("payitil/report", body)
 	if err != nil {
 		return
 	}
 	err = xml.Unmarshal(bytes, &wxRsp)
+	// TODO 结果校验
 	return
 }
 

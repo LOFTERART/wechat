@@ -16,6 +16,7 @@ func TestDownloadBill(t *testing.T) {
 	wxRsp, _, err := testClient.DownloadBill(body)
 	if err != nil {
 		t.Error(err)
+		return
 	}
 	fmt.Printf("返回值: %+v\n", wxRsp)
 }

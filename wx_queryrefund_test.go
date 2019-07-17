@@ -15,6 +15,7 @@ func TestQueryRefund(t *testing.T) {
 	wxRsp, err := testClient.QueryRefund(body)
 	if err != nil {
 		t.Error(err)
+		return
 	}
 	fmt.Printf("返回值: %+v\n", wxRsp)
 }

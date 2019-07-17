@@ -9,6 +9,7 @@ func (c *Client) CloseOrder(body CloseOrderBody) (wxRsp CloseOrderResponse, err 
 		return
 	}
 	err = xml.Unmarshal(bytes, &wxRsp)
+	// TODO 结果校验
 	return
 }
 

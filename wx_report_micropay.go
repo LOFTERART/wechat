@@ -4,12 +4,17 @@ import "encoding/xml"
 
 // 交易保障(MICROPAY)
 func (c *Client) ReportMicropay(body ReportMicropayBody) (wxRsp ReportMicropayResponse, err error) {
-	body.InterfaceUrl = "https://api.mch.weixin.qq.com/pay/batchreport/micropay/total"
+	// 处理参数
+	if body.InterfaceUrl, err = EscapedPath("https://api.mch.weixin.qq.com/pay/batchreport/micropay/total"); err != nil {
+		return
+	}
+	// 业务逻辑
 	bytes, err := c.doWeChat("payitil/report", body)
 	if err != nil {
 		return
 	}
 	err = xml.Unmarshal(bytes, &wxRsp)
+	// TODO 结果校验
 	return
 }
 

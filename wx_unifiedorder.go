@@ -9,6 +9,7 @@ func (c *Client) UnifiedOrder(body UnifiedOrderBody) (wxRsp UnifiedOrderResponse
 		return
 	}
 	err = xml.Unmarshal(bytes, &wxRsp)
+	// TODO 结果校验
 	return
 }
 

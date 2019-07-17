@@ -17,22 +17,22 @@ type SceneInfoModel struct {
 
 // 返回结果的通信标识
 type ResponseModel struct {
-	ReturnCode string `xml:"return_code" json:"return_code"` // SUCCESS/FAIL 此字段是通信标识，非交易标识，交易是否成功需要查看result_code来判断
-	ReturnMsg  string `xml:"return_msg" json:"return_msg"`   // 返回信息，如非空，为错误原因：签名失败/参数格式校验错误
-	RetMsg     string `xml:"retmsg" json:"retmsg,omitempty"` // 沙盒时返回的错误信息
+	ReturnCode string `xml:"return_code"` // SUCCESS/FAIL 此字段是通信标识，非交易标识，交易是否成功需要查看result_code来判断
+	ReturnMsg  string `xml:"return_msg"`  // 返回信息，如非空，为错误原因：签名失败/参数格式校验错误
+	RetMsg     string `xml:"retmsg"`      // 沙盒时返回的错误信息
 }
 
 // 业务返回结果的错误信息
 type ServiceResponseModel struct {
-	AppId      string `xml:"appid" json:"appid"`                     // 微信分配的公众账号ID
-	MchId      string `xml:"mch_id" json:"mch_id"`                   // 微信支付分配的商户号
-	SubAppId   string `xml:"sub_appid" json:"sub_appid,omitempty"`   // (服务商模式) 微信分配的子商户公众账号ID
-	SubMchId   string `xml:"sub_mch_id" json:"sub_mch_id,omitempty"` // (服务商模式) 微信支付分配的子商户号
-	NonceStr   string `xml:"nonce_str" json:"nonce_str"`             // 随机字符串，不长于32位
-	Sign       string `xml:"sign" json:"-"`                          // 签名，详见签名生成算法
-	ResultCode string `xml:"result_code" json:"result_code"`         // SUCCESS/FAIL
-	ErrCode    string `xml:"err_code" json:"err_code"`               // 详细参见第6节错误列表
-	ErrCodeDes string `xml:"err_code_des" json:"err_code_des"`       // 错误返回的信息描述
+	AppId      string `xml:"appid"`        // 微信分配的公众账号ID
+	MchId      string `xml:"mch_id"`       // 微信支付分配的商户号
+	SubAppId   string `xml:"sub_appid"`    // (服务商模式) 微信分配的子商户公众账号ID
+	SubMchId   string `xml:"sub_mch_id"`   // (服务商模式) 微信支付分配的子商户号
+	NonceStr   string `xml:"nonce_str"`    // 随机字符串，不长于32位
+	Sign       string `xml:"sign"`         // 签名，详见签名生成算法
+	ResultCode string `xml:"result_code"`  // SUCCESS/FAIL
+	ErrCode    string `xml:"err_code"`     // 详细参见第6节错误列表
+	ErrCodeDes string `xml:"err_code_des"` // 错误返回的信息描述
 }
 
 // 微信通知的结果返回值

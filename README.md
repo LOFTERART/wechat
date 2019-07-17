@@ -56,74 +56,6 @@ client := wechat.NewClient(isProd, serviceType, apiKey, config)
 * 参数或返回值中的常量，请参照[constant.go](constant.go)文件。
 * 具体使用方法，请参照接口对应的`wx_xxxxxx_test.go`测试文件。
 
-### 调试
-
-* 境内普通商户
-* 境内服务商
-    * (PROCESSING) [付款码支付](https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=5_1)
-        * 提交付款码支付
-        * 查询订单
-        * 撤销订单
-        * 申请退款
-        * 查询退款
-        * 下载对账单
-        * 交易保障
-        * 授权码查询openid
-        * 退款结果通知
-    * (PROCESSING) [JSAPI支付](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=7_1)
-        * (PROCESSING) [统一下单](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_1)
-        * (PROCESSING) [查询订单](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_2)
-        * (PROCESSING) [关闭订单](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_3)
-        * (PROCESSING) [申请退款](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_4)
-        * (PROCESSING) [查询退款](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_5)
-        * (PROCESSING) [下载对账单](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_6)
-        * (PROCESSING) [支付结果通知](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_7)
-        * (PROCESSING) [交易保障](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_8)
-        * (PROCESSING) [退款结果通知](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_16)
-    * (PROCESSING) [Native支付](https://pay.weixin.qq.com/wiki/doc/api/native_sl.php?chapter=6_1)
-        * 统一下单
-        * 查询订单
-        * 关闭订单
-        * 申请退款
-        * 查询退款
-        * 下载对账单
-        * 支付结果通知
-        * 交易保障
-        * 转换短链接
-        * 退款结果通知
-    * (PROCESSING) [APP支付](https://pay.weixin.qq.com/wiki/doc/api/app/app_sl.php?chapter=8_1)
-        * 统一下单
-        * 调起支付接口
-        * 支付结果通知
-        * 查询订单
-        * 关闭订单
-        * 申请退款
-        * 查询退款
-        * 下载对账单
-        * 交易保障
-        * 退款结果通知
-    * (PROCESSING) [H5支付](https://pay.weixin.qq.com/wiki/doc/api/H5_sl.php?chapter=15_1)
-        * 统一下单
-        * 查询订单
-        * 关闭订单
-        * 申请退款
-        * 查询退款
-        * 下载对账单
-        * 支付结果通知
-        * 交易保障
-    * (PROCESSING) [小程序支付](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_sl_api.php?chapter=7_3&index=1)
-        * 统一下单
-        * 查询订单
-        * 关闭订单
-        * 申请退款
-        * 查询退款
-        * 下载对账单
-        * 支付结果通知
-        * 交易保障
-        * 退款结果通知
-    * (PROCESSING) [人脸支付](https://pay.weixin.qq.com/wiki/doc/wxfacepay/)
-    * (PROCESSING) [现金红包](https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon_sl.php?chapter=13_1)
-
 ### 文档
 
 * 微信支付文档：[https://pay.weixin.qq.com/wiki/doc/api/index.html](https://pay.weixin.qq.com/wiki/doc/api/index.html)
@@ -140,6 +72,73 @@ client := wechat.NewClient(isProd, serviceType, apiKey, config)
 * 代金券或立减优惠：[https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=12_1](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=12_1)
 * 最新县及县以上行政区划代码：[https://pay.weixin.qq.com/wiki/doc/api/download/store_adress.csv](https://pay.weixin.qq.com/wiki/doc/api/download/store_adress.csv)
 
+### 开发进度
+
+* 境内普通商户
+* 境内服务商
+  * (PROCESSING) [付款码支付](https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=5_1)
+    * 提交付款码支付
+    * 查询订单
+    * 撤销订单
+    * 申请退款
+    * 查询退款
+    * 下载对账单
+    * 交易保障
+    * 授权码查询openid
+    * 退款结果通知
+  * (PROCESSING) [JSAPI支付](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=7_1)
+    * (PROCESSING) [统一下单](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_1)
+    * (PROCESSING) [查询订单](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_2)
+    * (PROCESSING) [关闭订单](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_3)
+    * (PROCESSING) [申请退款](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_4)
+    * (PROCESSING) [查询退款](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_5)
+    * (PROCESSING) [下载对账单](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_6)
+    * (PROCESSING) [支付结果通知](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_7)
+    * (PROCESSING) [交易保障](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_8)
+    * (PROCESSING) [退款结果通知](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_16)
+  * (PROCESSING) [Native支付](https://pay.weixin.qq.com/wiki/doc/api/native_sl.php?chapter=6_1)
+    * 统一下单
+    * 查询订单
+    * 关闭订单
+    * 申请退款
+    * 查询退款
+    * 下载对账单
+    * 支付结果通知
+    * 交易保障
+    * 转换短链接
+    * 退款结果通知
+  * (PROCESSING) [APP支付](https://pay.weixin.qq.com/wiki/doc/api/app/app_sl.php?chapter=8_1)
+    * 统一下单
+    * 调起支付接口
+    * 支付结果通知
+    * 查询订单
+    * 关闭订单
+    * 申请退款
+    * 查询退款
+    * 下载对账单
+    * 交易保障
+    * 退款结果通知
+  * (PROCESSING) [H5支付](https://pay.weixin.qq.com/wiki/doc/api/H5_sl.php?chapter=15_1)
+    * 统一下单
+    * 查询订单
+    * 关闭订单
+    * 申请退款
+    * 查询退款
+    * 下载对账单
+    * 支付结果通知
+    * 交易保障
+  * (PROCESSING) [小程序支付](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_sl_api.php?chapter=7_3&index=1)
+    * 统一下单
+    * 查询订单
+    * 关闭订单
+    * 申请退款
+    * 查询退款
+    * 下载对账单
+    * 支付结果通知
+    * 交易保障
+    * 退款结果通知
+  * (PROCESSING) [人脸支付](https://pay.weixin.qq.com/wiki/doc/wxfacepay/)
+  * (PROCESSING) [现金红包](https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon_sl.php?chapter=13_1)
 
 ## 微信公共API
 

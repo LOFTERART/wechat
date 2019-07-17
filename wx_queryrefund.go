@@ -9,49 +9,18 @@ import (
 
 // 查询退款
 func (c *Client) QueryRefund(body QueryRefundBody) (wxRsp QueryRefundResponse, err error) {
+	// 业务逻辑
 	bytes, err := c.doWeChat("pay/refundquery", body)
 	if err != nil {
 		return
 	}
-	// 常规解析
-	if err = xml.Unmarshal(bytes, &wxRsp); err != nil {
+	// 结果校验
+	if err = c.doVerifySign(bytes); err != nil {
 		return
 	}
-	// 解析RefundCount和TotalRefundCount的对应项
-	if wxRsp.RefundCount > 0 || wxRsp.TotalRefundCount > 0 {
-		doc := etree.NewDocument()
-		if err = doc.ReadFromBytes(bytes); err != nil {
-			return
-		}
-		// 解析RefundCount的对应项
-		if wxRsp.RefundCount > 0 {
-			wxRsp.CurrentRefunds = make([]QueryRefundResponseCurrentRefund, wxRsp.RefundCount)
-			for i := 0; i < wxRsp.RefundCount; i++ {
-				wxRsp.CurrentRefunds[i].OutRefundNo = doc.SelectElement(fmt.Sprintf("out_refund_no_%d", i)).Text()
-				wxRsp.CurrentRefunds[i].RefundId = doc.SelectElement(fmt.Sprintf("refund_id_%d", i)).Text()
-				wxRsp.CurrentRefunds[i].RefundChannel = doc.SelectElement(fmt.Sprintf("refund_channel_%d", i)).Text()
-			}
-		}
-		// 解析TotalRefundCount的对应项
-		if wxRsp.TotalRefundCount > 0 {
-			wxRsp.TotalRefunds = make([]QueryRefundResponseTotalRefund, wxRsp.TotalRefundCount)
-			for i := 0; i < wxRsp.TotalRefundCount; i++ {
-				wxRsp.TotalRefunds[i].RefundFee, _ = strconv.ParseInt(doc.SelectElement(fmt.Sprintf("refund_fee_%d", i)).Text(), 10, 64)
-				wxRsp.TotalRefunds[i].SettlementRefundFee, _ = strconv.ParseInt(doc.SelectElement(fmt.Sprintf("settlement_refund_fee_%d", i)).Text(), 10, 64)
-				wxRsp.TotalRefunds[i].CouponRefundFee, _ = strconv.ParseInt(doc.SelectElement(fmt.Sprintf("coupon_refund_fee_%d", i)).Text(), 10, 64)
-				wxRsp.TotalRefunds[i].CouponRefundCount, _ = strconv.ParseInt(doc.SelectElement(fmt.Sprintf("coupon_refund_count_%d", i)).Text(), 10, 64)
-				wxRsp.TotalRefunds[i].RefundStatus = doc.SelectElement(fmt.Sprintf("refund_status_%d", i)).Text()
-				wxRsp.TotalRefunds[i].RefundAccount = doc.SelectElement(fmt.Sprintf("refund_account_%d", i)).Text()
-				wxRsp.TotalRefunds[i].RefundRecvAccout = doc.SelectElement(fmt.Sprintf("refund_recv_accout_%d", i)).Text()
-				wxRsp.TotalRefunds[i].RefundSuccessTime = doc.SelectElement(fmt.Sprintf("refund_success_time_%d", i)).Text()
-				if wxRsp.TotalRefunds[i].CouponRefundCount > 0 {
-					for j := int64(0); j < wxRsp.TotalRefunds[i].CouponRefundCount; j++ {
-						m := NewCouponResponseModel(doc, "coupon_refund_id_%d_%d", "coupon_type_%d_%d", "coupon_refund_fee_%d_%d", i, j)
-						wxRsp.TotalRefunds[i].Coupons = append(wxRsp.TotalRefunds[i].Coupons, m)
-					}
-				}
-			}
-		}
+	// 常规解析
+	if err = c.queryFundParseResponse(bytes, &wxRsp); err != nil {
+		return
 	}
 	return
 }
@@ -102,4 +71,49 @@ type QueryRefundResponseTotalRefund struct {
 	RefundSuccessTime   string // 退款成功时间，当退款状态为退款成功时有返回。$n为下标，从0开始编号。
 	// 使用coupon_refund_count的序号生成的代金券项
 	Coupons []CouponResponseModel
+}
+
+// 查询退款-解析返回值
+func (c *Client) queryFundParseResponse(xmlStr []byte, rsp *QueryRefundResponse) (err error) {
+	// 常规解析
+	if err = xml.Unmarshal(xmlStr, rsp); err != nil {
+		return
+	}
+	// 解析RefundCount和TotalRefundCount的对应项
+	if rsp.RefundCount > 0 || rsp.TotalRefundCount > 0 {
+		doc := etree.NewDocument()
+		if err = doc.ReadFromBytes(xmlStr); err != nil {
+			return
+		}
+		// 解析RefundCount的对应项
+		if rsp.RefundCount > 0 {
+			rsp.CurrentRefunds = make([]QueryRefundResponseCurrentRefund, rsp.RefundCount)
+			for i := 0; i < rsp.RefundCount; i++ {
+				rsp.CurrentRefunds[i].OutRefundNo = doc.SelectElement(fmt.Sprintf("out_refund_no_%d", i)).Text()
+				rsp.CurrentRefunds[i].RefundId = doc.SelectElement(fmt.Sprintf("refund_id_%d", i)).Text()
+				rsp.CurrentRefunds[i].RefundChannel = doc.SelectElement(fmt.Sprintf("refund_channel_%d", i)).Text()
+			}
+		}
+		// 解析TotalRefundCount的对应项
+		if rsp.TotalRefundCount > 0 {
+			rsp.TotalRefunds = make([]QueryRefundResponseTotalRefund, rsp.TotalRefundCount)
+			for i := 0; i < rsp.TotalRefundCount; i++ {
+				rsp.TotalRefunds[i].RefundFee, _ = strconv.ParseInt(doc.SelectElement(fmt.Sprintf("refund_fee_%d", i)).Text(), 10, 64)
+				rsp.TotalRefunds[i].SettlementRefundFee, _ = strconv.ParseInt(doc.SelectElement(fmt.Sprintf("settlement_refund_fee_%d", i)).Text(), 10, 64)
+				rsp.TotalRefunds[i].CouponRefundFee, _ = strconv.ParseInt(doc.SelectElement(fmt.Sprintf("coupon_refund_fee_%d", i)).Text(), 10, 64)
+				rsp.TotalRefunds[i].CouponRefundCount, _ = strconv.ParseInt(doc.SelectElement(fmt.Sprintf("coupon_refund_count_%d", i)).Text(), 10, 64)
+				rsp.TotalRefunds[i].RefundStatus = doc.SelectElement(fmt.Sprintf("refund_status_%d", i)).Text()
+				rsp.TotalRefunds[i].RefundAccount = doc.SelectElement(fmt.Sprintf("refund_account_%d", i)).Text()
+				rsp.TotalRefunds[i].RefundRecvAccout = doc.SelectElement(fmt.Sprintf("refund_recv_accout_%d", i)).Text()
+				rsp.TotalRefunds[i].RefundSuccessTime = doc.SelectElement(fmt.Sprintf("refund_success_time_%d", i)).Text()
+				if rsp.TotalRefunds[i].CouponRefundCount > 0 {
+					for j := int64(0); j < rsp.TotalRefunds[i].CouponRefundCount; j++ {
+						m := NewCouponResponseModel(doc, "coupon_refund_id_%d_%d", "coupon_type_%d_%d", "coupon_refund_fee_%d_%d", i, j)
+						rsp.TotalRefunds[i].Coupons = append(rsp.TotalRefunds[i].Coupons, m)
+					}
+				}
+			}
+		}
+	}
+	return
 }

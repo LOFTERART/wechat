@@ -16,54 +16,6 @@ import (
 	"strings"
 )
 
-// 支付通知的签名验证和参数签名后的Sign
-//    apiKey：API秘钥值
-//    signType：签名类型 MD5 或 HMAC-SHA256（默认请填写 MD5）
-//    notifyRsp：利用 gopay.ParseNotifyResult() 得到的结构体
-// 返回参数ok：是否验证通过
-// 返回参数sign：根据参数计算的sign值，非微信返回参数中的Sign
-func VerifyPayResultSign(apiKey string, signType string, notifyRsp *WeChatNotifyRequest) (ok bool, sign string) {
-	body := make(BodyMap)
-	body["return_code"] = notifyRsp.ReturnCode
-	body["return_msg"] = notifyRsp.ReturnMsg
-	body["appid"] = notifyRsp.Appid
-	body["mch_id"] = notifyRsp.MchId
-	body["device_info"] = notifyRsp.DeviceInfo
-	body["nonce_str"] = notifyRsp.NonceStr
-	body["sign_type"] = notifyRsp.SignType
-	body["result_code"] = notifyRsp.ResultCode
-	body["err_code"] = notifyRsp.ErrCode
-	body["err_code_des"] = notifyRsp.ErrCodeDes
-	body["openid"] = notifyRsp.Openid
-	body["is_subscribe"] = notifyRsp.IsSubscribe
-	body["trade_type"] = notifyRsp.TradeType
-	body["bank_type"] = notifyRsp.BankType
-	body["total_fee"] = notifyRsp.TotalFee
-	body["settlement_total_fee"] = notifyRsp.SettlementTotalFee
-	body["fee_type"] = notifyRsp.FeeType
-	body["cash_fee"] = notifyRsp.CashFee
-	body["cash_fee_type"] = notifyRsp.CashFeeType
-	body["coupon_fee"] = notifyRsp.CouponFee
-	body["coupon_count"] = notifyRsp.CouponCount
-	body["coupon_type_0"] = notifyRsp.CouponType0
-	body["coupon_id_0"] = notifyRsp.CouponId0
-	body["coupon_fee_0"] = notifyRsp.CouponFee0
-	body["transaction_id"] = notifyRsp.TransactionId
-	body["out_trade_no"] = notifyRsp.OutTradeNo
-	body["attach"] = notifyRsp.Attach
-	body["time_end"] = notifyRsp.TimeEnd
-	newBody := make(BodyMap)
-	for k, v := range body {
-		vStr := convert2String(v)
-		if vStr != "" && vStr != "0" {
-			newBody[k] = v
-		}
-	}
-	sign = localSign(newBody, signType, apiKey)
-	ok = sign == notifyRsp.Sign
-	return
-}
-
 // JSAPI支付，统一下单获取支付参数后，再次计算出小程序用的paySign
 func GetMiniPaySign(appId, nonceStr, prepayId, signType, timeStamp, apiKey string) (paySign string) {
 	buffer := new(bytes.Buffer)

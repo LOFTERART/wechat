@@ -13,6 +13,7 @@ func (c *Client) DownloadBill(body DownloadBillBody) (wxRsp string, failRsp *Dow
 	}
 	failRsp = new(DownloadBillResponse)
 	err = xml.Unmarshal(bytes, failRsp)
+	// TODO 结果校验
 	if err != nil {
 		return string(bytes), nil, nil
 	} else {

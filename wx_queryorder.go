@@ -7,24 +7,18 @@ import (
 
 // 查询订单
 func (c *Client) QueryOrder(body QueryOrderBody) (wxRsp QueryOrderResponse, err error) {
+	// 业务逻辑
 	bytes, err := c.doWeChat("pay/orderquery", body)
 	if err != nil {
 		return
 	}
-	// 常规解析
-	if err = xml.Unmarshal(bytes, &wxRsp); err != nil {
+	// 结果校验
+	if err = c.doVerifySign(bytes); err != nil {
 		return
 	}
-	// 解析CouponCount的对应项
-	if wxRsp.CouponCount > 0 {
-		doc := etree.NewDocument()
-		if err = doc.ReadFromBytes(bytes); err != nil {
-			return
-		}
-		for i := 0; i < wxRsp.CouponCount; i++ {
-			m := NewCouponResponseModel(doc, "coupon_id_%d", "coupon_type_%d", "coupon_fee_%d", i)
-			wxRsp.Coupons = append(wxRsp.Coupons, m)
-		}
+	// 解析返回值
+	if err = c.queryOrderParseResponse(bytes, &wxRsp); err != nil {
+		return
 	}
 	return
 }
@@ -65,4 +59,24 @@ type QueryOrderResponse struct {
 	TradeStateDesc     string `xml:"trade_state_desc"`     // 对当前查询订单状态的描述和下一步操作的指引
 	// 使用coupon_count的序号生成的优惠券项
 	Coupons []CouponResponseModel `xml:"-"`
+}
+
+// 查询订单-解析XML返回值
+func (c *Client) queryOrderParseResponse(xmlStr []byte, rsp *QueryOrderResponse) (err error) {
+	// 常规解析
+	if err = xml.Unmarshal(xmlStr, rsp); err != nil {
+		return
+	}
+	// 解析CouponCount的对应项
+	if rsp.CouponCount > 0 {
+		doc := etree.NewDocument()
+		if err = doc.ReadFromBytes(xmlStr); err != nil {
+			return
+		}
+		for i := 0; i < rsp.CouponCount; i++ {
+			m := NewCouponResponseModel(doc, "coupon_id_%d", "coupon_type_%d", "coupon_fee_%d", i)
+			rsp.Coupons = append(rsp.Coupons, m)
+		}
+	}
+	return
 }

@@ -4,10 +4,16 @@ import "encoding/xml"
 
 // 提交付款码支付
 func (c *Client) Micropay(body MicropayBody) (wxRsp MicropayResponse, err error) {
+	// 业务逻辑
 	bytes, err := c.doWeChat("pay/micropay", body)
 	if err != nil {
 		return
 	}
+	// 结果校验
+	if err = c.doVerifySign(bytes); err != nil {
+		return
+	}
+	// 解析返回值
 	err = xml.Unmarshal(bytes, &wxRsp)
 	return
 }
