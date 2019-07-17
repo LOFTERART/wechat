@@ -39,6 +39,11 @@ const (
 	TradeStateUserPaying = "USERPAYING" // 用户支付中
 	TradeStatePayError   = "PAYERROR"   // 支付失败(其他原因，如银行返回失败)
 
+	// 交易保障(MICROPAY)上报数据包的交易状态
+	ReportMicropayTradeStateOk     = "OK"     // 成功
+	ReportMicropayTradeStateFail   = "FAIL"   // 失败
+	ReportMicropayTradeStateCancel = "CANCLE" // 取消
+
 	// 签名方式
 	SignTypeMD5        = "MD5" // 默认
 	SignTypeHmacSHA256 = "HMAC-SHA256"

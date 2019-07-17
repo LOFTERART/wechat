@@ -3,6 +3,12 @@
 [![Build Status](https://travis-ci.org/cuckoopark/wechat.svg?branch=master)](https://travis-ci.org/cuckoopark/wechat)
 [![Latest Tag](https://img.shields.io/github/tag/cuckoopark/wechat.svg)](https://github.com/cuckoopark/wechat/releases/latest)
 
+这是用Golang封装了微信支付的所有API接口的SDK，并自动生成和解析XML数据。
+
+* 支持境内普通商户和境内服务商(境外未测试)。
+* 支持全局配置应用ID、商家ID等信息。
+* 全部参数和返回值均使用`struct`类型传递，而不是`map`类型。
+
 ### 安装
 
 ```shell
@@ -38,6 +44,8 @@ client := wechat.NewClient(isProd, serviceType, apiKey, config)
 * 申请退款：client.Refund()
 * 查询退款：`client.QueryRefund`
 * 下载对账单：`client.DownloadBill`
+* 交易保障(JSAPI)：`client.ReportJsApi`
+* 交易保障(MICROPAY)：`client.ReportMicropay`
 * 下载资金账单：client.DownloadFundFlow()
 * 拉取订单评价数据：client.BatchQueryComment()
 
@@ -247,5 +255,5 @@ wxRsp, err := client.Refund(body, "", "", "")
 if err != nil {
 	fmt.Println("Error:", err)
 }
-fmt.Println("Response：", wxRsp)
+fmt.Println("返回值：", wxRsp)
 ```

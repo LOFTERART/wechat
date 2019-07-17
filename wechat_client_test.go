@@ -23,7 +23,7 @@ package wechat
 // 	if err != nil {
 // 		fmt.Println("Error:", err)
 // 	}
-// 	fmt.Println("Response：", wxRsp)
+// 	fmt.Println("返回值：", wxRsp)
 // }
 //
 // func TestWeChatClient_BatchQueryComment(t *testing.T) {
@@ -47,7 +47,7 @@ package wechat
 // 	if err != nil {
 // 		fmt.Println("Error:", err)
 // 	}
-// 	fmt.Println("Response：", wxRsp)
+// 	fmt.Println("返回值：", wxRsp)
 // }
 
 // func TestWeChatClient_Reverse(t *testing.T) {
@@ -69,7 +69,7 @@ package wechat
 // 	if err != nil {
 // 		fmt.Println("Error:", err)
 // 	}
-// 	fmt.Println("Response:", wxRsp)
+// 	fmt.Println("返回值:", wxRsp)
 // }
 //
 // func TestMd5(t *testing.T) {

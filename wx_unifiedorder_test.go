@@ -26,7 +26,7 @@ func TestUnifiedOrder(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	fmt.Printf("Response: %+v\n", wxRsp)
+	fmt.Printf("返回值: %+v\n", wxRsp)
 	testOutOrderNos = append(testOutOrderNos, outTradeNo)
 	// 获取小程序需要的支付签名
 	timeStamp := strconv.FormatInt(time.Now().Unix(), 10)

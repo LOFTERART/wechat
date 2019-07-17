@@ -25,5 +25,5 @@ func TestWeChatClient_Refund(t *testing.T) {
 	// if err != nil {
 	// 	fmt.Println("Error:", err)
 	// }
-	// fmt.Println("Response：", wxRsp)
+	// fmt.Println("返回值：", wxRsp)
 }
