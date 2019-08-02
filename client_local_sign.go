@@ -41,6 +41,5 @@ func (c *Client) sortSignParams(body map[string]interface{}, apiKey string) stri
 		buffer.WriteString(s)
 	}
 	buffer.WriteString(fmt.Sprintf("key=%s", apiKey))
-	fmt.Println("签名:", buffer.String())
 	return buffer.String()
 }

@@ -72,15 +72,6 @@ package wechat
 // 	fmt.Println("返回值:", wxRsp)
 // }
 //
-// func TestMd5(t *testing.T) {
-// 	st := "appid=wxdaa2ab9ef87b5497&nonceStr=9k20rM66parD2U49&package=prepay_id=wx29164301554772fbc70d1d793335446010&signType=MD5&timeStamp=1548751382&key=GFDS8j98rewnmgl45wHTt980jg543wmg"
-// 	hash := md5.New()
-// 	hash.Write([]byte(st))
-// 	sum := hash.Sum(nil)
-// 	upper := strings.ToUpper(hex.EncodeToString(sum))
-// 	fmt.Println(" ssad  ", upper)
-// }
-//
 // func TestCode2Session(t *testing.T) {
 // 	userIdRsp, err := Code2Session(AppID, APPSecret, "011EZg6p0VO47n1p2W4p0mle6p0EZg6u")
 // 	if err != nil {
