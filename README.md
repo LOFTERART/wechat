@@ -95,6 +95,12 @@ client := wechat.NewClient(isProd, serviceType, apiKey, config)
   * (TODO) [人脸支付](https://pay.weixin.qq.com/wiki/doc/wxfacepay/)
   * (TODO) [现金红包](https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon_sl.php?chapter=13_1)
 
+### 测试方法
+
+修改`config_test.go`中的生成测试Client的代码，调整沙盒/生产环境、普通商户/服务商等选项，或者修改环境变量，来调整商户参数。
+
+# TODO 整理
+
 ## 微信公共API
 
 * gopay.Code2Session() => 登录凭证校验：获取微信用户OpenId、UnionId、SessionKey
