@@ -203,7 +203,7 @@ const (
 	BankTypeSdrcuDebit   = "SDRCU_DEBIT"   // 山东农信(借记卡)
 	BankTypeBczDebit     = "BCZ_DEBIT"     // 沧州银行(借记卡)
 	BankTypeSjbDebit     = "SJB_DEBIT"     // 盛京银行(借记卡)
-	// BankType                 = "LNNX_DEBIT"        // 辽宁农信(借记卡)
+	BankTypeLnnxDebit    = "LNNX_DEBIT"    // 辽宁农信(借记卡)
 	// BankType                 = "JUFENGB_DEBIT"     // 临朐聚丰村镇银行(借记卡)
 	// BankType                 = "ZZB_CREDIT"        // 郑州银行(信用卡)
 	// BankType                 = "JXNXB_DEBIT"       // 江西农信(借记卡)

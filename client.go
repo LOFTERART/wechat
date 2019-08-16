@@ -4,6 +4,7 @@ type Client struct {
 	config      Config // 配置信息
 	serviceType int    // 服务模式
 	apiKey      string // API Key
+	certData    []byte // 证书内容
 	isProd      bool   // 是否是生产环境
 }
 

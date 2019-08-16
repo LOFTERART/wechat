@@ -1,1 +1,3 @@
+vendor
 go.sum
+apiclient_cert.p12
