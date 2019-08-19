@@ -6,12 +6,8 @@ const (
 	baseUrl        = "https://api.mch.weixin.qq.com/"            // (生产环境) 微信支付的基地址
 	baseUrlSandbox = "https://api.mch.weixin.qq.com/sandboxnew/" // (沙盒环境) 微信支付的基地址
 
-	// wxURL_Refund            = wxBaseUrl + "secapi/pay/refund"               // 申请退款
-	// wxURL_Reverse           = wxBaseUrl + "secapi/pay/reverse"              // 撤销订单
 	// wxURL_DownloadFundFlow  = wxBaseUrl + "pay/downloadfundflow"            // 下载资金账单
-	// wxURL_BatchQueryComment = wxBaseUrl + "billcommentsp/batchquerycomment" // 拉取订单评价数据
-	// wxURL_SanBox_Refund            = wxBaseUrlSandbox + "pay/refund"
-	// wxURL_SanBox_Reverse           = wxBaseUrlSandbox + "pay/reverse"
+	// wxURL_BatchQueryComment = wxBaseUrl + "billcommentsp/batchquerycomment" //
 	// wxURL_SanBox_DownloadFundFlow  = wxBaseUrlSandbox + "pay/downloadfundflow"
 	// wxURL_SanBox_BatchQueryComment = wxBaseUrlSandbox + "billcommentsp/batchquerycomment"
 
@@ -203,7 +199,7 @@ const (
 	BankTypeSdrcuDebit   = "SDRCU_DEBIT"   // 山东农信(借记卡)
 	BankTypeBczDebit     = "BCZ_DEBIT"     // 沧州银行(借记卡)
 	BankTypeSjbDebit     = "SJB_DEBIT"     // 盛京银行(借记卡)
-	// BankType                 = "LNNX_DEBIT"        // 辽宁农信(借记卡)
+	BankTypeLnnxDebit    = "LNNX_DEBIT"    // 辽宁农信(借记卡)
 	// BankType                 = "JUFENGB_DEBIT"     // 临朐聚丰村镇银行(借记卡)
 	// BankType                 = "ZZB_CREDIT"        // 郑州银行(信用卡)
 	// BankType                 = "JXNXB_DEBIT"       // 江西农信(借记卡)

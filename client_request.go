@@ -2,14 +2,15 @@ package wechat
 
 import (
 	"encoding/json"
+	"os"
 )
 
-// 向微信发送请求
-func (c *Client) doWeChat(relativeUrl string, bodyObj interface{}) (bytes []byte, err error) {
+func (c *Client) buildBody(bodyObj interface{}) (body map[string]interface{}, err error) {
 	// 将bodyObj转换为map[string]interface{}类型
 	bodyJson, _ := json.Marshal(bodyObj)
-	body := make(map[string]interface{})
+	body = make(map[string]interface{})
 	_ = json.Unmarshal(bodyJson, &body)
+
 	// 添加固定参数
 	body["appid"] = c.config.AppId
 	body["mch_id"] = c.config.MchId
@@ -19,6 +20,7 @@ func (c *Client) doWeChat(relativeUrl string, bodyObj interface{}) (bytes []byte
 	}
 	nonceStr := GetRandomString(32)
 	body["nonce_str"] = nonceStr
+
 	// 生成签名
 	signType, _ := body["sign_type"].(string)
 	var sign string
@@ -33,7 +35,38 @@ func (c *Client) doWeChat(relativeUrl string, bodyObj interface{}) (bytes []byte
 		sign = c.localSign(body, SignTypeMD5, key)
 	}
 	body["sign"] = sign
+	return
+}
+
+// 向微信发送请求
+func (c *Client) doWeChat(relativeUrl string, bodyObj interface{}) (bytes []byte, err error) {
+	// 转换参数
+	body, err := c.buildBody(bodyObj)
+	if err != nil {
+		return
+	}
+
 	// 发起请求
 	bytes, err = httpPost(c.url(relativeUrl), GenerateXml(body))
+	return
+}
+
+// 向微信发送带证书请求
+func (c *Client) doWeChatWithCert(relativeUrl string, bodyObj interface{}) (bytes []byte, err error) {
+	// 转换参数
+	body, err := c.buildBody(bodyObj)
+	if err != nil {
+		return
+	}
+
+	// 设置证书
+	certPath := os.Getenv("CertPath")
+	transport := c.setCertData(certPath)
+	if transport == nil {
+		return
+	}
+
+	// 发起请求
+	bytes, err = httpPostWithCert(c.url(relativeUrl), GenerateXml(body), transport)
 	return
 }

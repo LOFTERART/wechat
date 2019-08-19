@@ -2,6 +2,7 @@ package wechat
 
 import (
 	"errors"
+
 	"github.com/beevik/etree"
 )
 

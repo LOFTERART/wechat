@@ -4,6 +4,10 @@ import "encoding/xml"
 
 // 统一下单
 func (c *Client) UnifiedOrder(body UnifiedOrderBody) (wxRsp UnifiedOrderResponse, err error) {
+	// 处理参数
+	if body.SceneInfoModel != nil {
+		body.SceneInfo = JsonString(*body.SceneInfoModel)
+	}
 	// 业务逻辑
 	bytes, err := c.doWeChat("pay/unifiedorder", body)
 	if err != nil {
@@ -40,6 +44,8 @@ type UnifiedOrderBody struct {
 	SubOpenId      string `json:"sub_openid,omitempty"`  // (非必填) trade_type=JSAPI，此参数必传，用户在子商户appid下的唯一标识。openid和sub_openid可以选传其中之一，如果选择传sub_openid,则必须传sub_appid。下单前需要调用【网页授权获取用户信息】接口获取到用户的Openid。
 	Receipt        string `json:"receipt,omitempty"`     // (非必填) Y，传入Y时，支付成功消息和支付详情页将出现开票入口。需要在微信支付商户平台或微信公众平台开通电子发票功能，传此字段才可生效
 	SceneInfo      string `json:"scene_info,omitempty"`  // (非必填) 该字段用于上报场景信息，目前支持上报实际门店信息。该字段为JSON对象数据，对象格式为{"store_info":{"id": "门店ID","name": "名称","area_code": "编码","address": "地址" }} ，字段详细说明请点击行前的+展开
+	// 用于生成SceneInfo
+	SceneInfoModel *SceneInfoModel `json:"-"`
 }
 
 // 统一下单的返回值

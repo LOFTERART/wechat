@@ -5,14 +5,14 @@ import (
 	"testing"
 )
 
-// 测试查询订单
-func TestQueryOrder(t *testing.T) {
-	fmt.Println("----------查询订单----------")
+// 测试撤销订单
+func TestReverse(t *testing.T) {
+	fmt.Println("----------撤销订单----------")
 	// 初始化参数
-	body := QueryOrderBody{}
+	body := ReverseBody{}
 	body.OutTradeNo = "YgENQFTovdeJdFouNyy3nFVOhGD6ZvPH"
-	// 请求订单查询
-	wxRsp, err := testClient.QueryOrder(body)
+	// 请求撤销订单
+	wxRsp, err := testClient.Reverse(body)
 	if err != nil {
 		t.Error(err)
 		return
