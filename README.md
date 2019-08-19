@@ -1,6 +1,5 @@
 # wechat
 
-[![Build Status](https://travis-ci.org/cuckoopark/wechat.svg?branch=master)](https://travis-ci.org/cuckoopark/wechat)
 [![Latest Tag](https://img.shields.io/github/tag/cuckoopark/wechat.svg)](https://github.com/cuckoopark/wechat/releases/latest)
 
 这是用Golang封装了微信支付的所有API接口的SDK，并自动生成和解析XML数据。
@@ -54,13 +53,6 @@ client := wechat.NewClient(isProd, serviceType, apiKey, certFilepath, config)
 使用样例：
 
 ```go
-package test
-
-import (
-	"fmt"
-    "github.com/cuckoopark/wechat"
-)
-
 // 测试函数，client的生成参见上文
 func Test() {
 	// 初始化参数
