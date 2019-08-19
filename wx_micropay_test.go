@@ -11,7 +11,7 @@ func TestMicropay(t *testing.T) {
 	outTradeNo := GetRandomString(32)
 	// 初始化参数
 	body := MicropayBody{}
-	body.Body = "测试车场-停车费"
+	body.Body = "测试车场付款码支付-停车费"
 	body.OutTradeNo = outTradeNo
 	body.TotalFee = 1
 	body.SpbillCreateIP = "124.77.173.62"
