@@ -7,7 +7,7 @@ import (
 )
 
 // 测试交易保障(MICROPAY) TODO
-func TestReportMicropay(t *testing.T) {
+func testReportMicropay(t *testing.T) {
 	fmt.Println("----------交易保障(MICROPAY)----------")
 	// 初始化参数
 	body := ReportMicropayBody{}

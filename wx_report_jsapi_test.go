@@ -6,7 +6,7 @@ import (
 )
 
 // 测试交易保障(JSAPI) TODO
-func TestReportJsApi(t *testing.T) {
+func testReportJsApi(t *testing.T) {
 	fmt.Println("----------交易保障(JSAPI)----------")
 	// 初始化参数
 	body := ReportJsApiBody{}

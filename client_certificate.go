@@ -13,7 +13,6 @@ func (c *Client) setCertData(certPath string) (transport *http.Transport) {
 	if c.certData != nil && len(c.certData) > 0 {
 		return
 	}
-
 	certData, err := ioutil.ReadFile(certPath)
 	if err == nil {
 		c.certData = certData
@@ -28,7 +27,6 @@ func (c *Client) buildTransport() (transport *http.Transport) {
 	if err != nil {
 		return
 	}
-
 	// tls配置
 	config := &tls.Config{Certificates: []tls.Certificate{cert}}
 	transport = &http.Transport{
@@ -43,12 +41,10 @@ func (c *Client) pkc12ToPerm() (cert tls.Certificate, err error) {
 	if err != nil {
 		return
 	}
-
 	var pemData []byte
 	for _, b := range blocks {
 		pemData = append(pemData, pem.EncodeToMemory(b)...)
 	}
-
 	cert, err = tls.X509KeyPair(pemData, pemData)
 	return
 }

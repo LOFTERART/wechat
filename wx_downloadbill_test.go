@@ -6,7 +6,7 @@ import (
 )
 
 // 测试下载对账单
-func TestDownloadBill(t *testing.T) {
+func testDownloadBill(t *testing.T) {
 	fmt.Println("----------下载对账单----------")
 	// 初始化参数
 	body := DownloadBillBody{}

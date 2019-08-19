@@ -6,11 +6,11 @@ import (
 )
 
 // 测试查询订单
-func TestQueryOrder(t *testing.T) {
+func testQueryOrder(t *testing.T, outTradeNo string) {
 	fmt.Println("----------查询订单----------")
 	// 初始化参数
 	body := QueryOrderBody{}
-	body.OutTradeNo = "YgENQFTovdeJdFouNyy3nFVOhGD6ZvPH"
+	body.OutTradeNo = outTradeNo
 	// 请求订单查询
 	wxRsp, err := testClient.QueryOrder(body)
 	if err != nil {

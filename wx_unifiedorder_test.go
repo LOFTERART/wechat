@@ -6,9 +6,9 @@ import (
 )
 
 // 测试统一下单
-func TestUnifiedOrder(t *testing.T) {
+func testUnifiedOrder(t *testing.T) (outTradeNo string) {
 	fmt.Println("----------统一下单----------")
-	outTradeNo := GetRandomString(32)
+	outTradeNo = GetRandomString(32)
 	// 初始化参数
 	body := UnifiedOrderBody{}
 	body.Body = "测试车场扫码支付-停车费"
@@ -29,4 +29,5 @@ func TestUnifiedOrder(t *testing.T) {
 	//pac := "prepay_id=" + wxRsp.PrepayId
 	//paySign := GetMiniPaySign("wxbf1c916561ebb420", wxRsp.NonceStr, pac, SignTypeMD5, timeStamp, os.Getenv("ApiKey"))
 	//fmt.Printf("paySign: %s\n", paySign)
+	return
 }

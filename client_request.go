@@ -2,7 +2,6 @@ package wechat
 
 import (
 	"encoding/json"
-	"os"
 )
 
 func (c *Client) buildBody(bodyObj interface{}) (body map[string]interface{}, err error) {
@@ -10,7 +9,6 @@ func (c *Client) buildBody(bodyObj interface{}) (body map[string]interface{}, er
 	bodyJson, _ := json.Marshal(bodyObj)
 	body = make(map[string]interface{})
 	_ = json.Unmarshal(bodyJson, &body)
-
 	// 添加固定参数
 	body["appid"] = c.config.AppId
 	body["mch_id"] = c.config.MchId
@@ -20,7 +18,6 @@ func (c *Client) buildBody(bodyObj interface{}) (body map[string]interface{}, er
 	}
 	nonceStr := GetRandomString(32)
 	body["nonce_str"] = nonceStr
-
 	// 生成签名
 	signType, _ := body["sign_type"].(string)
 	var sign string
@@ -45,7 +42,6 @@ func (c *Client) doWeChat(relativeUrl string, bodyObj interface{}) (bytes []byte
 	if err != nil {
 		return
 	}
-
 	// 发起请求
 	bytes, err = httpPost(c.url(relativeUrl), GenerateXml(body))
 	return
@@ -58,14 +54,11 @@ func (c *Client) doWeChatWithCert(relativeUrl string, bodyObj interface{}) (byte
 	if err != nil {
 		return
 	}
-
 	// 设置证书
-	certPath := os.Getenv("CertPath")
-	transport := c.setCertData(certPath)
+	transport := c.setCertData(c.certFilepath)
 	if transport == nil {
 		return
 	}
-
 	// 发起请求
 	bytes, err = httpPostWithCert(c.url(relativeUrl), GenerateXml(body), transport)
 	return
