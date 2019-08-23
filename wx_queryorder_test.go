@@ -19,3 +19,7 @@ func testQueryOrder(t *testing.T, outTradeNo string) {
 	}
 	fmt.Printf("返回值: %+v\n", wxRsp)
 }
+
+func TestQueryOrder(t *testing.T) {
+	testQueryOrder(t, "wxcs201908231600001111")
+}
