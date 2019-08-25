@@ -7,6 +7,7 @@ type Client struct {
 	certFilepath string // 证书目录
 	certData     []byte // 证书内容
 	isProd       bool   // 是否是生产环境
+	isMch        bool   // 是否是特殊的商户接口(微信找零)
 }
 
 // 是否是服务商模式
@@ -29,12 +30,13 @@ func (c *Client) url(relativePath string) string {
 }
 
 // 初始化微信客户端
-func NewClient(isProd bool, serviceType int, apiKey string, certFilepath string, config Config) (client *Client) {
+func NewClient(isProd bool, isMch bool, serviceType int, apiKey string, certFilepath string, config Config) (client *Client) {
 	client = new(Client)
 	client.config = config
 	client.serviceType = serviceType
 	client.apiKey = apiKey
 	client.certFilepath = certFilepath
 	client.isProd = isProd
+	client.isMch = isMch
 	return client
 }
