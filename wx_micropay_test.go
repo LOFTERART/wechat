@@ -15,10 +15,10 @@ func testMicropay(t *testing.T) (outTradeNo string, transactionId string) {
 	// 初始化参数
 	body := MicropayBody{}
 	body.Body = "7克拉车场-京TTT001-微信支付-停车费"
-	body.OutTradeNo = "wxcs201908231600003333"
+	body.OutTradeNo = "wxcs201908231600004444"
 	body.TotalFee = 1
 	body.SpbillCreateIP = "124.77.173.62"
-	body.AuthCode = "134891333183485251"
+	body.AuthCode = "134864878479285388"
 	body.SceneInfo = &SceneInfoModel{
 		ID:   "1",
 		Name: "测试门店",
