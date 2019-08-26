@@ -12,9 +12,11 @@ func TestMicropay(t *testing.T) {
 // 测试付款码支付
 func testMicropay(t *testing.T) (outTradeNo string, transactionId string) {
 	fmt.Println("----------付款码支付----------")
+	//outTradeNo = GetRandomString(32)
 	// 初始化参数
 	body := MicropayBody{}
 	body.Body = "7克拉车场-京TTT001-微信支付-停车费"
+	//body.OutTradeNo = outTradeNo
 	body.OutTradeNo = "wxcs201908231600004444"
 	body.TotalFee = 1
 	body.SpbillCreateIP = "124.77.173.62"
