@@ -93,10 +93,10 @@ func Test() {
 
 * 境内普通商户
   * [付款码支付](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=5_1)
-  * (TODO) [JSAPI支付](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_1)
+  * [JSAPI支付](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_1)
   * [Native支付](https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_1)
-  * (TODO) [APP支付](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=8_1)
-  * (TODO) [H5支付](https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=15_1)
+  * [APP支付](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=8_1)
+  * [H5支付](https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=15_1)
   * (TODO) [小程序支付](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_3&index=1)
   * (TODO) [人脸支付](https://pay.weixin.qq.com/wiki/doc/wxfacepay/)
   * (TODO) [代金券或立减优惠](https://pay.weixin.qq.com/wiki/doc/api/tools/sp_coupon.php?chapter=12_1)
@@ -104,10 +104,10 @@ func Test() {
   * (TODO) [企业付款](https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_1)
 * 境内服务商
   * [付款码支付](https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=5_1)
-  * (TODO) [JSAPI支付](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=7_1)
+  * [JSAPI支付](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=7_1)
   * [Native支付](https://pay.weixin.qq.com/wiki/doc/api/native_sl.php?chapter=6_1)
-  * (TODO) [APP支付](https://pay.weixin.qq.com/wiki/doc/api/app/app_sl.php?chapter=8_1)
-  * (TODO) [H5支付](https://pay.weixin.qq.com/wiki/doc/api/H5_sl.php?chapter=15_1)
+  * [APP支付](https://pay.weixin.qq.com/wiki/doc/api/app/app_sl.php?chapter=8_1)
+  * [H5支付](https://pay.weixin.qq.com/wiki/doc/api/H5_sl.php?chapter=15_1)
   * (TODO) [小程序支付](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_sl_api.php?chapter=7_3&index=1)
   * (TODO) [人脸支付](https://pay.weixin.qq.com/wiki/doc/wxfacepay/)
   * (TODO) [现金红包](https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon_sl.php?chapter=13_1)
