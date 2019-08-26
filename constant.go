@@ -86,6 +86,10 @@ const (
 	RefundRequestSourceApi            = "API"             // API接口
 	RefundRequestSourceVendorPlatform = "VENDOR_PLATFORM" // 商户平台
 
+	// 找零校验用户姓名选项
+	CheckNameTypeNoCheck    = "NO_CHECK"    //不校验真实姓名
+	CheckNameTypeForceCheck = "FORCE_CHECK" //强校验真实姓名
+
 	// 返回结果
 	ResponseSuccess = "SUCCESS" // 成功，通信标识或业务结果
 	ResponseFail    = "FAIL"    // 失败，通信标识或业务结果

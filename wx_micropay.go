@@ -25,21 +25,21 @@ func (c *Client) Micropay(body MicropayBody) (wxRsp MicropayResponse, err error)
 // 提交付款码支付的参数
 type MicropayBody struct {
 	SignType       string `json:"sign_type,omitempty"`   // 签名类型，目前支持HMAC-SHA256和MD5，默认为MD5
-	DeviceInfo     string `json:"device_info,omitempty"` // (非必填) 终端设备号(商户自定义，如门店编号)
+	DeviceInfo     string `json:"device_info,omitempty"` // 终端设备号(商户自定义，如门店编号)
 	Body           string `json:"body"`                  // 商品或支付单简要描述，格式要求：门店品牌名-城市分店名-实际商品名称
-	Detail         string `json:"detail,omitempty"`      // (非必填) TODO 单品优惠功能字段，需要接入请见详细说明
-	Attach         string `json:"attach,omitempty"`      // (非必填) 附加数据，在查询API和支付通知中原样返回，该字段主要用于商户携带订单的自定义数据
+	Detail         string `json:"detail,omitempty"`      // 单品优惠功能字段，需要接入请见详细说明
+	Attach         string `json:"attach,omitempty"`      // 附加数据，在查询API和支付通知中原样返回，该字段主要用于商户携带订单的自定义数据
 	OutTradeNo     string `json:"out_trade_no"`          // 商户系统内部订单号，要求32个字符内，只能是数字、大小写字母_-|*且在同一个商户号下唯一。详见商户订单号
 	TotalFee       int    `json:"total_fee"`             // 订单总金额，单位为分，只能为整数，详见支付金额
-	FeeType        string `json:"fee_type,omitempty"`    // (非必填) 符合ISO 4217标准的三位字母代码，默认人民币：CNY，其他值列表详见货币类型
+	FeeType        string `json:"fee_type,omitempty"`    // 符合ISO 4217标准的三位字母代码，默认人民币：CNY，其他值列表详见货币类型
 	SpbillCreateIP string `json:"spbill_create_ip"`      // 支持IPV4和IPV6两种格式的IP地址。调用微信支付API的机器IP
-	GoodsTag       string `json:"goods_tag,omitempty"`   // (非必填) TODO 订单优惠标记，代金券或立减优惠功能的参数，说明详见代金券或立减优惠
-	LimitPay       string `json:"limit_pay,omitempty"`   // (非必填) no_credit：指定不能使用信用卡支付
-	TimeStart      string `json:"time_start,omitempty"`  // (非必填) 订单生成时间，格式为yyyyMMddHHmmss，如2009年12月25日9点10分10秒表示为20091225091010。其他详见时间规则
-	TimeExpire     string `json:"time_expire,omitempty"` // (非必填) 订单失效时间，格式为yyyyMMddHHmmss，如2009年12月27日9点10分10秒表示为20091227091010。注意：最短失效时间间隔需大于1分钟
+	GoodsTag       string `json:"goods_tag,omitempty"`   // 订单优惠标记，代金券或立减优惠功能的参数，说明详见代金券或立减优惠
+	LimitPay       string `json:"limit_pay,omitempty"`   // no_credit：指定不能使用信用卡支付
+	TimeStart      string `json:"time_start,omitempty"`  // 订单生成时间，格式为yyyyMMddHHmmss，如2009年12月25日9点10分10秒表示为20091225091010。其他详见时间规则
+	TimeExpire     string `json:"time_expire,omitempty"` // 订单失效时间，格式为yyyyMMddHHmmss，如2009年12月27日9点10分10秒表示为20091227091010。注意：最短失效时间间隔需大于1分钟
 	AuthCode       string `json:"auth_code"`             // 扫码支付授权码，设备读取用户微信中的条码或者二维码信息 （注：用户付款码条形码规则：18位纯数字，以10、11、12、13、14、15开头）
-	Receipt        string `json:"receipt,omitempty"`     // (非必填) Y，传入Y时，支付成功消息和支付详情页将出现开票入口。需要在微信支付商户平台或微信公众平台开通电子发票功能，传此字段才可生效
-	SceneInfoStr   string `json:"scene_info,omitempty"`  // (非必填) 该字段用于上报场景信息，目前支持上报实际门店信息。该字段为JSON对象数据，对象格式为{"store_info":{"id": "门店ID","name": "名称","area_code": "编码","address": "地址" }} ，字段详细说明请点击行前的+展开
+	Receipt        string `json:"receipt,omitempty"`     // Y，传入Y时，支付成功消息和支付详情页将出现开票入口。需要在微信支付商户平台或微信公众平台开通电子发票功能，传此字段才可生效
+	SceneInfoStr   string `json:"scene_info,omitempty"`  // 该字段用于上报场景信息，目前支持上报实际门店信息。该字段为JSON对象数据，对象格式为{"store_info":{"id": "门店ID","name": "名称","area_code": "编码","address": "地址" }} ，字段详细说明请点击行前的+展开
 	// 用于生成SceneInfoStr
 	SceneInfo *SceneInfoModel `json:"-"`
 }

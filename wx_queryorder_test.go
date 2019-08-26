@@ -5,6 +5,10 @@ import (
 	"testing"
 )
 
+func TestQueryOrder(t *testing.T) {
+	testQueryOrder(t, "wxcs201908231600003333")
+}
+
 // 测试查询订单
 func testQueryOrder(t *testing.T, outTradeNo string) {
 	fmt.Println("----------查询订单----------")

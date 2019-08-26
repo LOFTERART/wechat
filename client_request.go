@@ -10,8 +10,13 @@ func (c *Client) buildBody(bodyObj interface{}) (body map[string]interface{}, er
 	body = make(map[string]interface{})
 	_ = json.Unmarshal(bodyJson, &body)
 	// 添加固定参数
-	body["appid"] = c.config.AppId
-	body["mch_id"] = c.config.MchId
+	if c.isMch {
+		body["mch_appid"] = c.config.AppId
+		body["mchid"] = c.config.MchId
+	} else {
+		body["appid"] = c.config.AppId
+		body["mch_id"] = c.config.MchId
+	}
 	if c.isFacilitator() {
 		body["sub_appid"] = c.config.SubAppId
 		body["sub_mch_id"] = c.config.SubMchId
