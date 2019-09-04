@@ -25,7 +25,7 @@ func TestWeChatUserInfo(t *testing.T) {
 	// 请求接口
 	token := "25_p1C7uUEPdgWHqCgX3hNcdBNZqdjEKU75ZLGQKfUFjEq7mQms-8J1KmSD0Fh0wSBg1pwumB_kRoB8OnnR10fml914bazh9xAoigZT2QHQrentZpZ--SM2j3iKaMRgr0Ec9_xjFKrPw_N5Og4mGDHeAHAZWA"
 	openId := "gh_2d95fca4a95e"
-	user, err := GetWeChatUserInfo(token, openId, "")
+	user, err := GetUserInfo(token, openId, "")
 	if err != nil {
 		t.Error(err)
 		return

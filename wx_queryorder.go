@@ -37,7 +37,7 @@ type QueryOrderResponse struct {
 	ServiceResponseModel
 	// 当return_code、result_code、trade_state都为SUCCESS时有返回，如trade_state不为SUCCESS，则只返回out_trade_no(必传)和attach(选传)。
 	DeviceInfo         string `xml:"device_info"`          // 微信支付分配的终端设备号
-	Openid             string `xml:"openid"`               // 用户在商户appid下的唯一标识
+	OpenId             string `xml:"openid"`               // 用户在商户appid下的唯一标识
 	IsSubscribe        string `xml:"is_subscribe"`         // 用户是否关注公众账号，Y-关注，N-未关注（机构商户不返回）
 	SubOpenId          string `xml:"sub_openid"`           // (服务商模式) 子商户appid下用户唯一标识，如需返回则请求时需要传sub_appid
 	SubIsSubscribe     string `xml:"sub_is_subscribe"`     // (服务商模式) 用户是否关注子公众账号，仅在公众账号类型支付有效，取值范围：Y或N;Y-关注;N-未关注

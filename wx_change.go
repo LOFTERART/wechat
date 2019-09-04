@@ -2,7 +2,7 @@ package wechat
 
 import "encoding/xml"
 
-// 微信找零（前提用户必须关注公众号）
+// 企业付款到零钱(前提用户必须关注公众号)
 func (c *Client) Change(body ChangeBody) (wxRsp ChangeResponse, err error) {
 	// 业务逻辑
 	bytes, err := c.doWeChatWithCert("mmpaymkttransfers/promotion/transfers", body)

@@ -39,7 +39,7 @@ type PayNotifyBody struct {
 	DeviceInfo         string `xml:"device_info"`          // 微信支付分配的终端设备号
 	IsSubscribe        string `xml:"is_subscribe"`         // 用户是否关注公众账号(机构商户不返回)
 	SubIsSubscribe     string `xml:"sub_is_subscribe"`     // (服务商模式) 用户是否关注子公众账号(机构商户不返回)
-	Openid             string `xml:"openid"`               // 用户在商户appid下的唯一标识
+	OpenId             string `xml:"openid"`               // 用户在商户appid下的唯一标识
 	SubOpenId          string `xml:"sub_openid"`           // (服务商模式) 用户在子商户appid下的唯一标识
 	TradeType          string `xml:"trade_type"`           // 交易类型
 	BankType           string `xml:"bank_type"`            // 银行类型，采用字符串类型的银行标识，银行类型见附表

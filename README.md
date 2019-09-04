@@ -48,12 +48,19 @@ client := wechat.NewClient(isProd, serviceType, apiKey, certFilepath, config)
 * 交易保障(MICROPAY)：`func (*Client) ReportMicropay(ReportMicropayBody) (ReportMicropayResponse, error)`
 * 下载资金账单：TODO，client.DownloadFundFlow()
 * 拉取订单评价数据：TODO，client.BatchQueryComment()
+* 企业付款到零钱：`func (*Client) Change(ChangeBody) (ChangeResponse, error)`
 * 授权码查询OpenId：`func (*Client) OpenIdByAuthCode(OpenIdByAuthCodeBody) (OpenIdByAuthCodeResponse, error)`
+* 获取AccessToken：`func GetAccessToken(appId string, appSecret string) (AccessToken, error)`
+* 获取用户基本信息(UnionId机制)：`func GetUserInfo(accessToken string, openId string, lang ...string) (UserInfo, error)`
+* 获取小程序支付签名：`func GetMiniPaySign(appId, nonceStr, prepayId, signType, timeStamp, apiKey string) (string)`
+* 获取H5支付签名：`func GetH5PaySign(appId, nonceStr, packages, signType, timeStamp, apiKey string) (string)`
+* 获取APP支付签名：`func GetAppPaySign(appId, nonceStr, partnerId, prepayId, signType, timeStamp, apiKey string) (string)`
+
+其中带有`(*Client)`字样的接口，需要使用`wechat.NewClient`创建的实例对象来调用，而不带的接口，则可以直接使用`wechat.XXX`调用。
 
 使用样例：
 
 ```go
-// 测试函数，client的生成参见上文
 func Test() {
 	// 初始化参数
 	body := wechat.QueryOrderBody{}
@@ -98,10 +105,9 @@ func Test() {
   * [APP支付](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=8_1)
   * [H5支付](https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=15_1)
   * (TODO) [小程序支付](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_3&index=1)
-  * (TODO) [人脸支付](https://pay.weixin.qq.com/wiki/doc/wxfacepay/)
   * (TODO) [代金券或立减优惠](https://pay.weixin.qq.com/wiki/doc/api/tools/sp_coupon.php?chapter=12_1)
   * (TODO) [现金红包](https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_1)
-  * (TODO) [企业付款](https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_1)
+  * [企业付款](https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_1)
 * 境内服务商
   * [付款码支付](https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=5_1)
   * [JSAPI支付](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=7_1)
@@ -109,8 +115,7 @@ func Test() {
   * [APP支付](https://pay.weixin.qq.com/wiki/doc/api/app/app_sl.php?chapter=8_1)
   * [H5支付](https://pay.weixin.qq.com/wiki/doc/api/H5_sl.php?chapter=15_1)
   * (TODO) [小程序支付](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_sl_api.php?chapter=7_3&index=1)
-  * (TODO) [人脸支付](https://pay.weixin.qq.com/wiki/doc/wxfacepay/)
-  * (TODO) [现金红包](https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon_sl.php?chapter=13_1)
+  * [现金红包](https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon_sl.php?chapter=13_1)
 
 ### 测试方法
 
@@ -125,8 +130,6 @@ go test
 
 ### TODO
 
-- [ ] 测试改为不同情境使用不同的用例。
-- [ ] 继续修改`client.go`中未完成的接口。
-- [ ] 继续修改`server_api.go`中的实用工具。
-- [ ] 继续调试境内普通商户和境内服务商的其他模块API文档。
-- [ ] 选择性调试境外接口。
+- 测试改为不同情境使用不同的用例。
+- 继续调试境内普通商户和境内服务商的其他模块API文档。
+- 选择性调试境外接口。
