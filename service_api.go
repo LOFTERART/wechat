@@ -1,3 +1,7 @@
+/*
+ 基础支持相关的接口。
+*/
+
 package wechat
 
 import (
@@ -5,8 +9,8 @@ import (
 	"fmt"
 )
 
-// 获取全局唯一后台接口调用凭据
-func GetAccessToken(appId string, appSecret string) (accessToken AccessToken, err error) {
+// 获取基础支持的access_token
+func GetBasicAccessToken(appId, appSecret string) (accessToken AccessToken, err error) {
 	url := fmt.Sprintf("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s", appId, appSecret)
 	body, err := httpGet(url)
 	if err != nil {
@@ -17,14 +21,11 @@ func GetAccessToken(appId string, appSecret string) (accessToken AccessToken, er
 }
 
 // 获取用户基本信息(UnionID机制)
-func GetUserInfo(accessToken string, openId string, lang ...string) (userInfo UserInfo, err error) {
-	var language string
-	if len(lang) > 0 {
-		language = lang[0]
-	} else {
-		language = "zh_CN"
+func GetBasicUserInfo(accessToken, openId, lang string) (userInfo UserInfo, err error) {
+	if len(lang) <= 0 {
+		lang = "zh_CN"
 	}
-	url := fmt.Sprintf("https://api.weixin.qq.com/cgi-bin/user/info?access_token=%s&openid=%s&lang=%s", accessToken, openId, language)
+	url := fmt.Sprintf("https://api.weixin.qq.com/cgi-bin/user/info?access_token=%s&openid=%s&lang=%s", accessToken, openId, lang)
 	body, err := httpGet(url)
 	if err != nil {
 		return
