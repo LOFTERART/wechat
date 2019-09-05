@@ -6,11 +6,11 @@ import (
 )
 
 // 测试授权码查询openid
-func testOpenIdByAuthCode(t *testing.T) {
+func TestOpenIdByAuthCode(t *testing.T) {
 	fmt.Println("----------授权码查询openid----------")
 	// 初始化参数
 	body := OpenIdByAuthCodeBody{}
-	body.AuthCode = "135127679952609396"
+	body.AuthCode = "134878838249661612"
 	// 请求支付
 	wxRsp, err := testClient.OpenIdByAuthCode(body)
 	if err != nil {

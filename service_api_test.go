@@ -2,16 +2,16 @@ package wechat
 
 import (
 	"fmt"
+	"os"
 	"testing"
 )
 
-// 测试获取访问凭证
-func TestAccessToken(t *testing.T) {
+func TestBasicAccessToken(t *testing.T) {
 	fmt.Println("----------获取访问凭证----------")
 	// 请求接口
 	appId := "wx80adf00e00fecc80"
 	appSecret := "fa1c98a5449e909129d08b10c1bbb415"
-	token, err := GetAccessToken(appId, appSecret)
+	token, err := GetBasicAccessToken(appId, appSecret)
 	if err != nil {
 		t.Error(err)
 		return
@@ -19,16 +19,68 @@ func TestAccessToken(t *testing.T) {
 	t.Logf("返回值: %+v\n", token)
 }
 
-// 测试获取用户基本信息(UnionID机制)
-func TestWeChatUserInfo(t *testing.T) {
+func TestBasicUserInfo(t *testing.T) {
 	fmt.Println("----------获取用户基本信息----------")
 	// 请求接口
-	token := "25_p1C7uUEPdgWHqCgX3hNcdBNZqdjEKU75ZLGQKfUFjEq7mQms-8J1KmSD0Fh0wSBg1pwumB_kRoB8OnnR10fml914bazh9xAoigZT2QHQrentZpZ--SM2j3iKaMRgr0Ec9_xjFKrPw_N5Og4mGDHeAHAZWA"
-	openId := "gh_2d95fca4a95e"
-	user, err := GetUserInfo(token, openId, "")
+	token := ""
+	openId := ""
+	user, err := GetBasicUserInfo(token, openId, "")
 	if err != nil {
 		t.Error(err)
 		return
 	}
 	t.Logf("返回值: %+v\n", user)
+}
+
+func TestAuthAccessToken(t *testing.T) {
+	fmt.Println("----------获取授权的access_token----------")
+	// 请求接口
+	appId := os.Getenv("AppID")
+	appSecret := os.Getenv("ApiSecret")
+	code := ""
+	token, err := GetAuthAccessToken(appId, appSecret, code)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Logf("返回值: %+v\n", token)
+}
+
+func TestAuthUserInfo(t *testing.T) {
+	fmt.Println("----------获取用户基本信息(授权机制)----------")
+	// 请求接口
+	token := ""
+	openId := ""
+	user, err := GetAuthUserInfo(token, openId, "")
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Logf("返回值: %+v\n", user)
+}
+
+func TestRefreshAuthAccessToken(t *testing.T) {
+	fmt.Println("----------刷新授权的access_token----------")
+	// 请求接口
+	appId := os.Getenv("AppID")
+	refresh := ""
+	token, err := RefreshAuthAccessToken(appId, refresh)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Logf("返回值: %+v\n", token)
+}
+
+func TestCheckAuthAccessToken(t *testing.T) {
+	fmt.Println("----------校验授权的access_token----------")
+	// 请求接口
+	token := ""
+	openId := ""
+	rst, err := CheckAuthAccessToken(token, openId)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Logf("返回值: %+v\n", rst)
 }
