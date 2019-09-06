@@ -1,17 +1,19 @@
 # wechat
 
-[![Latest Tag](https://img.shields.io/github/tag/cuckoopark/wechat.svg)](https://github.com/cuckoopark/wechat/releases/latest)
+[![Latest Tag](https://img.shields.io/badge/tag-v0.2.0-blue.svg)](https://gitee.com/cuckoopark/wechat/releases)
 
-这是用Golang封装了微信支付的所有API接口的SDK，并自动生成和解析XML数据。
+这是用Golang封装了微信支付的所有API接口的SDK，并自动生成和解析XML数据，还包括部分服务号、小程序、移动端的工具函数。
 
 * 支持境内普通商户和境内服务商(境外和银行服务商没有条件测试)。
 * 支持全局配置应用ID、商家ID等信息。
 * 全部参数和返回值均使用`struct`类型传递，而不是`map`类型。
+* 包含公众号网页授权码的相关操作。
+* 包含H5、小程序、移动端的支付签名生成方法。
 
 ### 安装
 
 ```shell
-go get -u github.com/cuckoopark/wechat
+go get -u gitee.com/cuckoopark/wechat
 ```
 
 ### 初始化
@@ -19,6 +21,7 @@ go get -u github.com/cuckoopark/wechat
 ```go
 const (
     isProd       = true                             // 生产环境或沙盒环境
+    isMch        = false                            // 是否是企业模式，仅当调用企业付款时为true
     serviceType  = wechat.ServiceTypeNormalDomestic // 普通商户或服务商等类型
     apiKey       = "xxxxxxxx"                       // 微信支付上设置的API Key
     certFilepath = "/xxx/yyy/apiclient_cert.p12"    // 微信证书文件的本地路径，仅部分接口使用，如果不使用这些接口，可以传递空值
@@ -29,7 +32,7 @@ config := wechat.Config{
     SubAppId: SubAppId, // 仅服务商模式有效
     SubMchId: SubMchID, // 仅服务商模式有效
 }
-client := wechat.NewClient(isProd, serviceType, apiKey, certFilepath, config)
+client := wechat.NewClient(isProd, isMch, serviceType, apiKey, certFilepath, config)
 ```
 
 ### 使用

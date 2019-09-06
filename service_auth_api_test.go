@@ -10,7 +10,7 @@ func TestAuthAccessToken(t *testing.T) {
 	fmt.Println("----------获取授权的access_token----------")
 	// 请求接口
 	appId := os.Getenv("AppID")
-	appSecret := os.Getenv("ApiSecret")
+	appSecret := os.Getenv("AppSecret")
 	code := ""
 	token, err := GetAuthAccessToken(appId, appSecret, code)
 	if err != nil {
