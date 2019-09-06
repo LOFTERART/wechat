@@ -1,4 +1,4 @@
-module github.com/cuckoopark/wechat
+module gitee.com/cuckoopark/wechat
 
 go 1.12
 
