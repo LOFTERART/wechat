@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"math/rand"
 	"net/url"
+	"regexp"
 	"time"
 )
 
@@ -59,4 +60,11 @@ func PKCS7UnPadding(plainText []byte) []byte {
 	length := len(plainText)
 	unpadding := int(plainText[length-1])   // 找到Byte数组最后的填充byte
 	return plainText[:(length - unpadding)] // 只截取返回有效数字内的byte数组
+}
+
+// 18位纯数字，以10、11、12、13、14、15开头
+func IsValidAuthCode(authcode string) (ok bool) {
+	pattern := "^1[0-5][0-9]{16}$"
+	ok, _ = regexp.MatchString(pattern, authcode)
+	return
 }

@@ -59,12 +59,11 @@ func (c *Client) doWeChatWithCert(relativeUrl string, bodyObj interface{}) (byte
 	if err != nil {
 		return
 	}
-	// 设置证书
-	transport := c.setCertData(c.certFilepath)
-	if transport == nil {
+	// 设置证书和连接池
+	if err = c.setCertData(c.certFilepath); err != nil {
 		return
 	}
 	// 发起请求
-	bytes, err = httpPostWithCert(c.url(relativeUrl), GenerateXml(body), transport)
+	bytes, err = httpPostWithCert(c.url(relativeUrl), GenerateXml(body), c.certClient)
 	return
 }

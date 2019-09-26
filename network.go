@@ -2,13 +2,32 @@ package wechat
 
 import (
 	"io/ioutil"
+	"net"
 	"net/http"
 	"strings"
+	"time"
 )
+
+var client *http.Client
+
+func init() {
+	client = &http.Client{
+		Timeout: 30 * time.Second,
+		Transport: &http.Transport{
+			IdleConnTimeout:     3 * time.Minute,
+			TLSHandshakeTimeout: 10 * time.Second,
+			DialContext: (&net.Dialer{
+				Timeout:   30 * time.Second,
+				KeepAlive: 10 * time.Minute,
+				DualStack: true,
+			}).DialContext,
+		},
+	}
+}
 
 // 发送Get请求
 func httpGet(url string) (body []byte, err error) {
-	resp, err := http.Get(url)
+	resp, err := client.Get(url)
 	if err != nil {
 		return
 	}
@@ -19,7 +38,7 @@ func httpGet(url string) (body []byte, err error) {
 
 // 发送Post请求，参数是XML格式的字符串
 func httpPost(url string, xmlBody string) (body []byte, err error) {
-	resp, err := http.Post(url, "application/xml", strings.NewReader(xmlBody))
+	resp, err := client.Post(url, "application/xml", strings.NewReader(xmlBody))
 	if err != nil {
 		return
 	}
@@ -29,9 +48,8 @@ func httpPost(url string, xmlBody string) (body []byte, err error) {
 }
 
 // 发送带证书的Post请求，参数是XML格式的字符串
-func httpPostWithCert(url string, xmlBody string, transport *http.Transport) (body []byte, err error) {
-	h := &http.Client{Transport: transport}
-	resp, err := h.Post(url, "application/xml", strings.NewReader(xmlBody))
+func httpPostWithCert(url string, xmlBody string, client *http.Client) (body []byte, err error) {
+	resp, err := client.Post(url, "application/xml", strings.NewReader(xmlBody))
 	if err != nil {
 		return
 	}

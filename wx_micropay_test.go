@@ -5,6 +5,12 @@ import (
 	"testing"
 )
 
+func TestAuthcode(t *testing.T) {
+	code := "165007001630843683"
+	ok := IsValidAuthCode(code)
+	t.Logf("%s is : %v", code, ok)
+}
+
 func TestMicropay(t *testing.T) {
 	testMicropay(t)
 }
