@@ -1,13 +1,18 @@
 package wechat
 
+import (
+	"net/http"
+)
+
 type Client struct {
-	config       Config // 配置信息
-	serviceType  int    // 服务模式
-	apiKey       string // API Key
-	certFilepath string // 证书目录
-	certData     []byte // 证书内容
-	isProd       bool   // 是否是生产环境
-	isMch        bool   // 是否是特殊的商户接口(微信找零)
+	config       Config       // 配置信息
+	serviceType  int          // 服务模式
+	apiKey       string       // API Key
+	certFilepath string       // 证书目录
+	certData     []byte       // 证书内容
+	certClient   *http.Client // 带证书的http连接池
+	isProd       bool         // 是否是生产环境
+	isMch        bool         // 是否是特殊的商户接口(微信找零)
 }
 
 // 是否是服务商模式

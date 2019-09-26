@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"math/rand"
 	"net/url"
+	"strconv"
+	"strings"
 	"time"
 )
 
@@ -59,4 +61,27 @@ func PKCS7UnPadding(plainText []byte) []byte {
 	length := len(plainText)
 	unpadding := int(plainText[length-1])   // 找到Byte数组最后的填充byte
 	return plainText[:(length - unpadding)] // 只截取返回有效数字内的byte数组
+}
+
+// 18位纯数字，以10、11、12、13、14、15开头
+func IsValidAuthCode(authcode string) (ok bool) {
+	ok = false
+
+	if len(authcode) != 18 {
+		return
+	}
+
+	if _, err := strconv.ParseUint(authcode, 10, 64); err != nil {
+		return
+	}
+
+	if strings.HasPrefix(authcode, "10") ||
+		strings.HasPrefix(authcode, "11") ||
+		strings.HasPrefix(authcode, "12") ||
+		strings.HasPrefix(authcode, "13") ||
+		strings.HasPrefix(authcode, "14") ||
+		strings.HasPrefix(authcode, "15") {
+		ok = true
+	}
+	return
 }
