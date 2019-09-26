@@ -9,7 +9,6 @@ type Client struct {
 	serviceType  int          // 服务模式
 	apiKey       string       // API Key
 	certFilepath string       // 证书目录
-	certData     []byte       // 证书内容
 	certClient   *http.Client // 带证书的http连接池
 	isProd       bool         // 是否是生产环境
 	isMch        bool         // 是否是特殊的商户接口(微信找零)

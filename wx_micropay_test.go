@@ -6,7 +6,7 @@ import (
 )
 
 func TestAuthcode(t *testing.T) {
-	code := "135007001630843681"
+	code := "165007001630843683"
 	ok := IsValidAuthCode(code)
 	t.Logf("%s is : %v", code, ok)
 }

@@ -6,8 +6,7 @@ import (
 	"fmt"
 	"math/rand"
 	"net/url"
-	"strconv"
-	"strings"
+	"regexp"
 	"time"
 )
 
@@ -65,23 +64,7 @@ func PKCS7UnPadding(plainText []byte) []byte {
 
 // 18位纯数字，以10、11、12、13、14、15开头
 func IsValidAuthCode(authcode string) (ok bool) {
-	ok = false
-
-	if len(authcode) != 18 {
-		return
-	}
-
-	if _, err := strconv.ParseUint(authcode, 10, 64); err != nil {
-		return
-	}
-
-	if strings.HasPrefix(authcode, "10") ||
-		strings.HasPrefix(authcode, "11") ||
-		strings.HasPrefix(authcode, "12") ||
-		strings.HasPrefix(authcode, "13") ||
-		strings.HasPrefix(authcode, "14") ||
-		strings.HasPrefix(authcode, "15") {
-		ok = true
-	}
+	pattern := "^1[0-5][0-9]{16}$"
+	ok, _ = regexp.MatchString(pattern, authcode)
 	return
 }

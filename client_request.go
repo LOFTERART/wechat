@@ -2,7 +2,6 @@ package wechat
 
 import (
 	"encoding/json"
-	"errors"
 )
 
 func (c *Client) buildBody(bodyObj interface{}) (body map[string]interface{}, err error) {
@@ -61,13 +60,10 @@ func (c *Client) doWeChatWithCert(relativeUrl string, bodyObj interface{}) (byte
 		return
 	}
 	// 设置证书和连接池
-	c.setCertData(c.certFilepath)
-
-	// 发起请求
-	if c.certClient == nil {
-		err = errors.New("带证书的http连接池生成失败")
-	} else {
-		bytes, err = httpPostWithCert(c.url(relativeUrl), GenerateXml(body), c.certClient)
+	if err = c.setCertData(c.certFilepath); err != nil {
+		return
 	}
+	// 发起请求
+	bytes, err = httpPostWithCert(c.url(relativeUrl), GenerateXml(body), c.certClient)
 	return
 }
