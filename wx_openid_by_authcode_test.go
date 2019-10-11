@@ -10,7 +10,7 @@ func TestOpenIdByAuthCode(t *testing.T) {
 	fmt.Println("----------授权码查询openid----------")
 	// 初始化参数
 	body := OpenIdByAuthCodeBody{}
-	body.AuthCode = "134878838249661612"
+	body.AuthCode = "134785902462927760"
 	// 请求支付
 	wxRsp, err := testClient.OpenIdByAuthCode(body)
 	if err != nil {
