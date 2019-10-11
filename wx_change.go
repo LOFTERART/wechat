@@ -1,6 +1,8 @@
 package wechat
 
-import "encoding/xml"
+import (
+	"encoding/xml"
+)
 
 // 企业付款到零钱(前提用户必须关注公众号)
 func (c *Client) Change(body ChangeBody) (wxRsp ChangeResponse, err error) {
@@ -9,10 +11,7 @@ func (c *Client) Change(body ChangeBody) (wxRsp ChangeResponse, err error) {
 	if err != nil {
 		return
 	}
-	// 结果校验
-	if err = c.doVerifySign(bytes, true); err != nil {
-		return
-	}
+	// 不返回sign不需要校验
 	// 解析返回值
 	err = xml.Unmarshal(bytes, &wxRsp)
 	return
@@ -34,8 +33,8 @@ type ChangeBody struct {
 type ChangeResponse struct {
 	ResponseModel
 	MchServiceResponseModel
-	DeviceInfo     string `json:"device_info,omitempty"` // 终端设备号
-	PartnerTradeNo string `json:"partner_trade_no"`      // 商户系统内部订单号，要求32个字符内，只能是数字、大小写字母_-|*且在同一个商户号下唯一。详见商户订单号
-	PaymentNo      string `json:"payment_no"`            // 企业付款成功，返回的微信付款单号
-	PaymentTime    string `json:"payment_time"`          // 企业付款成功时间
+	DeviceInfo     string `xml:"device_info"`      // 终端设备号
+	PartnerTradeNo string `xml:"partner_trade_no"` // 商户系统内部订单号，要求32个字符内，只能是数字、大小写字母_-|*且在同一个商户号下唯一。详见商户订单号
+	PaymentNo      string `xml:"payment_no"`       // 企业付款成功，返回的微信付款单号
+	PaymentTime    string `xml:"payment_time"`     // 企业付款成功时间
 }
