@@ -4,9 +4,11 @@ import (
 	"bytes"
 	"crypto/hmac"
 	"crypto/md5"
+	"crypto/sha1"
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
+	"sort"
 	"strings"
 )
 
@@ -77,4 +79,37 @@ func GetAppPaySign(appId, nonceStr, partnerId, prepayId, signType, timeStamp, ap
 	}
 	paySign = strings.ToUpper(hex.EncodeToString(hashSign))
 	return
+}
+
+// 生成JS-SDK权限验证的签名
+func GetTicketSign(nonceStr, ticket, timeStamp, url string) (ticketSign string) {
+	// 生成参数排序并拼接
+	signStr := sortSignParams(nonceStr, ticket, timeStamp, url)
+
+	// 加密签名
+	h := sha1.New()
+	h.Write([]byte(signStr))
+	ticketSign = hex.EncodeToString(h.Sum([]byte("")))
+	return
+}
+
+// 获取根据Key排序后的请求参数字符串
+func sortSignParams(nonceStr, ticket, timeStamp, url string) string {
+	body := make(map[string]interface{})
+	body["noncestr"] = nonceStr
+	body["jsapi_ticket"] = ticket
+	body["timestamp"] = timeStamp
+	body["url"] = url
+
+	keyList := make([]string, 0)
+	for k := range body {
+		keyList = append(keyList, k)
+	}
+	sort.Strings(keyList)
+	buffer := new(bytes.Buffer)
+	for _, k := range keyList {
+		s := fmt.Sprintf("%s=%s&", k, fmt.Sprintf("%v", body[k]))
+		buffer.WriteString(s)
+	}
+	return buffer.String()
 }
