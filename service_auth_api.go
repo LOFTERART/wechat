@@ -1,5 +1,6 @@
 /*
  网页授权相关的接口。
+ https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html
 */
 
 package wechat
