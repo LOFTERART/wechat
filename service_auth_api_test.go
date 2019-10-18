@@ -58,3 +58,17 @@ func TestCheckAuthAccessToken(t *testing.T) {
 	}
 	t.Logf("返回值: %+v\n", rst)
 }
+
+func TestCode2Session(t *testing.T) {
+	fmt.Println("----------登录凭证校验----------")
+	// 请求接口
+	appId := ""
+	secret := ""
+	js_code := ""
+	rst, err := Code2Session(appId, secret, js_code)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Logf("返回值: %+v\n", rst)
+}
