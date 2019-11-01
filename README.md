@@ -37,29 +37,7 @@ client := wechat.NewClient(isProd, isMch, serviceType, apiKey, certFilepath, con
 
 ### 使用
 
-下面是通用的接口，使用上面初始化时生成的实例`client`进行相应函数的调用：
-
-* 提交付款码支付：`func (*Client) Micropay(MicropayBody) (MicropayResponse, error)`
-* 统一下单：`func (*Client) UnifiedOrder(UnifiedOrderBody) (UnifiedOrderResponse, error)`
-* 查询订单：`func (*Client) QueryOrder(QueryOrderBody) (QueryOrderResponse, error)`
-* 关闭订单：`func (*Client) CloseOrder(CloseOrderBody) (CloseOrderResponse, error)`
-* 撤销订单：`func (*Client) Reverse(ReverseBody) (ReverseResponse, error)`
-* 申请退款：`func (*Client) Refund(RefundBody) (RefundResponse, error)`
-* 查询退款：`func (*Client) QueryRefund(QueryRefundBody) (QueryRefundResponse, error)`
-* 下载对账单：`func (*Client) DownloadBill(DownloadBillBody) (string, *DownloadBillResponse, error)`
-* 交易保障(JSAPI)：`func (*Client) ReportJsApi(ReportJsApiBody) (ReportJsApiResponse, error)`
-* 交易保障(MICROPAY)：`func (*Client) ReportMicropay(ReportMicropayBody) (ReportMicropayResponse, error)`
-* 下载资金账单：TODO，client.DownloadFundFlow()
-* 拉取订单评价数据：TODO，client.BatchQueryComment()
-* 企业付款到零钱：`func (*Client) Change(ChangeBody) (ChangeResponse, error)`
-* 授权码查询OpenId：`func (*Client) OpenIdByAuthCode(OpenIdByAuthCodeBody) (OpenIdByAuthCodeResponse, error)`
-* 获取AccessToken：`func GetAccessToken(appId string, appSecret string) (AccessToken, error)`
-* 获取用户基本信息(UnionId机制)：`func GetUserInfo(accessToken string, openId string, lang ...string) (UserInfo, error)`
-* 获取小程序支付签名：`func GetMiniPaySign(appId, nonceStr, prepayId, signType, timeStamp, apiKey string) (string)`
-* 获取H5支付签名：`func GetH5PaySign(appId, nonceStr, packages, signType, timeStamp, apiKey string) (string)`
-* 获取APP支付签名：`func GetAppPaySign(appId, nonceStr, partnerId, prepayId, signType, timeStamp, apiKey string) (string)`
-
-其中带有`(*Client)`字样的接口，需要使用`wechat.NewClient`创建的实例对象来调用，而不带的接口，则可以直接使用`wechat.XXX`调用。
+以下是通用的接口，使用上面初始化时生成的实例`client`进行相应函数的调用。其中带有`(*Client)`字样的接口，需要使用`wechat.NewClient`创建的实例对象来调用，而不带的接口，则可以直接使用`wechat.XXX`调用。
 
 使用样例：
 
@@ -79,9 +57,56 @@ func Test() {
 
 注意事项：
 
-* 参数或返回值的类型，请查看接口对应的`wx_xxxxxx.go`文件，里面有`XXXBody`和`XXXResponse`与之对应。
+* 参数或返回值的类型，请查看接口对应的文件，里面有`XXXBody`和`XXXResponse`与之对应。
 * 参数或返回值中的常量，请参照[constant.go](constant.go)文件。
-* 具体使用方法，请参照接口对应的`wx_xxxxxx_test.go`测试文件。
+* 具体使用方法，请参照接口对应的测试文件。
+
+#### 微信支付
+
+对应文件：`wx_pay_xxxxxx.go`
+
+* 提交付款码支付：`(*Client) Micropay`。
+* 统一下单：`(*Client) UnifiedOrder`。
+* 查询订单：`(*Client) QueryOrder`。
+* 关闭订单：`(*Client) CloseOrder`。
+* 撤销订单：`(*Client) Reverse`。
+* 申请退款：`(*Client) Refund`。
+* 查询退款：`(*Client) QueryRefund`。
+* 下载对账单：`(*Client) DownloadBill`。
+* 交易保障(JSAPI)：`(*Client) ReportJsApi`。
+* 交易保障(MICROPAY)：`(*Client) ReportMicropay`。
+* 下载资金账单：TODO，client.DownloadFundFlow()。
+* 拉取订单评价数据：TODO，client.BatchQueryComment()。
+* 企业付款到零钱：`(*Client) Change`。
+* 查询企业付款到零钱：`(*Client) QueryChange`。
+
+#### 微信支付回调
+
+对应文件：`wx_notify_xxxxxx.go`
+
+* 支付回调：`(*Client) NotifyPay`。
+* 退款回调：`(*Client) NotifyRefund`。
+
+#### 微信公众号
+
+对应文件：`wx_service_xxxxxx.go`
+
+* 授权码查询OpenId：`(*Client) OpenIdByAuthCode`。
+* 获取基础支持的AccessToken：`GetBasicAccessToken`。
+* 获取用户基本信息(UnionId机制)：`GetUserInfo`。
+* 获取H5支付签名：`GetH5PaySign`。
+
+#### 微信小程序
+
+对应文件：`wx_applet_xxxxxx.go`
+
+* 获取小程序支付签名：`GetAppletPaySign`。
+
+#### 移动端
+
+对应文件：`wx_app_xxxxxx.go`
+
+* 获取APP支付签名：`GetAppPaySign`。
 
 ### 文档
 
@@ -107,7 +132,7 @@ func Test() {
   * [Native支付](https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_1)
   * [APP支付](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=8_1)
   * [H5支付](https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=15_1)
-  * (TODO) [小程序支付](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_3&index=1)
+  * [小程序支付](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_3&index=1)
   * (TODO) [代金券或立减优惠](https://pay.weixin.qq.com/wiki/doc/api/tools/sp_coupon.php?chapter=12_1)
   * (TODO) [现金红包](https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_1)
   * [企业付款](https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_1)
@@ -117,7 +142,7 @@ func Test() {
   * [Native支付](https://pay.weixin.qq.com/wiki/doc/api/native_sl.php?chapter=6_1)
   * [APP支付](https://pay.weixin.qq.com/wiki/doc/api/app/app_sl.php?chapter=8_1)
   * [H5支付](https://pay.weixin.qq.com/wiki/doc/api/H5_sl.php?chapter=15_1)
-  * (TODO) [小程序支付](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_sl_api.php?chapter=7_3&index=1)
+  * [小程序支付](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_sl_api.php?chapter=7_3&index=1)
   * [现金红包](https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon_sl.php?chapter=13_1)
 
 ### 测试方法
@@ -136,3 +161,5 @@ go test
 - 测试改为不同情境使用不同的用例。
 - 继续调试境内普通商户和境内服务商的其他模块API文档。
 - 选择性调试境外接口。
+- 继续增加公众号和小程序相关接口。
+- 移除`service`开头的文件。

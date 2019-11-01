@@ -1,15 +1,15 @@
 package wechat
 
-type RefundNotifyHandler func(RefundNotifyBody) (NotifyResponseModel, error)
+type NotifyRefundHandler func(NotifyRefundBody) (NotifyResponseModel, error)
 
 // 退款结果通知
-func (c *Client) RefundNotify(handler RefundNotifyHandler, requestBody []byte) (rspBody string, err error) {
+func (c *Client) NotifyRefund(handler NotifyRefundHandler, requestBody []byte) (rspBody string, err error) {
 	// TODO
 	return
 }
 
 // 退款结果通知的参数
-type RefundNotifyBody struct {
+type NotifyRefundBody struct {
 	ResponseModel
 	// 当return_code为SUCCESS时
 	ServiceResponseModel

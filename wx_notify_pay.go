@@ -5,16 +5,16 @@ import (
 	"github.com/beevik/etree"
 )
 
-type PayNotifyHandler func(PayNotifyBody) error
+type NotifyPayHandler func(NotifyPayBody) error
 
 // 支付结果通知
-func (c *Client) OnPayNotify(handler PayNotifyHandler, requestBody []byte) (rspBody string, err error) {
+func (c *Client) NotifyPay(handler NotifyPayHandler, requestBody []byte) (rspBody string, err error) {
 	// 验证Sign
 	if err = c.doVerifySign(requestBody, false); err != nil {
 		return
 	}
 	// 解析参数
-	var body PayNotifyBody
+	var body NotifyPayBody
 	if err = c.payNotifyParseParams(requestBody, &body); err != nil {
 		return
 	}
@@ -32,7 +32,7 @@ func (c *Client) OnPayNotify(handler PayNotifyHandler, requestBody []byte) (rspB
 }
 
 // 支付结果通知的参数
-type PayNotifyBody struct {
+type NotifyPayBody struct {
 	ResponseModel
 	// 当return_code为SUCCESS时
 	ServiceResponseModel
@@ -59,7 +59,7 @@ type PayNotifyBody struct {
 }
 
 // 支付结果通知-解析XML参数
-func (c *Client) payNotifyParseParams(xmlStr []byte, body *PayNotifyBody) (err error) {
+func (c *Client) payNotifyParseParams(xmlStr []byte, body *NotifyPayBody) (err error) {
 	if err = xml.Unmarshal(xmlStr, &body); err != nil {
 		return
 	}
