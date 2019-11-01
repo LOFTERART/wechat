@@ -48,7 +48,7 @@ func (c *Client) doWeChat(relativeUrl string, bodyObj interface{}) (bytes []byte
 		return
 	}
 	// 发起请求
-	bytes, err = httpPost(c.url(relativeUrl), GenerateXml(body))
+	bytes, err = httpPostXml(c.url(relativeUrl), GenerateXml(body))
 	return
 }
 
@@ -64,6 +64,6 @@ func (c *Client) doWeChatWithCert(relativeUrl string, bodyObj interface{}) (byte
 		return
 	}
 	// 发起请求
-	bytes, err = httpPostWithCert(c.url(relativeUrl), GenerateXml(body), c.certClient)
+	bytes, err = httpPostXmlWithCert(c.url(relativeUrl), GenerateXml(body), c.certClient)
 	return
 }

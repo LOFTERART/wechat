@@ -1,6 +1,8 @@
 package wechat
 
 import (
+	"bytes"
+	"encoding/json"
 	"io/ioutil"
 	"net"
 	"net/http"
@@ -36,8 +38,23 @@ func httpGet(url string) (body []byte, err error) {
 	return
 }
 
+// 发送Post请求
+func httpPost(url string, body interface{}) (data []byte, err error) {
+	bodyStr, err := json.Marshal(body)
+	if err != nil {
+		return
+	}
+	resp, err := client.Post(url, "application/json", bytes.NewReader(bodyStr))
+	if err != nil {
+		return
+	}
+	defer resp.Body.Close()
+	data, err = ioutil.ReadAll(resp.Body)
+	return
+}
+
 // 发送Post请求，参数是XML格式的字符串
-func httpPost(url string, xmlBody string) (body []byte, err error) {
+func httpPostXml(url string, xmlBody string) (body []byte, err error) {
 	resp, err := client.Post(url, "application/xml", strings.NewReader(xmlBody))
 	if err != nil {
 		return
@@ -48,7 +65,7 @@ func httpPost(url string, xmlBody string) (body []byte, err error) {
 }
 
 // 发送带证书的Post请求，参数是XML格式的字符串
-func httpPostWithCert(url string, xmlBody string, client *http.Client) (body []byte, err error) {
+func httpPostXmlWithCert(url string, xmlBody string, client *http.Client) (body []byte, err error) {
 	resp, err := client.Post(url, "application/xml", strings.NewReader(xmlBody))
 	if err != nil {
 		return

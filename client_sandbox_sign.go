@@ -32,7 +32,7 @@ func (c *Client) getSandBoxSignKey(nonceStr string, sign string) (key string, er
 	params["nonce_str"] = nonceStr
 	params["sign"] = sign
 	paramXml := GenerateXml(params)
-	bytes, err := httpPost(baseUrlSandbox+"pay/getsignkey", paramXml)
+	bytes, err := httpPostXml(baseUrlSandbox+"pay/getsignkey", paramXml)
 	if err != nil {
 		return
 	}

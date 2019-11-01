@@ -2,13 +2,11 @@
 
 [![Latest Tag](https://img.shields.io/badge/tag-v0.2.0-blue.svg)](https://gitee.com/cuckoopark/wechat/releases)
 
-这是用Golang封装了微信支付的所有API接口的SDK，并自动生成和解析XML数据，还包括部分服务号、小程序、移动端的工具函数。
+这是用Golang封装了微信的所有API接口的SDK，并自动生成和解析XML数据，包括微信支付、公众号、小程序、移动端的工具函数。
 
 * 支持境内普通商户和境内服务商(境外和银行服务商没有条件测试)。
 * 支持全局配置应用ID、商家ID等信息。
 * 全部参数和返回值均使用`struct`类型传递，而不是`map`类型。
-* 包含公众号网页授权码的相关操作。
-* 包含H5、小程序、移动端的支付签名生成方法。
 
 ### 安装
 
@@ -101,6 +99,7 @@ func Test() {
 对应文件：`wx_applet_xxxxxx.go`
 
 * 获取小程序支付签名：`GetAppletPaySign`。
+* 获取小程序码：`GetAppletUnlimitQrcode`。
 
 #### 移动端
 
