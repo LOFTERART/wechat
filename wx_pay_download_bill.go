@@ -34,5 +34,5 @@ type DownloadBillBody struct {
 // 下载对账单的返回值
 type DownloadBillResponse struct {
 	ResponseModel
-	ErrCode string `xml:"err_code"` // 失败错误码，详见错误码列表 TODO
+	ErrCode string `xml:"err_code"` // TODO 失败错误码，详见错误码列表
 }

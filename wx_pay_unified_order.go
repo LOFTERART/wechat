@@ -27,7 +27,7 @@ type UnifiedOrderBody struct {
 	SignType       string `json:"sign_type,omitempty"`   // 签名类型，目前支持HMAC-SHA256和MD5，默认为MD5
 	DeviceInfo     string `json:"device_info,omitempty"` // (非必填) 终端设备号(门店号或收银设备ID)，注意：PC网页或JSAPI支付请传"WEB"
 	Body           string `json:"body"`                  // 商品描述交易字段格式根据不同的应用场景建议按照以下格式上传： （1）PC网站——传入浏览器打开的网站主页title名-实际商品名称，例如：腾讯充值中心-QQ会员充值；（2） 公众号——传入公众号名称-实际商品名称，例如：腾讯形象店- image-QQ公仔；（3） H5——应用在浏览器网页上的场景，传入浏览器打开的移动网页的主页title名-实际商品名称，例如：腾讯充值中心-QQ会员充值；（4） 线下门店——门店品牌名-城市分店名-实际商品名称，例如： image形象店-深圳腾大- QQ公仔）（5） APP——需传入应用市场上的APP名字-实际商品名称，天天爱消除-游戏充值。
-	Detail         string `json:"detail,omitempty"`      // (非必填) TODO 商品详细描述，对于使用单品优惠的商户，该字段必须按照规范上传，详见"单品优惠参数说明"
+	Detail         string `json:"detail,omitempty"`      // TODO (非必填) 商品详细描述，对于使用单品优惠的商户，该字段必须按照规范上传，详见"单品优惠参数说明"
 	Attach         string `json:"attach,omitempty"`      // (非必填) 附加数据，在查询API和支付通知中原样返回，该字段主要用于商户携带订单的自定义数据
 	OutTradeNo     string `json:"out_trade_no"`          // 商户系统内部订单号，要求32个字符内，只能是数字、大小写字母_-|*且在同一个商户号下唯一。详见商户订单号
 	FeeType        string `json:"fee_type,omitempty"`    // (非必填) 符合ISO 4217标准的三位字母代码，默认人民币：CNY，其他值列表详见货币类型
@@ -35,7 +35,7 @@ type UnifiedOrderBody struct {
 	SpbillCreateIP string `json:"spbill_create_ip"`      // 支持IPV4和IPV6两种格式的IP地址。调用微信支付API的机器IP
 	TimeStart      string `json:"time_start,omitempty"`  // (非必填) 订单生成时间，格式为yyyyMMddHHmmss，如2009年12月25日9点10分10秒表示为20091225091010。其他详见时间规则
 	TimeExpire     string `json:"time_expire,omitempty"` // (非必填) 订单失效时间，格式为yyyyMMddHHmmss，如2009年12月27日9点10分10秒表示为20091227091010。订单失效时间是针对订单号而言的，由于在请求支付的时候有一个必传参数prepay_id只有两小时的有效期，所以在重入时间超过2小时的时候需要重新请求下单接口获取新的prepay_id。其他详见时间规则。建议：最短失效时间间隔大于1分钟
-	GoodsTag       string `json:"goods_tag,omitempty"`   // (非必填) TODO 订单优惠标记，代金券或立减优惠功能的参数，说明详见代金券或立减优惠
+	GoodsTag       string `json:"goods_tag,omitempty"`   // TODO (非必填) 订单优惠标记，代金券或立减优惠功能的参数，说明详见代金券或立减优惠
 	NotifyUrl      string `json:"notify_url"`            // 接收微信支付异步通知回调地址，通知url必须为直接可访问的url，不能携带参数。
 	TradeType      string `json:"trade_type"`            // JSAPI-JSAPI支付 NATIVE-Native支付 APP-APP支付 说明详见参数规定
 	ProductId      string `json:"product_id,omitempty"`  // (非必填) trade_type=NATIVE时，此参数必传。此id为二维码中包含的商品ID，商户自行定义。

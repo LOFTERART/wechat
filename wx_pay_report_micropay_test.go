@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// 测试交易保障(MICROPAY) TODO
+// TODO 测试交易保障(MICROPAY)
 func testReportMicropay(t *testing.T) {
 	fmt.Println("----------交易保障(MICROPAY)----------")
 	// 初始化参数

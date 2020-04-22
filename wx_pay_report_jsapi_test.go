@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-// 测试交易保障(JSAPI) TODO
+// TODO 测试交易保障(JSAPI)
 func testReportJsApi(t *testing.T) {
 	fmt.Println("----------交易保障(JSAPI)----------")
 	// 初始化参数
