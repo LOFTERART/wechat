@@ -3,7 +3,7 @@ package wechat
 import "encoding/xml"
 
 // 交易保障(MICROPAY)
-func (c *Client) ReportMicropay(body ReportMicropayBody) (wxRsp ReportMicropayResponse, err error) {
+func (c *PayClient) ReportMicropay(body ReportMicropayBody) (wxRsp ReportMicropayResponse, err error) {
 	// 处理参数
 	if body.InterfaceUrl, err = EscapedPath("https://api.mch.weixin.qq.com/pay/batchreport/micropay/total"); err != nil {
 		return

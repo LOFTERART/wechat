@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 )
 
-func (c *Client) buildBody(bodyObj interface{}) (body map[string]interface{}, err error) {
+func (c *PayClient) buildBody(bodyObj interface{}) (body map[string]interface{}, err error) {
 	// 将bodyObj转换为map[string]interface{}类型
 	bodyJson, _ := json.Marshal(bodyObj)
 	body = make(map[string]interface{})
@@ -41,7 +41,7 @@ func (c *Client) buildBody(bodyObj interface{}) (body map[string]interface{}, er
 }
 
 // 向微信发送请求
-func (c *Client) doWeChat(relativeUrl string, bodyObj interface{}) (bytes []byte, err error) {
+func (c *PayClient) doWeChat(relativeUrl string, bodyObj interface{}) (bytes []byte, err error) {
 	// 转换参数
 	body, err := c.buildBody(bodyObj)
 	if err != nil {
@@ -53,7 +53,7 @@ func (c *Client) doWeChat(relativeUrl string, bodyObj interface{}) (bytes []byte
 }
 
 // 向微信发送带证书请求
-func (c *Client) doWeChatWithCert(relativeUrl string, bodyObj interface{}) (bytes []byte, err error) {
+func (c *PayClient) doWeChatWithCert(relativeUrl string, bodyObj interface{}) (bytes []byte, err error) {
 	// 转换参数
 	body, err := c.buildBody(bodyObj)
 	if err != nil {

@@ -5,14 +5,14 @@ import (
 	"testing"
 )
 
-// 测试授权码查询openid
-func TestOpenIdByAuthCode(t *testing.T) {
-	fmt.Println("----------授权码查询openid----------")
+// 测试付款码查询openid
+func TestAuthCodeToOpenId(t *testing.T) {
+	fmt.Println("----------付款码查询openid----------")
 	// 初始化参数
-	body := OpenIdByAuthCodeBody{}
+	body := AuthCodeToOpenIdBody{}
 	body.AuthCode = "134785902462927760"
 	// 请求支付
-	wxRsp, err := testClient.OpenIdByAuthCode(body)
+	wxRsp, err := testClient.AuthCodeToOpenId(body)
 	if err != nil {
 		t.Error(err)
 		return

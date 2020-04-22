@@ -16,13 +16,11 @@ func TestChange(t *testing.T) {
 	body.Amount = 30
 	body.Desc = "停车费找零"
 	body.SpbillCreateIP = "124.77.173.62"
-
 	// 请求的客户端必须是商户模式，且是特殊的商户接口
-	changeClient := NewClient(true, true, ServiceTypeNormalDomestic, testApiKey, testCertPath, Config{
+	changeClient := NewPayClient(true, true, ServiceTypeNormalDomestic, testApiKey, testCertPath, Config{
 		AppId: testAppId, // 用子商户id设置
 		MchId: testMchId, // 用子商户号设置
 	})
-
 	// 请求支付
 	wxRsp, err := changeClient.Change(body)
 	if err != nil {

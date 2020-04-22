@@ -3,7 +3,7 @@ package wechat
 import "encoding/xml"
 
 // 撤销订单
-func (c *Client) Reverse(body ReverseBody) (wxRsp ReverseResponse, err error) {
+func (c *PayClient) Reverse(body ReverseBody) (wxRsp ReverseResponse, err error) {
 	// 业务逻辑
 	bytes, err := c.doWeChatWithCert("secapi/pay/reverse", body)
 	if err != nil {

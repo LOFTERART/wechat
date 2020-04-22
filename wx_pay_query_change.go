@@ -5,7 +5,7 @@ import (
 )
 
 // 企业付款到零钱的查询
-func (c *Client) QueryChange(body QueryChangeBody) (wxRsp QueryChangeResponse, err error) {
+func (c *PayClient) QueryChange(body QueryChangeBody) (wxRsp QueryChangeResponse, err error) {
 	// 业务逻辑
 	bytes, err := c.doWeChatWithCert("mmpaymkttransfers/gettransferinfo", body)
 	if err != nil {

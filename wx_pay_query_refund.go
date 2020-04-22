@@ -8,7 +8,7 @@ import (
 )
 
 // 查询退款
-func (c *Client) QueryRefund(body QueryRefundBody) (wxRsp QueryRefundResponse, err error) {
+func (c *PayClient) QueryRefund(body QueryRefundBody) (wxRsp QueryRefundResponse, err error) {
 	// 业务逻辑
 	bytes, err := c.doWeChat("pay/refundquery", body)
 	if err != nil {
@@ -74,7 +74,7 @@ type QueryRefundResponseTotalRefund struct {
 }
 
 // 查询退款-解析返回值
-func (c *Client) queryRefundParseResponse(xmlStr []byte, rsp *QueryRefundResponse) (err error) {
+func (c *PayClient) queryRefundParseResponse(xmlStr []byte, rsp *QueryRefundResponse) (err error) {
 	// 常规解析
 	if err = xml.Unmarshal(xmlStr, rsp); err != nil {
 		return

@@ -7,7 +7,7 @@ import (
 )
 
 // 申请退款
-func (c *Client) Refund(body RefundBody) (wxRsp RefundResponse, err error) {
+func (c *PayClient) Refund(body RefundBody) (wxRsp RefundResponse, err error) {
 	// 业务逻辑
 	bytes, err := c.doWeChatWithCert("secapi/pay/refund", body)
 	if err != nil {
@@ -57,7 +57,7 @@ type RefundResponse struct {
 }
 
 // 申请退款-解析XML返回值
-func (c *Client) refundParseResponse(xmlStr []byte, rsp *RefundResponse) (err error) {
+func (c *PayClient) refundParseResponse(xmlStr []byte, rsp *RefundResponse) (err error) {
 	// 常规解析
 	if err = xml.Unmarshal(xmlStr, rsp); err != nil {
 		return

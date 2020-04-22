@@ -6,7 +6,7 @@ import (
 )
 
 // 查询订单
-func (c *Client) QueryOrder(body QueryOrderBody) (wxRsp QueryOrderResponse, err error) {
+func (c *PayClient) QueryOrder(body QueryOrderBody) (wxRsp QueryOrderResponse, err error) {
 	// 业务逻辑
 	bytes, err := c.doWeChat("pay/orderquery", body)
 	if err != nil {
@@ -62,7 +62,7 @@ type QueryOrderResponse struct {
 }
 
 // 查询订单-解析XML返回值
-func (c *Client) queryOrderParseResponse(xmlStr []byte, rsp *QueryOrderResponse) (err error) {
+func (c *PayClient) queryOrderParseResponse(xmlStr []byte, rsp *QueryOrderResponse) (err error) {
 	// 常规解析
 	if err = xml.Unmarshal(xmlStr, rsp); err != nil {
 		return

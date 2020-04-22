@@ -3,7 +3,7 @@ package wechat
 type NotifyRefundHandler func(NotifyRefundBody) (NotifyResponseModel, error)
 
 // 退款结果通知
-func (c *Client) NotifyRefund(handler NotifyRefundHandler, requestBody []byte) (rspBody string, err error) {
+func (c *PayClient) NotifyRefund(handler NotifyRefundHandler, requestBody []byte) (rspBody string, err error) {
 	// TODO
 	return
 }

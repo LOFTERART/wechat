@@ -3,7 +3,7 @@ package wechat
 import "encoding/xml"
 
 // 统一下单
-func (c *Client) UnifiedOrder(body UnifiedOrderBody) (wxRsp UnifiedOrderResponse, err error) {
+func (c *PayClient) UnifiedOrder(body UnifiedOrderBody) (wxRsp UnifiedOrderResponse, err error) {
 	// 处理参数
 	if body.SceneInfoModel != nil {
 		body.SceneInfo = JsonString(*body.SceneInfoModel)

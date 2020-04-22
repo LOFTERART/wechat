@@ -14,7 +14,7 @@ type getSignKeyResponse struct {
 }
 
 // 获取沙盒的签名
-func (c *Client) sandboxSign(nonceStr string, signType string) (key string, err error) {
+func (c *PayClient) sandboxSign(nonceStr string, signType string) (key string, err error) {
 	body := make(BodyMap)
 	body["mch_id"] = c.config.MchId
 	body["nonce_str"] = nonceStr
@@ -26,7 +26,7 @@ func (c *Client) sandboxSign(nonceStr string, signType string) (key string, err 
 }
 
 // 调用微信提供的接口获取SandboxSignkey
-func (c *Client) getSandBoxSignKey(nonceStr string, sign string) (key string, err error) {
+func (c *PayClient) getSandBoxSignKey(nonceStr string, sign string) (key string, err error) {
 	params := make(map[string]interface{})
 	params["mch_id"] = c.config.MchId
 	params["nonce_str"] = nonceStr

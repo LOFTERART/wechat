@@ -3,7 +3,7 @@ package wechat
 import "encoding/xml"
 
 // 提交付款码支付
-func (c *Client) Micropay(body MicropayBody) (wxRsp MicropayResponse, err error) {
+func (c *PayClient) Micropay(body MicropayBody) (wxRsp MicropayResponse, err error) {
 	// 处理参数
 	if body.SceneInfo != nil {
 		body.SceneInfoStr = JsonString(*body.SceneInfo)

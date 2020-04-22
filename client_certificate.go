@@ -11,7 +11,7 @@ import (
 	"golang.org/x/crypto/pkcs12"
 )
 
-func (c *Client) setCertData(certPath string) (err error) {
+func (c *PayClient) setCertData(certPath string) (err error) {
 	if c.certClient != nil {
 		return
 	}
@@ -27,7 +27,7 @@ func (c *Client) setCertData(certPath string) (err error) {
 	return
 }
 
-func (c *Client) buildClient(data []byte) (client *http.Client, err error) {
+func (c *PayClient) buildClient(data []byte) (client *http.Client, err error) {
 	// 将pkcs12证书转成pem
 	cert, err := c.pkc12ToPerm(data)
 	if err != nil {
@@ -53,7 +53,7 @@ func (c *Client) buildClient(data []byte) (client *http.Client, err error) {
 	return
 }
 
-func (c *Client) pkc12ToPerm(data []byte) (cert tls.Certificate, err error) {
+func (c *PayClient) pkc12ToPerm(data []byte) (cert tls.Certificate, err error) {
 	blocks, err := pkcs12.ToPEM(data, c.config.MchId)
 	if err != nil {
 		return

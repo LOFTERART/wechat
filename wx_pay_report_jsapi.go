@@ -5,7 +5,7 @@ import (
 )
 
 // 交易保障(JSAPI)
-func (c *Client) ReportJsApi(body ReportJsApiBody) (wxRsp ReportJsApiResponse, err error) {
+func (c *PayClient) ReportJsApi(body ReportJsApiBody) (wxRsp ReportJsApiResponse, err error) {
 	// 处理参数
 	if body.InterfaceUrl, err = EscapedPath(body.InterfaceUrl); err != nil {
 		return

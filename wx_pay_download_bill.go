@@ -6,7 +6,7 @@ import (
 )
 
 // 下载对账单
-func (c *Client) DownloadBill(body DownloadBillBody) (wxRsp string, failRsp *DownloadBillResponse, err error) {
+func (c *PayClient) DownloadBill(body DownloadBillBody) (wxRsp string, failRsp *DownloadBillResponse, err error) {
 	// 业务逻辑
 	bytes, err := c.doWeChat("pay/downloadbill", body)
 	if err != nil {

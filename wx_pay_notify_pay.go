@@ -8,7 +8,7 @@ import (
 type NotifyPayHandler func(NotifyPayBody) error
 
 // 支付结果通知
-func (c *Client) NotifyPay(handler NotifyPayHandler, requestBody []byte) (rspBody string, err error) {
+func (c *PayClient) NotifyPay(handler NotifyPayHandler, requestBody []byte) (rspBody string, err error) {
 	// 验证Sign
 	if err = c.doVerifySign(requestBody, false); err != nil {
 		return
@@ -59,7 +59,7 @@ type NotifyPayBody struct {
 }
 
 // 支付结果通知-解析XML参数
-func (c *Client) payNotifyParseParams(xmlStr []byte, body *NotifyPayBody) (err error) {
+func (c *PayClient) payNotifyParseParams(xmlStr []byte, body *NotifyPayBody) (err error) {
 	if err = xml.Unmarshal(xmlStr, &body); err != nil {
 		return
 	}

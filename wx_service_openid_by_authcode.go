@@ -4,8 +4,8 @@ import (
 	"encoding/xml"
 )
 
-// 授权码查询OpenId
-func (c *Client) OpenIdByAuthCode(body OpenIdByAuthCodeBody) (wxRsp OpenIdByAuthCodeResponse, err error) {
+// 付款码查询OpenId
+func (c *PayClient) AuthCodeToOpenId(body AuthCodeToOpenIdBody) (wxRsp AuthCodeToOpenIdResponse, err error) {
 	// 业务逻辑
 	bytes, err := c.doWeChat("tools/authcodetoopenid", body)
 	if err != nil {
@@ -20,14 +20,14 @@ func (c *Client) OpenIdByAuthCode(body OpenIdByAuthCodeBody) (wxRsp OpenIdByAuth
 	return
 }
 
-// 授权码查询OpenId参数
-type OpenIdByAuthCodeBody struct {
+// 付款码查询OpenId参数
+type AuthCodeToOpenIdBody struct {
 	SignType string `json:"sign_type,omitempty"` // 签名类型，目前支持HMAC-SHA256和MD5，默认为MD5
 	AuthCode string `json:"auth_code"`           // 扫码支付授权码，设备读取用户微信中的条码或者二维码信息
 }
 
-// 授权码查询OpenId返回值
-type OpenIdByAuthCodeResponse struct {
+// 付款码查询OpenId返回值
+type AuthCodeToOpenIdResponse struct {
 	ResponseModel
 	// 当return_code为SUCCESS时
 	ServiceResponseModel

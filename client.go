@@ -4,7 +4,7 @@ import (
 	"net/http"
 )
 
-type Client struct {
+type PayClient struct {
 	config       Config       // 配置信息
 	serviceType  int          // 服务模式
 	apiKey       string       // API Key
@@ -15,7 +15,7 @@ type Client struct {
 }
 
 // 是否是服务商模式
-func (c *Client) isFacilitator() bool {
+func (c *PayClient) isFacilitator() bool {
 	switch c.serviceType {
 	case ServiceTypeFacilitatorDomestic, ServiceTypeFacilitatorAbroad, ServiceTypeBankServiceProvidor:
 		return true
@@ -25,7 +25,7 @@ func (c *Client) isFacilitator() bool {
 }
 
 // 拼接完整的URL
-func (c *Client) url(relativePath string) string {
+func (c *PayClient) url(relativePath string) string {
 	if c.isProd {
 		return baseUrl + relativePath
 	} else {
@@ -33,9 +33,9 @@ func (c *Client) url(relativePath string) string {
 	}
 }
 
-// 初始化微信客户端
-func NewClient(isProd bool, isMch bool, serviceType int, apiKey string, certFilepath string, config Config) (client *Client) {
-	client = new(Client)
+// 初始化微信支付客户端
+func NewPayClient(isProd bool, isMch bool, serviceType int, apiKey string, certFilepath string, config Config) (client *PayClient) {
+	client = new(PayClient)
 	client.config = config
 	client.serviceType = serviceType
 	client.apiKey = apiKey

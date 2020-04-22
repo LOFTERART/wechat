@@ -12,7 +12,7 @@ func TestQueryChange(t *testing.T) {
 	body := QueryChangeBody{}
 	body.PartnerTradeNo = "wxcs201908241600005555"
 	// 请求的客户端必须是商户模式，且是特殊的商户接口
-	changeClient := NewClient(true, false, ServiceTypeNormalDomestic, testApiKey, testCertPath, Config{
+	changeClient := NewPayClient(true, false, ServiceTypeNormalDomestic, testApiKey, testCertPath, Config{
 		AppId: testAppId, // 用子商户id设置
 		MchId: testMchId, // 用子商户号设置
 	})

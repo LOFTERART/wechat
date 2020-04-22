@@ -3,7 +3,7 @@ package wechat
 import "encoding/xml"
 
 // 关闭订单
-func (c *Client) CloseOrder(body CloseOrderBody) (wxRsp CloseOrderResponse, err error) {
+func (c *PayClient) CloseOrder(body CloseOrderBody) (wxRsp CloseOrderResponse, err error) {
 	// 业务逻辑
 	bytes, err := c.doWeChat("pay/closeorder", body)
 	if err != nil {

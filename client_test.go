@@ -15,7 +15,7 @@ var (
 	testCertPath = os.Getenv("CertFilepath")
 )
 
-var testClient = NewClient(true, false, ServiceTypeFacilitatorDomestic, testApiKey, testCertPath, Config{
+var testClient = NewPayClient(true, false, ServiceTypeFacilitatorDomestic, testApiKey, testCertPath, Config{
 	AppId:    testAppId,
 	SubAppId: testSubAppId,
 	MchId:    testMchId,

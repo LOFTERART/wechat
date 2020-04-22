@@ -6,7 +6,7 @@ import (
 )
 
 // 验证微信返回的结果签名
-func (c *Client) doVerifySign(xmlStr []byte, breakWhenFail bool) (err error) {
+func (c *PayClient) doVerifySign(xmlStr []byte, breakWhenFail bool) (err error) {
 	// 生成XML文档
 	doc := etree.NewDocument()
 	if err = doc.ReadFromBytes(xmlStr); err != nil {
