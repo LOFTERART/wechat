@@ -3,12 +3,11 @@ package wechat
 import (
 	"crypto/tls"
 	"encoding/pem"
+	"golang.org/x/crypto/pkcs12"
 	"io/ioutil"
 	"net"
 	"net/http"
 	"time"
-
-	"golang.org/x/crypto/pkcs12"
 )
 
 func (c *PayClient) setCertData(certPath string) (err error) {

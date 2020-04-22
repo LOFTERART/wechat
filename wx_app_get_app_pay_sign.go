@@ -2,14 +2,9 @@ package wechat
 
 import (
 	"bytes"
-	"crypto/hmac"
-	"crypto/md5"
-	"crypto/sha1"
-	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
 	"sort"
-	"strings"
 )
 
 // APP支付，统一下单获取支付参数后，再次计算APP支付所需要的的sign
@@ -21,17 +16,7 @@ func GetAppPaySign(appId, nonceStr, partnerId, prepayId, signType, timeStamp, ap
 	buffer.WriteString(raw)
 	// 加密签名
 	signStr := buffer.String()
-	var hashSign []byte
-	if signType == SignTypeHmacSHA256 {
-		hash := hmac.New(sha256.New, []byte(apiKey))
-		hash.Write([]byte(signStr))
-		hashSign = hash.Sum(nil)
-	} else {
-		hash := md5.New()
-		hash.Write([]byte(signStr))
-		hashSign = hash.Sum(nil)
-	}
-	paySign = strings.ToUpper(hex.EncodeToString(hashSign))
+	paySign = SignWithType(signType, signStr, apiKey)
 	return
 }
 
@@ -39,11 +24,8 @@ func GetAppPaySign(appId, nonceStr, partnerId, prepayId, signType, timeStamp, ap
 func GetTicketSign(nonceStr, ticket, timeStamp, url string) (ticketSign string) {
 	// 生成参数排序并拼接
 	signStr := sortSignParams(nonceStr, ticket, timeStamp, url)
-
 	// 加密签名
-	h := sha1.New()
-	h.Write([]byte(signStr))
-	ticketSign = hex.EncodeToString(h.Sum([]byte("")))
+	ticketSign = hex.EncodeToString(Sha1(signStr))
 	return
 }
 
@@ -54,7 +36,6 @@ func sortSignParams(nonceStr, ticket, timeStamp, url string) string {
 	body["jsapi_ticket"] = ticket
 	body["timestamp"] = timeStamp
 	body["url"] = url
-
 	keyList := make([]string, 0)
 	for k := range body {
 		keyList = append(keyList, k)

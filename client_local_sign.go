@@ -2,30 +2,14 @@ package wechat
 
 import (
 	"bytes"
-	"crypto/hmac"
-	"crypto/md5"
-	"crypto/sha256"
-	"encoding/hex"
 	"fmt"
 	"sort"
-	"strings"
 )
 
 // 本地通过支付参数计算签名值
-// 生成算法：https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=4_3
 func (c *PayClient) localSign(body map[string]interface{}, signType string, apiKey string) string {
 	signStr := c.sortSignParams(body, apiKey)
-	var hashSign []byte
-	if signType == SignTypeHmacSHA256 {
-		hash := hmac.New(sha256.New, []byte(apiKey))
-		hash.Write([]byte(signStr))
-		hashSign = hash.Sum(nil)
-	} else {
-		hash := md5.New()
-		hash.Write([]byte(signStr))
-		hashSign = hash.Sum(nil)
-	}
-	return strings.ToUpper(hex.EncodeToString(hashSign))
+	return SignWithType(signType, signStr, apiKey)
 }
 
 // 获取根据Key排序后的请求参数字符串
