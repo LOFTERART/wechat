@@ -3,12 +3,12 @@ package wxapplet
 import (
 	"encoding/json"
 	"fmt"
+	"gitee.com/xiaochengtech/wechat/constant"
 	"gitee.com/xiaochengtech/wechat/util"
 )
 
-// 获取小程序码，适用于需要的码数量极多的业务场景。通过该接口生成的小程序码，永久有效，数量暂无限制。
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.getUnlimited.html
-func GetAppletUnlimitQrcode(body GetAppletUnlimitQrcodeBody) (data []byte, baseErr ResponseBase, err error) {
+// 获取小程序码
+func GetUnlimitedQrcode(body GetUnlimitedQrcodeBody) (data []byte, baseErr constant.BaseResponse, err error) {
 	url := fmt.Sprintf("https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=%s", body.AccessToken)
 	// 参数处理
 	bodyStr, err := json.Marshal(body)
@@ -35,7 +35,8 @@ func GetAppletUnlimitQrcode(body GetAppletUnlimitQrcodeBody) (data []byte, baseE
 	return
 }
 
-type GetAppletUnlimitQrcodeBody struct {
+// 获取小程序码参数
+type GetUnlimitedQrcodeBody struct {
 	AccessToken string `json:"-"`                    // 接口调用凭证
 	Scene       string `json:"scene"`                // 最大32个可见字符，只支持数字，大小写英文以及部分特殊字符：!#$&'()*+,/:;=?@-._~，其它字符请自行编码为合法字符（因不支持%，中文无法使用 urlencode 处理，请使用其他编码方式）
 	Page        string `json:"page,omitempty"`       // 必须是已经发布的小程序存在的页面（否则报错），例如 pages/index/index, 根路径前不要填加 /,不能携带参数（参数请放在scene字段里），如果不填写这个字段，默认跳主页面

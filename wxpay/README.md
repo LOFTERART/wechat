@@ -1,11 +1,9 @@
 # 微信支付
 
-特性：
-
 * 支持境内普通商户和境内服务商(境外和银行服务商没有条件测试)。
 * 支持全局配置应用ID、商家ID等信息。
 
-初始化：
+### 使用方法
 
 ```go
 const (
@@ -45,7 +43,7 @@ func Test() {
 * 参数或返回值中的常量，请参照`constant.go`文件。
 * 具体使用方法，请参照接口对应的测试文件。
 
-普通商户版API实现进度：
+### 普通商户版API
 
 * [ ] 付款码支付
   * [x] [付款码支付](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_10&index=1)：`Micropay`
@@ -75,6 +73,18 @@ func Test() {
 * [ ] APP支付
 * [ ] H5支付
 * [ ] 小程序支付
+  * [x] [小程序调起支付API签名](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_7&index=5)：`GetAppletPaySign`
+  * [x] [统一下单](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1)：`UnifiedOrder`
+  * [x] [查询订单](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_2)：`QueryOrder`
+  * [x] [关闭订单](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_3)：`CloseOrder`
+  * [x] [申请退款](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_4)：`Refund`
+  * [x] [查询退款](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_5)：`QueryRefund`
+  * [x] [下载交易账单](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_6)：`DownloadBill`
+  * [ ] [下载资金账单](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_18&index=7)
+  * [x] [支付结果通知](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_7&index=8)：`NotifyPay`
+  * [x] [交易保障](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_8&index=9)：`ReportJsApi`
+  * [x] [退款结果通知](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_16&index=10)：`NotifyRefund`
+  * [ ] [拉取订单评价数据](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_17&index=11)
 * [ ] 人脸支付
 * [ ] 代金券或立减优惠
 * [ ] 现金红包
@@ -85,7 +95,7 @@ func Test() {
   * [ ] 企业付款到银行卡
 * [ ] 分账
 
-服务商版API实现进度：
+### 服务商版API
 
 * [x] 付款码支付
   * [x] [付款码支付](https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=9_10&index=1)：`Micropay`
@@ -110,13 +120,23 @@ func Test() {
 * [ ] Native支付
 * [ ] APP支付
 * [ ] H5支付
-* [ ] 小程序支付
+* [x] 小程序支付
+  * [x] [小程序调起支付API签名](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_sl_api.php?chapter=7_7&index=5)：`GetAppletPaySign`
+  * [x] [统一下单](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_sl_api.php?chapter=9_1)：`UnifiedOrder`
+  * [x] [查询订单](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_sl_api.php?chapter=9_2)：`QueryOrder`
+  * [x] [关闭订单](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_sl_api.php?chapter=9_3)：`CloseOrder`
+  * [x] [申请退款](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_sl_api.php?chapter=9_4)：`Refund`
+  * [x] [查询退款](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_sl_api.php?chapter=9_5)：`QueryRefund`
+  * [x] [下载交易账单](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_sl_api.php?chapter=9_6)：`DownloadBill`
+  * [x] [支付结果通知](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_sl_api.php?chapter=9_7)：`NotifyPay`
+  * [x] [交易保障](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_sl_api.php?chapter=9_8)：`ReportJsApi`
+  * [x] [退款结果通知](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_sl_api.php?chapter=9_16)：`NotifyRefund`
 * [ ] 人脸支付
 * [ ] 现金红包
 * [ ] 分账
 * [ ] 特约商户进件
 
-支付相关文档：
+### 相关文档
 
 * [普通商户版](https://pay.weixin.qq.com/wiki/doc/api/index.html)
   * 付款码支付

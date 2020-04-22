@@ -6,14 +6,14 @@ import (
 	"testing"
 )
 
-func TestGetAppletUnlimitQrcode(t *testing.T) {
+func TestGetUnlimitedQrcode(t *testing.T) {
 	fmt.Println("----------获取小程序二维码----------")
 	// 请求接口
-	body := GetAppletUnlimitQrcodeBody{
+	body := GetUnlimitedQrcodeBody{
 		AccessToken: "",
 		Scene:       "TJ0Rg25wM2AfFltah6XXg5PxNZoyV9D4",
 	}
-	data, iErr, err := GetAppletUnlimitQrcode(body)
+	data, iErr, err := GetUnlimitedQrcode(body)
 	if err != nil {
 		t.Error(err)
 		return

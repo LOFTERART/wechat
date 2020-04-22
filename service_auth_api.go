@@ -56,14 +56,3 @@ func CheckAuthAccessToken(accessToken, openId string) (resp ResponseBase, err er
 	err = json.Unmarshal(body, &resp)
 	return
 }
-
-// 登录凭证校验
-func Code2Session(appId, secret, js_code string) (resp SessionKey, err error) {
-	url := fmt.Sprintf("https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code", appId, secret, js_code)
-	body, err := httpGet(url)
-	if err != nil {
-		return
-	}
-	err = json.Unmarshal(body, &resp)
-	return
-}
