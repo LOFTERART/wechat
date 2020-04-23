@@ -50,7 +50,7 @@ func (c *Client) getSandBoxSignKey(nonceStr string, sign string) (key string, er
 		return
 	}
 	if keyResponse.ReturnCode == ResponseFail {
-		err = errors.New(keyResponse.RetMsg)
+		err = errors.New(keyResponse.ReturnMsg)
 		return
 	}
 	key = keyResponse.SandboxSignkey

@@ -43,6 +43,32 @@ func Test() {
 * 参数或返回值中的常量，请参照`constant.go`文件。
 * 具体使用方法，请参照接口对应的测试文件。
 
+### 单元测试方法
+
+修改`client_test.go`中的生成测试Client的代码，调整沙盒/生产环境、普通商户/服务商等选项，或者修改环境变量，来调整商户参数。
+
+环境变量的脚本在`wxpay/testcase/env.profile`文件中，修改后加载环境变量：
+
+```shell
+source wxpay/testcase/env.profile
+cd wxpay
+go test
+```
+
+### 微信沙盒测试样例
+
+具体说明见[wxpay/testcase](testcase/)目录。
+
+修改`testcase/client_test.go`中的生成测试Client的代码，调整普通商户/服务商等选项，或者修改环境变量，来调整商户参数。
+
+环境变量的脚本在`wxpay/testcase/env.profile`文件中，修改后加载环境变量：
+
+```shell
+source wxpay/testcase/env.profile
+cd wxpay/testcase
+go test
+```
+
 ### 普通商户版API
 
 * [ ] 付款码支付

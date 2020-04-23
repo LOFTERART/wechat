@@ -1,7 +1,0 @@
-export AppID=""
-export AppSecret=""
-export MchID=""
-export SubAppID=""
-export SubMchID=""
-export ApiKey=""
-export CertFilepath=""
