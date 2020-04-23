@@ -29,12 +29,12 @@ var client *http.Client
 
 func init() {
 	client = &http.Client{
-		Timeout: 30 * time.Second,
+		Timeout: 5 * time.Second,
 		Transport: &http.Transport{
 			IdleConnTimeout:     3 * time.Minute,
-			TLSHandshakeTimeout: 10 * time.Second,
+			TLSHandshakeTimeout: 5 * time.Second,
 			DialContext: (&net.Dialer{
-				Timeout:   30 * time.Second,
+				Timeout:   5 * time.Second,
 				KeepAlive: 10 * time.Minute,
 				DualStack: true,
 			}).DialContext,

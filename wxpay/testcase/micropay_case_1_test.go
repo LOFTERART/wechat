@@ -17,7 +17,6 @@
 package testcase
 
 import (
-	"errors"
 	"gitee.com/xiaochengtech/wechat/util"
 	"gitee.com/xiaochengtech/wechat/wxpay"
 	"testing"
@@ -26,12 +25,14 @@ import (
 // 刷卡支付-用例1：【刷卡-正常】订单金额0.01元，用户支付成功
 func TestMicropayCase1(t *testing.T) {
 	var (
-		wxRsp wxpay.MicropayResponse
-		err   error
+		wxRsp    wxpay.MicropayResponse
+		queryRsp wxpay.QueryOrderResponse
+		err      error
 	)
 	defer func() {
 		if err != nil {
 			t.Logf("返回值: %+v\n", wxRsp)
+			t.Logf("查询值: %+v\n", queryRsp)
 			t.Error(err)
 		}
 	}()
@@ -43,52 +44,46 @@ func TestMicropayCase1(t *testing.T) {
 	body.TotalFee = 1
 	body.SpbillCreateIP = "1.1.1.1"
 	body.AuthCode = "150000111122223333"
-	body.SceneInfo = &wxpay.SceneInfoModel{
-		ID:   "1",
-		Name: "测试门店",
-	}
 	// 请求支付
 	wxRsp, err = testClient.Micropay(body)
 	if err != nil {
 		return
 	}
-	// 校验字段(状态)
-	if wxRsp.ReturnCode != wxpay.ResponseSuccess {
-		err = errors.New("return_code错误")
+	// 校验字段
+	validFields := map[string]interface{}{
+		"trade_type":    wxpay.TradeTypeMicropay,
+		"cash_fee":      1,
+		"cash_fee_type": wxpay.FeeTypeCNY,
+		"return_code":   wxpay.ResponseSuccess,
+		"out_trade_no":  outTradeNo,
+		"return_msg":    wxpay.ResponseMessageOk,
+		"total_fee":     1,
+		"result_code":   wxpay.ResponseSuccess,
+		"err_code":      wxpay.ResponseSuccess,
+	}
+	if err = CheckFields(wxRsp, validFields); err != nil {
 		return
 	}
-	if wxRsp.ReturnMsg != wxpay.ResponseMessageOk {
-		err = errors.New("return_msg错误")
+	// 查询订单
+	queryRsp, err = testClient.QueryOrder(wxpay.QueryOrderBody{
+		OutTradeNo: outTradeNo,
+	})
+	if err != nil {
 		return
 	}
-	if wxRsp.ResultCode != wxpay.ResponseSuccess {
-		err = errors.New("result_code错误")
+	// 校验字段
+	validQueryOrderFields := map[string]interface{}{
+		"mch_id": testClient.Config.MchId,
+		// FIXME 始终失败，为APP。 "trade_type": wxpay.TradeTypeMicropay,
+		"trade_state_desc": "ok",
+		"trade_state":      wxpay.TradeStateSuccess,
+		"cash_fee":         1,
+		"out_trade_no":     outTradeNo,
+		"total_fee":        1,
+		"result_code":      wxpay.ResponseSuccess,
+		"err_code":         wxpay.ResponseSuccess,
+	}
+	if err = CheckFields(queryRsp, validQueryOrderFields); err != nil {
 		return
 	}
-	if wxRsp.ErrCode != wxpay.ResponseSuccess {
-		err = errors.New("err_code错误")
-		return
-	}
-	// 校验字段(业务)
-	if wxRsp.TradeType != wxpay.TradeTypeMicropay {
-		err = errors.New("trade_type错误")
-		return
-	}
-	if wxRsp.CashFee != 1 {
-		err = errors.New("cash_fee错误")
-		return
-	}
-	if wxRsp.CashFeeType != wxpay.FeeTypeCNY {
-		err = errors.New("cash_fee_type错误")
-		return
-	}
-	if wxRsp.OutTradeNo != outTradeNo {
-		err = errors.New("out_trade_no错误")
-		return
-	}
-	if wxRsp.TotalFee != 1 {
-		err = errors.New("total_fee错误")
-		return
-	}
-	return
 }

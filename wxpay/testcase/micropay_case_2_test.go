@@ -17,9 +17,81 @@
 package testcase
 
 import (
+	"errors"
+	"gitee.com/xiaochengtech/wechat/util"
+	"gitee.com/xiaochengtech/wechat/wxpay"
 	"testing"
 )
 
 // 刷卡支付-用例2：【刷卡-正常】订单金额0.02元（含0.01元代金券），用户支付成功
 func TestMicropayCase2(t *testing.T) {
+	var (
+		wxRsp    wxpay.MicropayResponse
+		queryRsp wxpay.QueryOrderResponse
+		err      error
+	)
+	defer func() {
+		if err != nil {
+			t.Logf("返回值: %+v\n", wxRsp)
+			t.Logf("查询值: %+v\n", queryRsp)
+			t.Error(err)
+		}
+	}()
+	// 初始化参数
+	outTradeNo := util.RandomString(32)
+	body := wxpay.MicropayBody{}
+	body.Body = "刷卡支付-测试用例2"
+	body.OutTradeNo = outTradeNo
+	body.TotalFee = 2
+	body.SpbillCreateIP = "1.1.1.1"
+	body.AuthCode = "150000111122223333"
+	// 请求支付
+	wxRsp, err = testClient.Micropay(body)
+	if err != nil {
+		return
+	}
+	// 校验字段
+	validFields := map[string]interface{}{
+		"coupon_fee":    1,
+		"cash_fee_type": wxpay.FeeTypeCNY,
+		"out_trade_no":  outTradeNo,
+		"return_code":   wxpay.ResponseSuccess,
+		"cash_fee":      1,
+		"total_fee":     2,
+		"result_code":   wxpay.ResponseSuccess,
+		"err_code":      wxpay.ResponseSuccess,
+	}
+	if err = CheckFields(wxRsp, validFields); err != nil {
+		return
+	}
+	// 查询订单
+	queryRsp, err = testClient.QueryOrder(wxpay.QueryOrderBody{
+		OutTradeNo: outTradeNo,
+	})
+	if err != nil {
+		return
+	}
+	// 校验字段
+	validQueryOrderFields := map[string]interface{}{
+		"coupon_fee":   1,
+		"return_code":  wxpay.ResponseSuccess,
+		"cash_fee":     1,
+		"out_trade_no": outTradeNo,
+		"total_fee":    2,
+		"coupon_count": 1,
+		"result_code":  wxpay.ResponseSuccess,
+	}
+	if err = CheckFields(queryRsp, validQueryOrderFields); err != nil {
+		return
+	}
+	if len(queryRsp.Coupons) != 1 {
+		err = errors.New("优惠券数量错误")
+		return
+	}
+	if err = CheckFields(queryRsp.Coupons[0], map[string]interface{}{
+		"CouponFee":  1,
+		"CouponType": wxpay.CouponTypeCash,
+	}); err != nil {
+		return
+	}
 }
