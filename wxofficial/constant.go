@@ -16,22 +16,9 @@
 
 package wxofficial
 
-import (
-	"encoding/json"
-	"fmt"
-	"gitee.com/xiaochengtech/wechat/util"
+const (
+	// 语言
+	LanguageZhCn = "zh_CN" // 简体
+	LanguageZhTw = "zh_TW" // 繁体
+	LanguageEn   = "en"    // 英语
 )
-
-// 获取用户基本信息(UnionID机制)
-func GetUserInfo(accessToken string, openId string, lang string) (wxRsp UserInfoResponse, err error) {
-	if len(lang) <= 0 {
-		lang = "zh_CN"
-	}
-	url := fmt.Sprintf("https://api.weixin.qq.com/cgi-bin/user/info?access_token=%s&openid=%s&lang=%s", accessToken, openId, lang)
-	body, err := util.HttpGet(url)
-	if err != nil {
-		return
-	}
-	err = json.Unmarshal(body, &wxRsp)
-	return
-}

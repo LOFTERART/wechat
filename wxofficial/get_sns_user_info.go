@@ -22,12 +22,12 @@ import (
 	"gitee.com/xiaochengtech/wechat/util"
 )
 
-// 获取用户基本信息(UnionID机制)
-func GetUserInfo(accessToken string, openId string, lang string) (wxRsp UserInfoResponse, err error) {
+// 网页授权-拉取用户信息(需scope为snsapi_userinfo)
+func GetSnsUserInfo(accessToken string, openId string, lang string) (wxRsp UserInfoResponse, err error) {
 	if len(lang) <= 0 {
 		lang = "zh_CN"
 	}
-	url := fmt.Sprintf("https://api.weixin.qq.com/cgi-bin/user/info?access_token=%s&openid=%s&lang=%s", accessToken, openId, lang)
+	url := fmt.Sprintf("https://api.weixin.qq.com/sns/userinfo?access_token=%s&openid=%s&lang=%s", accessToken, openId, lang)
 	body, err := util.HttpGet(url)
 	if err != nil {
 		return

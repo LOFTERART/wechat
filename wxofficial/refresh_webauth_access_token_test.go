@@ -17,21 +17,19 @@
 package wxofficial
 
 import (
-	"encoding/json"
 	"fmt"
-	"gitee.com/xiaochengtech/wechat/util"
+	"testing"
 )
 
-// 获取用户基本信息(UnionID机制)
-func GetUserInfo(accessToken string, openId string, lang string) (wxRsp UserInfoResponse, err error) {
-	if len(lang) <= 0 {
-		lang = "zh_CN"
-	}
-	url := fmt.Sprintf("https://api.weixin.qq.com/cgi-bin/user/info?access_token=%s&openid=%s&lang=%s", accessToken, openId, lang)
-	body, err := util.HttpGet(url)
+func TestRefreshWebAuthAccessToken(t *testing.T) {
+	fmt.Println("----------刷新网页授权的access_token----------")
+	// 请求接口
+	appId := ""
+	refresh := ""
+	token, err := RefreshWebAuthAccessToken(appId, refresh)
 	if err != nil {
+		t.Error(err)
 		return
 	}
-	err = json.Unmarshal(body, &wxRsp)
-	return
+	t.Logf("返回值: %+v\n", token)
 }

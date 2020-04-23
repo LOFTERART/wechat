@@ -7,3 +7,5 @@
 * [微信支付](wxpay/)
 * [微信公众号](wxofficial/)
 * [微信小程序](wxapplet/)
+
+Go Package名称：`gitee.com/xiaochengtech/wechat`
