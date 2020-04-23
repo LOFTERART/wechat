@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-package wxapp
+package wxpay
 
 import (
 	"fmt"

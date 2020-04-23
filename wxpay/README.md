@@ -97,6 +97,18 @@ go test
   * [ ] [拉取订单评价数据](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_17&index=11)
 * [ ] Native支付
 * [ ] APP支付
+  * [x] [统一下单](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_1)：`UnifiedOrder`
+  * [x] [调起支付接口](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12&index=2)：`GetAppPaySign`
+  * [x] [支付结果通知](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_7&index=3)：`NotifyPay`
+  * [x] [查询订单](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_2&index=4)：`QueryOrder`
+  * [x] [关闭订单](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_3&index=5)：`CloseOrder`
+  * [x] [申请退款](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_4&index=6)：`Refund`
+  * [x] [查询退款](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_5&index=7)：`QueryRefund`
+  * [x] [下载交易账单](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_6&index=8)：`DownloadBill`
+  * [ ] [下载资金账单](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_18&index=9)
+  * [x] [交易保障](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_8&index=10)：`ReportJsApi`
+  * [x] [退款结果通知](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_16&index=11)：`NotifyRefund`
+  * [ ] [拉取订单评价数据](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_99&index=12)
 * [ ] H5支付
 * [ ] 小程序支付
   * [x] [小程序调起支付API签名](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_7&index=5)：`GetAppletPaySign`
@@ -144,7 +156,17 @@ go test
   * [x] [交易保障](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_8)：`ReportJsApi`
   * [x] [退款结果通知](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_16)：`NotifyRefund`
 * [ ] Native支付
-* [ ] APP支付
+* [x] APP支付
+  * [x] [统一下单](https://pay.weixin.qq.com/wiki/doc/api/app/app_sl.php?chapter=9_1)：`UnifiedOrder`
+  * [x] [调起支付接口](https://pay.weixin.qq.com/wiki/doc/api/app/app_sl.php?chapter=9_12&index=2)：`GetAppPaySign`
+  * [x] [支付结果通知](https://pay.weixin.qq.com/wiki/doc/api/app/app_sl.php?chapter=9_7&index=3)：`NotifyPay`
+  * [x] [查询订单](https://pay.weixin.qq.com/wiki/doc/api/app/app_sl.php?chapter=9_2&index=4)：`QueryOrder`
+  * [x] [关闭订单](https://pay.weixin.qq.com/wiki/doc/api/app/app_sl.php?chapter=9_3&index=5)：`CloseOrder`
+  * [x] [申请退款](https://pay.weixin.qq.com/wiki/doc/api/app/app_sl.php?chapter=9_4&index=6)：`Refund`
+  * [x] [查询退款](https://pay.weixin.qq.com/wiki/doc/api/app/app_sl.php?chapter=9_5&index=7)：`QueryRefund`
+  * [x] [下载交易账单](https://pay.weixin.qq.com/wiki/doc/api/app/app_sl.php?chapter=9_6&index=8)：`DownloadBill`
+  * [x] [交易保障](https://pay.weixin.qq.com/wiki/doc/api/app/app_sl.php?chapter=9_8&index=9)：`ReportJsApi`
+  * [x] [退款结果通知](https://pay.weixin.qq.com/wiki/doc/api/app/app_sl.php?chapter=9_16)：`NotifyRefund`
 * [ ] H5支付
 * [x] 小程序支付
   * [x] [小程序调起支付API签名](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_sl_api.php?chapter=7_7&index=5)：`GetAppletPaySign`
