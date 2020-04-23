@@ -14,22 +14,22 @@
    limitations under the License.
 */
 
-package wxservice
+package wxofficial
 
 import (
 	"fmt"
 	"testing"
 )
 
-func TestGetBasicUserInfo(t *testing.T) {
-	fmt.Println("----------获取用户基本信息----------")
+func TestGetAccessToken(t *testing.T) {
+	fmt.Println("----------获取访问凭证----------")
 	// 请求接口
-	token := ""
-	openId := ""
-	user, err := GetBasicUserInfo(token, openId, "")
+	appId := "wx80adf00e00fecc80"
+	appSecret := "fa1c98a5449e909129d08b10c1bbb415"
+	token, err := GetAccessToken(appId, appSecret)
 	if err != nil {
 		t.Error(err)
 		return
 	}
-	t.Logf("返回值: %+v\n", user)
+	t.Logf("返回值: %+v\n", token)
 }

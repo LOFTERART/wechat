@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-package wxservice
+package wxofficial
 
 import (
 	"encoding/json"
@@ -22,18 +22,18 @@ import (
 	"gitee.com/xiaochengtech/wechat/util"
 )
 
-// 获取基础支持的AccessToken
-func GetBasicAccessToken(appId, appSecret string) (accessToken AccessToken, err error) {
+// 获取AccessToken
+func GetAccessToken(appId string, appSecret string) (wxRsp GetAccessTokenResponse, err error) {
 	url := fmt.Sprintf("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s", appId, appSecret)
 	body, err := util.HttpGet(url)
 	if err != nil {
 		return
 	}
-	err = json.Unmarshal(body, &accessToken)
+	err = json.Unmarshal(body, &wxRsp)
 	return
 }
 
-type AccessToken struct {
+type GetAccessTokenResponse struct {
 	AccessToken  string `json:"access_token"`  // 获取到的凭证
 	ExpiresIn    int64  `json:"expires_in"`    // SessionKey超时时间（秒）
 	RefreshToken string `json:"refresh_token"` // 用户刷新access_tokenOpenId

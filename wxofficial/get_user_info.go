@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-package wxservice
+package wxofficial
 
 import (
 	"encoding/json"
@@ -22,8 +22,8 @@ import (
 	"gitee.com/xiaochengtech/wechat/util"
 )
 
-// 获取用户基本信息(UnionId机制)
-func GetBasicUserInfo(accessToken, openId, lang string) (userInfo UserInfo, err error) {
+// 获取用户基本信息(UnionID机制)
+func GetUserInfo(accessToken string, openId string, lang string) (wxRsp GetUserInfoResponse, err error) {
 	if len(lang) <= 0 {
 		lang = "zh_CN"
 	}
@@ -32,11 +32,11 @@ func GetBasicUserInfo(accessToken, openId, lang string) (userInfo UserInfo, err 
 	if err != nil {
 		return
 	}
-	err = json.Unmarshal(body, &userInfo)
+	err = json.Unmarshal(body, &wxRsp)
 	return
 }
 
-type UserInfo struct {
+type GetUserInfoResponse struct {
 	OpenId         string   `json:"openid"`          // 用户唯一标识
 	Nickname       string   `json:"nickname"`        // 用户的昵称
 	Sex            int      `json:"sex"`             // 用户的性别，值为1时是男性，值为2时是女性，值为0时是未知

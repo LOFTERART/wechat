@@ -84,6 +84,7 @@ go test
   * [x] [退款结果通知](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_16&index=10)：`NotifyRefund`
   * [ ] [拉取订单评价数据](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_17&index=11)
 * [ ] JSAPI支付
+  * [x] [微信内H5调起支付](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_7&index=6)：`GetJsApiPaySign`
   * [x] [统一下单](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1)：`UnifiedOrder`
   * [x] [查询订单](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_2)：`QueryOrder`
   * [x] [关闭订单](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_3)：`CloseOrder`
@@ -146,6 +147,7 @@ go test
   * [x] [付款码查询openid](https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=9_12&index=8)：`AuthCodeToOpenId`
   * [x] [退款结果通知](https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=9_16&index=9)：`NotifyRefund`
 * [x] JSAPI支付
+  * [x] [微信内H5调起支付](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=7_7&index=6)：`GetJsApiPaySign`
   * [x] [统一下单](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_1)：：`UnifiedOrder`
   * [x] [查询订单](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_2)：`QueryOrder`
   * [x] [关闭订单](https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_3)：`CloseOrder`

@@ -14,22 +14,25 @@
    limitations under the License.
 */
 
-package wxservice
+package wxpay
 
 import (
 	"fmt"
+	"gitee.com/xiaochengtech/wechat/constant"
+	"gitee.com/xiaochengtech/wechat/util"
 	"testing"
+	"time"
 )
 
-func TestGetBasicAccessToken(t *testing.T) {
-	fmt.Println("----------获取访问凭证----------")
+func TestGetJsApiPaySign(t *testing.T) {
+	fmt.Println("----------获取JSAPI的支付签名----------")
 	// 请求接口
 	appId := "wx80adf00e00fecc80"
-	appSecret := "fa1c98a5449e909129d08b10c1bbb415"
-	token, err := GetBasicAccessToken(appId, appSecret)
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	t.Logf("返回值: %+v\n", token)
+	nonceStr := util.RandomString(32)
+	packages := util.RandomString(32)
+	signType := constant.SignTypeMD5
+	timeStamp := string(time.Now().Unix())
+	apiKey := "TJ0Rg25wM2AfFltah6XXg5PxNZoyV9D4"
+	sign := GetJsApiPaySign(appId, nonceStr, packages, signType, timeStamp, apiKey)
+	t.Logf("返回值: %+v\n", sign)
 }
